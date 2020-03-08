@@ -5,21 +5,12 @@
     <link>https://u2633.github.io/authors/</link>
       <atom:link href="https://u2633.github.io/authors/index.xml" rel="self" type="application/rss+xml" />
     <description>Authors</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>Authors</title>
       <link>https://u2633.github.io/authors/</link>
     </image>
-    
-    <item>
-      <title></title>
-      <link>https://u2633.github.io/authors/admin/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://u2633.github.io/authors/admin/</guid>
-      <description>&lt;p&gt;Hi there&lt;/p&gt;
-</description>
-    </item>
     
   </channel>
 </rss>

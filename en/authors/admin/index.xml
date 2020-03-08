@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Z@NE.NOTE</title>
+    <link>https://u2633.github.io/en/authors/admin/</link>
+      <atom:link href="https://u2633.github.io/en/authors/admin/index.xml" rel="self" type="application/rss+xml" />
+    <description>Z@NE.NOTE</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <image>
+      <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
+      <title>Z@NE.NOTE</title>
+      <link>https://u2633.github.io/en/authors/admin/</link>
+    </image>
+    
+  </channel>
+</rss>
