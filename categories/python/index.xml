@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Z@NE.NOTE</title>
-    <link>https://u2633.github.io/</link>
-      <atom:link href="https://u2633.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <description>Z@NE.NOTE</description>
+    <title>python | Z@NE.NOTE</title>
+    <link>https://u2633.github.io/categories/python/</link>
+      <atom:link href="https://u2633.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    <description>python</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 10 Mar 2020 17:20:29 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
-      <title>Z@NE.NOTE</title>
-      <link>https://u2633.github.io/</link>
+      <title>python</title>
+      <link>https://u2633.github.io/categories/python/</link>
     </image>
     
     <item>
@@ -730,52 +730,6 @@ Memory Usage: &lt;strong&gt;12.8 MB&lt;/strong&gt;, less than &lt;strong&gt;100.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Runtime: &lt;strong&gt;44 ms&lt;/strong&gt;, faster than &lt;strong&gt;97.79%&lt;/strong&gt; of Python3 online submissions for Find Numbers with Even Number of Digits.
 Memory Usage: &lt;strong&gt;12.6 MB&lt;/strong&gt;, less than &lt;strong&gt;100.00%&lt;/strong&gt; of Python3 online submissions for Find Numbers with Even Number of Digits.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>BLoC Design Pattern</title>
-      <link>https://u2633.github.io/post/2020/bloc-design-pattern/</link>
-      <pubDate>Tue, 10 Mar 2020 14:50:24 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/bloc-design-pattern/</guid>
-      <description>&lt;p&gt;Business Logic Component Pattern 簡稱 
-&lt;a href=&#34;https://bloclibrary.dev/#/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC&lt;/a&gt;。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。&lt;/p&gt;
-&lt;p&gt;
-&lt;a href=&#34;https://bloclibrary.dev/#/coreconcepts?id=blocs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC 主件&lt;/a&gt;，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&amp;hellip;else 或是 switch&amp;hellip;case，如下:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:bloc/bloc.dart&#39;;
-
-enum CounterEvent { increment, decrement }
-
-class CounterBloc extends Bloc&amp;lt;CounterEvent, int&amp;gt; {
-  @override
-  int get initialState =&amp;gt; 0;
-
-  @override
-  Stream&amp;lt;int&amp;gt; mapEventToState(CounterEvent event) async* {
-    switch (event) {
-      case CounterEvent.decrement:
-        yield currentState - 1;
-        break;
-      case CounterEvent.increment:
-        yield currentState + 1;
-        break;
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>First Commit</title>
-      <link>https://u2633.github.io/post/2020/first-commit/</link>
-      <pubDate>Mon, 09 Mar 2020 15:20:02 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/first-commit/</guid>
-      <description>&lt;p&gt;今天終於把自己的 Blog 建起來了，當然免不了要發第一篇文章。&lt;/p&gt;
-&lt;p&gt;其實，早在之前就在自己的 NAS 上建立過
-&lt;a href=&#34;https://u2633.w3rfamily.myds.me/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wordpress&lt;/a&gt;，並且也發過幾篇文了，但為什麼要再重新研究 Hugo，然後再重建自己的 Blog 呢?我的動機其實蠻簡單的，就是 Github 提供的
-&lt;a href=&#34;https://pages.github.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Pages&lt;/a&gt;這個功能，它可以把你的 Repository 變成一個具有 SSL/TLS 憑證的靜態網頁，而本人也是個能省則省的人，而 Github 又可以讓我免去買憑證的動作，況且 Github 又是程式碼的大本營，這也讓我們間接達到了集中管理的需求了。&lt;/p&gt;
-&lt;p&gt;接下來就是慢慢把 Wordpress 上的文章搬過來這了。&lt;/p&gt;
 </description>
     </item>
     

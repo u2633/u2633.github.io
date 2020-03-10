@@ -31,7 +31,7 @@
   <meta name="description" content="前端/App工程師">
 
   
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/404.html">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/categories/flutter/">
 
   
 
@@ -213,12 +213,14 @@
 
 
   
+  <link rel="alternate" href="/categories/flutter/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
+  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/404.html">
+  <link rel="canonical" href="https://u2633.github.io/categories/flutter/">
 
   
   
@@ -232,12 +234,12 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/404.html">
-  <meta property="og:title" content="404 Page not found | Z@NE.NOTE">
+  <meta property="og:url" content="https://u2633.github.io/categories/flutter/">
+  <meta property="og:title" content="flutter | Z@NE.NOTE">
   <meta property="og:description" content="前端/App工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    
+    <meta property="og:updated_time" content="2020-03-10T14:50:24&#43;08:00">
   
 
   
@@ -254,7 +256,7 @@
 
 
 
-  <title>404 Page not found | Z@NE.NOTE</title>
+  <title>flutter | Z@NE.NOTE</title>
 
 </head>
 
@@ -473,34 +475,56 @@
 </nav>
 
 
-  <div class="universal-wrapper pt-3">
-
-  <h1>找不到頁面</h1>
-
-  
-  
-  <form class="d-flex align-items-center mb-3">
-    <input name="q" type="search" class="form-control" placeholder="搜尋..." autocomplete="off">
-  </form>
   
 
+
+
+
+
+
+
+
+
+
+
+
   
 
-  <p>您可能在找？</p>
-
   
   
   
-  <h2>最新</h2>
-  <ul>
     
-      <li><a href="/post/2020/leetcode-challenges/">My Leetcode Challenges</a></li>
+  
+<div class="universal-wrapper pt-3">
+  <h1>flutter</h1>
+
+  
+
+  
+</div>
+
+
+
+<div class="universal-wrapper">
+  
+
+  
+  
     
-      <li><a href="/post/2020/bloc-design-pattern/">BLoC Design Pattern</a></li>
     
-      <li><a href="/post/2020/first-commit/">First Commit</a></li>
     
-  </ul>
+    <div>
+      <h2><a href="/post/2020/bloc-design-pattern/" >BLoC Design Pattern</a></h2>
+      <div class="article-style">
+        
+          Business Logic Component Pattern 簡稱 BLoC。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。
+ BLoC 主件，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&hellip;else 或是 switch&hellip;case，如下:
+import 'package:bloc/bloc.dart'; enum CounterEvent { increment, decrement } class CounterBloc extends Bloc&lt;CounterEvent, int&gt; { @override int get initialState =&gt; 0; @override Stream&lt;int&gt; mapEventToState(CounterEvent event) async* { switch (event) { case CounterEvent.decrement: yield currentState - 1; break; case CounterEvent.
+        
+      </div>
+    </div>
+  
+
   
 
 </div>
