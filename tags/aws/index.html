@@ -28,12 +28,10 @@
   
     
   
-  <meta name="description" content="Business Logic Component Pattern 簡稱 BLoC。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。
- BLoC 主件，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&hellip;else 或是 switch&hellip;case，如下:
-import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decrement } class CounterBloc extends Bloc&lt;CounterEvent, int&gt; { @override int get initialState =&gt; 0; @override Stream&lt;int&gt; mapEventToState(CounterEvent event) async* { switch (event) { case CounterEvent.decrement: yield currentState - 1; break; case CounterEvent.">
+  <meta name="description" content="前端/App工程師">
 
   
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/bloc-design-pattern/">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/tags/aws/">
 
   
 
@@ -215,12 +213,14 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
 
 
   
+  <link rel="alternate" href="/tags/aws/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
+  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/post/2020/bloc-design-pattern/">
+  <link rel="canonical" href="https://u2633.github.io/tags/aws/">
 
   
   
@@ -234,67 +234,17 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/post/2020/bloc-design-pattern/">
-  <meta property="og:title" content="BLoC Design Pattern | Z@NE.NOTE">
-  <meta property="og:description" content="Business Logic Component Pattern 簡稱 BLoC。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。
- BLoC 主件，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&hellip;else 或是 switch&hellip;case，如下:
-import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decrement } class CounterBloc extends Bloc&lt;CounterEvent, int&gt; { @override int get initialState =&gt; 0; @override Stream&lt;int&gt; mapEventToState(CounterEvent event) async* { switch (event) { case CounterEvent.decrement: yield currentState - 1; break; case CounterEvent."><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://u2633.github.io/tags/aws/">
+  <meta property="og:title" content="aws | Z@NE.NOTE">
+  <meta property="og:description" content="前端/App工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    
-      <meta property="article:published_time" content="2020-03-10T14:50:24&#43;08:00">
-    
-    <meta property="article:modified_time" content="2020-03-10T14:50:24&#43;08:00">
+    <meta property="og:updated_time" content="2020-03-11T13:49:56&#43;08:00">
   
 
   
 
 
-    
-
-
-
-
-
-
-  
-
-
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://u2633.github.io/post/2020/bloc-design-pattern/"
-  },
-  "headline": "BLoC Design Pattern",
-  
-  "datePublished": "2020-03-10T14:50:24+08:00",
-  "dateModified": "2020-03-10T14:50:24+08:00",
-  
-  "author": {
-    "@type": "Person",
-    "name": "zane"
-  },
-  
-  "publisher": {
-    "@type": "Organization",
-    "name": "Z@NE.NOTE",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
-    }
-  },
-  "description": "Business Logic Component Pattern 簡稱 BLoC。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。\n BLoC 主件，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if\u0026hellip;else 或是 switch\u0026hellip;case，如下:\nimport 'package:bloc/bloc.dart'; enum CounterEvent { increment, decrement } class CounterBloc extends Bloc\u0026lt;CounterEvent, int\u0026gt; { @override int get initialState =\u0026gt; 0; @override Stream\u0026lt;int\u0026gt; mapEventToState(CounterEvent event) async* { switch (event) { case CounterEvent.decrement: yield currentState - 1; break; case CounterEvent."
-}
-</script>
-
-  
-
-  
 
 
   
@@ -306,7 +256,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
 
 
 
-  <title>BLoC Design Pattern | Z@NE.NOTE</title>
+  <title>aws | Z@NE.NOTE</title>
 
 </head>
 
@@ -525,8 +475,6 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
 </nav>
 
 
-  <article class="article">
-
   
 
 
@@ -544,241 +492,43 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
 
   
   
-  
-<div class="article-container pt-3">
-  <h1>BLoC Design Pattern</h1>
-
-  
-
   
     
-
-
-<div class="article-metadata">
+  
+<div class="universal-wrapper pt-3">
+  <h1>aws</h1>
 
   
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年3月10日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/flutter/">flutter</a></span>
-  
-
-</div>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   
 </div>
 
 
 
-  <div class="article-container">
+<div class="universal-wrapper">
+  
 
-    <div class="article-style">
-      <p>Business Logic Component Pattern 簡稱 
-<a href="https://bloclibrary.dev/#/" target="_blank" rel="noopener">BLoC</a>。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。</p>
-<p>
-<a href="https://bloclibrary.dev/#/coreconcepts?id=blocs" target="_blank" rel="noopener">BLoC 主件</a>，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&hellip;else 或是 switch&hellip;case，如下:</p>
-<pre><code class="language-dart">import 'package:bloc/bloc.dart';
-
-enum CounterEvent { increment, decrement }
-
-class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
-  @override
-  int get initialState =&gt; 0;
-
-  @override
-  Stream&lt;int&gt; mapEventToState(CounterEvent event) async* {
-    switch (event) {
-      case CounterEvent.decrement:
-        yield currentState - 1;
-        break;
-      case CounterEvent.increment:
-        yield currentState + 1;
-        break;
-    }
-  }
-}
-</code></pre>
-
+  
+  
+    
+    
+    
+    <div>
+      <h2><a href="/post/2020/aws-s3-ssl-setup/" >讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證</a></h2>
+      <div class="article-style">
+        
+          前言 大部份 AWS 的使用者都如道 S3 提供一個僅需在管理頁面點擊設定便可以讓 Bucket 變成靜態網頁的方法。 但也僅提供 HTTP 連線方式，如果我要的是個客制化的 Domain + HTTPS 協定呢?
+這時候我們所只需要 Cloudfront 及 Certificate Manager 這兩個服務來達成我們目的。如果有網域名稱的需求也可以利用 Route53 來做購買的動作。
+建立 AWS S3 Bucket  假設我已經擁有一個叫www.example.com的網域名稱，接下來的步驟:
+ 建立一個與域名相同的 Bucket Name，這裡的範例就會是www.example.com。 開啟 Bucket 中 Static website hosting 的功能並且複制 Endpoint 裡的網址。   設定 AWS Cloudfront   選擇 Web delivery method。   將 Bucket 的 Endpoint 填入 Origin Domain Name。   設定協定方式 我希望只提供 HTTPS 的連線方式，所以我會選擇自動導向的方式，避免使用者輸入 http 開頭的網址後出現錯誤
+        
+      </div>
     </div>
-
-    
-
-
-
-<div class="article-tags">
   
-  <a class="badge badge-light" href="/tags/pattern/">pattern</a>
+
   
+
 </div>
-
-
-
-<div class="share-box" aria-hidden="true">
-  <ul class="share">
-    
-      
-      
-      
-        
-      
-      
-      
-      <li>
-        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;text=BLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-twitter">
-          <i class="fab fa-twitter"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;t=BLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-facebook">
-          <i class="fab fa-facebook"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      <li>
-        <a href="mailto:?subject=BLoC%20Design%20Pattern&amp;body=https://u2633.github.io/post/2020/bloc-design-pattern/" target="_blank" rel="noopener" class="share-btn-email">
-          <i class="fas fa-envelope"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;title=BLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-linkedin">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-      </li>
-    
-  </ul>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-    
-    
-
-
-
-
-
-  
-  
-  
-  
-  
-  <div class="media author-card content-widget-hr">
-    
-
-    <div class="media-body">
-      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
-      
-      
-      <ul class="network-icon" aria-hidden="true">
-  
-</ul>
-
-    </div>
-  </div>
-
-
-  
-
-
-
-
-
-
-
-
-
-
-  
-  
-
-
-
-  </div>
-</article>
 
       
 

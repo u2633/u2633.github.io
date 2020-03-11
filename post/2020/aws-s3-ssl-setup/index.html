@@ -28,12 +28,13 @@
   
     
   
-  <meta name="description" content="Business Logic Component Pattern 簡稱 BLoC。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。
- BLoC 主件，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&hellip;else 或是 switch&hellip;case，如下:
-import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decrement } class CounterBloc extends Bloc&lt;CounterEvent, int&gt; { @override int get initialState =&gt; 0; @override Stream&lt;int&gt; mapEventToState(CounterEvent event) async* { switch (event) { case CounterEvent.decrement: yield currentState - 1; break; case CounterEvent.">
+  <meta name="description" content="前言 大部份 AWS 的使用者都如道 S3 提供一個僅需在管理頁面點擊設定便可以讓 Bucket 變成靜態網頁的方法。 但也僅提供 HTTP 連線方式，如果我要的是個客制化的 Domain &#43; HTTPS 協定呢?
+這時候我們所只需要 Cloudfront 及 Certificate Manager 這兩個服務來達成我們目的。如果有網域名稱的需求也可以利用 Route53 來做購買的動作。
+建立 AWS S3 Bucket  假設我已經擁有一個叫www.example.com的網域名稱，接下來的步驟:
+ 建立一個與域名相同的 Bucket Name，這裡的範例就會是www.example.com。 開啟 Bucket 中 Static website hosting 的功能並且複制 Endpoint 裡的網址。   設定 AWS Cloudfront   選擇 Web delivery method。   將 Bucket 的 Endpoint 填入 Origin Domain Name。   設定協定方式 我希望只提供 HTTPS 的連線方式，所以我會選擇自動導向的方式，避免使用者輸入 http 開頭的網址後出現錯誤">
 
   
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/bloc-design-pattern/">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/aws-s3-ssl-setup/">
 
   
 
@@ -220,7 +221,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/post/2020/bloc-design-pattern/">
+  <link rel="canonical" href="https://u2633.github.io/post/2020/aws-s3-ssl-setup/">
 
   
   
@@ -234,17 +235,18 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/post/2020/bloc-design-pattern/">
-  <meta property="og:title" content="BLoC Design Pattern | Z@NE.NOTE">
-  <meta property="og:description" content="Business Logic Component Pattern 簡稱 BLoC。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。
- BLoC 主件，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&hellip;else 或是 switch&hellip;case，如下:
-import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decrement } class CounterBloc extends Bloc&lt;CounterEvent, int&gt; { @override int get initialState =&gt; 0; @override Stream&lt;int&gt; mapEventToState(CounterEvent event) async* { switch (event) { case CounterEvent.decrement: yield currentState - 1; break; case CounterEvent."><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://u2633.github.io/post/2020/aws-s3-ssl-setup/">
+  <meta property="og:title" content="讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證 | Z@NE.NOTE">
+  <meta property="og:description" content="前言 大部份 AWS 的使用者都如道 S3 提供一個僅需在管理頁面點擊設定便可以讓 Bucket 變成靜態網頁的方法。 但也僅提供 HTTP 連線方式，如果我要的是個客制化的 Domain &#43; HTTPS 協定呢?
+這時候我們所只需要 Cloudfront 及 Certificate Manager 這兩個服務來達成我們目的。如果有網域名稱的需求也可以利用 Route53 來做購買的動作。
+建立 AWS S3 Bucket  假設我已經擁有一個叫www.example.com的網域名稱，接下來的步驟:
+ 建立一個與域名相同的 Bucket Name，這裡的範例就會是www.example.com。 開啟 Bucket 中 Static website hosting 的功能並且複制 Endpoint 裡的網址。   設定 AWS Cloudfront   選擇 Web delivery method。   將 Bucket 的 Endpoint 填入 Origin Domain Name。   設定協定方式 我希望只提供 HTTPS 的連線方式，所以我會選擇自動導向的方式，避免使用者輸入 http 開頭的網址後出現錯誤"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
     
-      <meta property="article:published_time" content="2020-03-10T14:50:24&#43;08:00">
+      <meta property="article:published_time" content="2020-03-11T13:49:56&#43;08:00">
     
-    <meta property="article:modified_time" content="2020-03-10T14:50:24&#43;08:00">
+    <meta property="article:modified_time" content="2020-03-11T13:49:56&#43;08:00">
   
 
   
@@ -268,12 +270,12 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
   "@type": "BlogPosting",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://u2633.github.io/post/2020/bloc-design-pattern/"
+    "@id": "https://u2633.github.io/post/2020/aws-s3-ssl-setup/"
   },
-  "headline": "BLoC Design Pattern",
+  "headline": "讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證",
   
-  "datePublished": "2020-03-10T14:50:24+08:00",
-  "dateModified": "2020-03-10T14:50:24+08:00",
+  "datePublished": "2020-03-11T13:49:56+08:00",
+  "dateModified": "2020-03-11T13:49:56+08:00",
   
   "author": {
     "@type": "Person",
@@ -288,7 +290,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
       "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "Business Logic Component Pattern 簡稱 BLoC。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。\n BLoC 主件，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if\u0026hellip;else 或是 switch\u0026hellip;case，如下:\nimport 'package:bloc/bloc.dart'; enum CounterEvent { increment, decrement } class CounterBloc extends Bloc\u0026lt;CounterEvent, int\u0026gt; { @override int get initialState =\u0026gt; 0; @override Stream\u0026lt;int\u0026gt; mapEventToState(CounterEvent event) async* { switch (event) { case CounterEvent.decrement: yield currentState - 1; break; case CounterEvent."
+  "description": "前言 大部份 AWS 的使用者都如道 S3 提供一個僅需在管理頁面點擊設定便可以讓 Bucket 變成靜態網頁的方法。 但也僅提供 HTTP 連線方式，如果我要的是個客制化的 Domain + HTTPS 協定呢?\n這時候我們所只需要 Cloudfront 及 Certificate Manager 這兩個服務來達成我們目的。如果有網域名稱的需求也可以利用 Route53 來做購買的動作。\n建立 AWS S3 Bucket  假設我已經擁有一個叫www.example.com的網域名稱，接下來的步驟:\n 建立一個與域名相同的 Bucket Name，這裡的範例就會是www.example.com。 開啟 Bucket 中 Static website hosting 的功能並且複制 Endpoint 裡的網址。   設定 AWS Cloudfront   選擇 Web delivery method。   將 Bucket 的 Endpoint 填入 Origin Domain Name。   設定協定方式 我希望只提供 HTTPS 的連線方式，所以我會選擇自動導向的方式，避免使用者輸入 http 開頭的網址後出現錯誤"
 }
 </script>
 
@@ -306,7 +308,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
 
 
 
-  <title>BLoC Design Pattern | Z@NE.NOTE</title>
+  <title>讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證 | Z@NE.NOTE</title>
 
 </head>
 
@@ -546,7 +548,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
   
   
 <div class="article-container pt-3">
-  <h1>BLoC Design Pattern</h1>
+  <h1>讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證</h1>
 
   
 
@@ -564,7 +566,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
     
 
   
-  <span><a href="/authors/zane/">Zane</a></span>
+  <span><a href="/authors/zane/">zane</a></span>
   </div>
   
   
@@ -575,7 +577,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
     
       
     
-    2020年3月10日
+    2020年3月11日
   </span>
   
 
@@ -596,7 +598,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/flutter/">flutter</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/categories/cloud/">cloud</a></span>
   
 
 </div>
@@ -624,31 +626,63 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
   <div class="article-container">
 
     <div class="article-style">
-      <p>Business Logic Component Pattern 簡稱 
-<a href="https://bloclibrary.dev/#/" target="_blank" rel="noopener">BLoC</a>。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。</p>
-<p>
-<a href="https://bloclibrary.dev/#/coreconcepts?id=blocs" target="_blank" rel="noopener">BLoC 主件</a>，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&hellip;else 或是 switch&hellip;case，如下:</p>
-<pre><code class="language-dart">import 'package:bloc/bloc.dart';
-
-enum CounterEvent { increment, decrement }
-
-class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
-  @override
-  int get initialState =&gt; 0;
-
-  @override
-  Stream&lt;int&gt; mapEventToState(CounterEvent event) async* {
-    switch (event) {
-      case CounterEvent.decrement:
-        yield currentState - 1;
-        break;
-      case CounterEvent.increment:
-        yield currentState + 1;
-        break;
-    }
-  }
-}
-</code></pre>
+      <h2 id="前言">前言</h2>
+<p>大部份 AWS 的使用者都如道 S3 提供一個僅需在管理頁面點擊設定便可以讓 Bucket 變成靜態網頁的方法。
+但也僅提供 HTTP 連線方式，如果我要的是個<code>客制化的 Domain + HTTPS 協定</code>呢?</p>
+<p>這時候我們所只需要 
+<a href="https://aws.amazon.com/cloudfront/?sc_channel=PS&amp;sc_campaign=acquisition_TW&amp;sc_publisher=google&amp;sc_medium=cloudfront_b&amp;sc_content=cloudfront_e&amp;sc_detail=aws%20cloud%20front&amp;sc_category=cloudfront&amp;sc_segment=165240657802&amp;sc_matchtype=e&amp;sc_country=TW&amp;s_kwcid=AL!4422!3!165240657802!e!!g!!aws%20cloud%20front&amp;ef_id=Cj0KCQjw9ZzzBRCKARIsANwXaeKmwmjacNS9IzzJ_mkQYoFHLr9_0uWUt8kGWI3xEu9zQlDm36GLOXAaAuz6EALw_wcB:G:s" target="_blank" rel="noopener">Cloudfront</a> 及 
+<a href="https://aws.amazon.com/certificate-manager/?nc2=type_a" target="_blank" rel="noopener">Certificate Manager</a> 這兩個服務來達成我們目的。如果有網域名稱的需求也可以利用 
+<a href="https://aws.amazon.com/route53/?nc2=type_a" target="_blank" rel="noopener">Route53</a> 來做購買的動作。</p>
+<h2 id="建立-aws-s3-bucket-a-idchapter-1a">建立 AWS S3 Bucket <a id="chapter-1"></a></h2>
+<p>假設我已經擁有一個叫<code>www.example.com</code>的網域名稱，接下來的步驟:</p>
+<ul>
+<li>建立一個與域名相同的 Bucket Name，這裡的範例就會是<code>www.example.com</code>。</li>
+<li>開啟 Bucket 中 <code>Static website hosting</code> 的功能並且<strong>複制 Endpoint 裡的網址</strong>。
+<img src="./aws_s3_web_hosting.png" alt="S3 Web Hosting"></li>
+</ul>
+<h2 id="設定-aws-cloudfront">設定 AWS Cloudfront</h2>
+<ul>
+<li>
+<h3 id="選擇-web-delivery-method">選擇 <strong><code>Web</code></strong> delivery method。</h3>
+<p><img src="./aws_cloutfront_createion_1.png" alt="Cloudfront Creattion Step 1"></p>
+</li>
+<li>
+<h3 id="將-bucket-的-endpointchapter-1-填入-origin-domain-name">將 
+<a href="#chapter-1">Bucket 的 Endpoint</a> 填入 <code>Origin Domain Name</code>。</h3>
+<p><img src="./aws_cloutfront_createion_2.png" alt="Cloudfront Creattion Step 2"></p>
+</li>
+<li>
+<h3 id="設定協定方式">設定協定方式</h3>
+<p>我希望只提供 <strong>HTTPS</strong> 的連線方式，所以我會選擇自動導向的方式，避免使用者輸入 http 開頭的網址後出現錯誤</p>
+<p><img src="./aws_cloutfront_createion_3.png" alt="Cloudfront Creation Step 3"></p>
+</li>
+<li>
+<h3 id="設定域名及憑證">設定域名及憑證</h3>
+<p>此範例的域名就是<code>www.example.com</code>，而憑證的申請並不會太困難，可參考官方文件或是 google 申請的教學。</p>
+<p>最後只要點擊建立並且等待至少 15 分鐘的時間生效。</p>
+<p><img src="./aws_cloutfront_createion_4.png" alt="Cloudfront Creation Step 4"></p>
+</li>
+</ul>
+<h2 id="jenkins-自動-deployoptional">Jenkins 自動 Deploy(optional)</h2>
+<p>為了可以減少開發中多餘的動作，自動部署的功能就重要多了，這也是 CI/CD 現在被重視的原因了。</p>
+<p>而這裡我使用的是 Jenkins，動作主要有兩步驟，也就是<code>編譯與部署</code></p>
+<p><img src="./jenkins_build_script.png" alt="Jenkins"></p>
+<h2 id="實作中遇到的問題">實作中遇到的問題</h2>
+<p>在實作完成後，我也很幸運的遇到問題了，在存取的時候出現下圖的錯誤</p>
+<p><img src="error_403_404.png" alt="Error 404/404"></p>
+<p>在請教 Google 大神後也找到了
+<a href="https://github.com/kriasoft/react-firebase-starter/issues/141" target="_blank" rel="noopener">解法</a>，
+這裡面提供了兩種解法</p>
+<ul>
+<li>
+<a href="https://github.com/kriasoft/react-firebase-starter/issues/141#issuecomment-244115218" target="_blank" rel="noopener">為這個錯誤做重新導向</a></li>
+<li>
+<a href="https://github.com/kriasoft/react-firebase-starter/issues/141#issuecomment-285772833" target="_blank" rel="noopener">在 S3 的 Web hosting 裡設定錯誤頁面</a></li>
+</ul>
+<p>我選擇的是直接做導向這個解決方式並且很順利的解決了這個問題，現在也可以正常存取了。</p>
+<h2 id="總結">總結</h2>
+<p>AWS 的多元化的服務讓使用者僅需利用介面的操作便能達目的，個人認為是很直覺又方便的一件事，
+這種一條龍的方式也減少了使用者切換平台而造成多餘的時間成本，很值得學習。</p>
 
     </div>
 
@@ -658,7 +692,7 @@ class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="/tags/pattern/">pattern</a>
+  <a class="badge badge-light" href="/tags/aws/">aws</a>
   
 </div>
 
@@ -675,7 +709,7 @@ class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;text=BLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/aws-s3-ssl-setup/&amp;text=%e8%ae%93%e4%bd%a0%e7%9a%84AWS%20S3%e6%93%81%e6%9c%89%e8%87%aa%e5%b7%b1%e7%9a%84%e7%b6%b2%e5%9f%9f%e5%90%8d%e7%a8%b1%e9%82%84%e5%85%b7%e6%9c%89%e5%85%8d%e8%b2%bb%e7%b6%b2%e8%b7%af%e6%86%91%e8%ad%89" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -688,7 +722,7 @@ class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;t=BLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/aws-s3-ssl-setup/&amp;t=%e8%ae%93%e4%bd%a0%e7%9a%84AWS%20S3%e6%93%81%e6%9c%89%e8%87%aa%e5%b7%b1%e7%9a%84%e7%b6%b2%e5%9f%9f%e5%90%8d%e7%a8%b1%e9%82%84%e5%85%b7%e6%9c%89%e5%85%8d%e8%b2%bb%e7%b6%b2%e8%b7%af%e6%86%91%e8%ad%89" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -701,7 +735,7 @@ class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
       
       
       <li>
-        <a href="mailto:?subject=BLoC%20Design%20Pattern&amp;body=https://u2633.github.io/post/2020/bloc-design-pattern/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=%e8%ae%93%e4%bd%a0%e7%9a%84AWS%20S3%e6%93%81%e6%9c%89%e8%87%aa%e5%b7%b1%e7%9a%84%e7%b6%b2%e5%9f%9f%e5%90%8d%e7%a8%b1%e9%82%84%e5%85%b7%e6%9c%89%e5%85%8d%e8%b2%bb%e7%b6%b2%e8%b7%af%e6%86%91%e8%ad%89&amp;body=https://u2633.github.io/post/2020/aws-s3-ssl-setup/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -714,7 +748,7 @@ class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;title=BLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/aws-s3-ssl-setup/&amp;title=%e8%ae%93%e4%bd%a0%e7%9a%84AWS%20S3%e6%93%81%e6%9c%89%e8%87%aa%e5%b7%b1%e7%9a%84%e7%b6%b2%e5%9f%9f%e5%90%8d%e7%a8%b1%e9%82%84%e5%85%b7%e6%9c%89%e5%85%8d%e8%b2%bb%e7%b6%b2%e8%b7%af%e6%86%91%e8%ad%89" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>

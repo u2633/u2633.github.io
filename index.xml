@@ -5,12 +5,77 @@
     <link>https://u2633.github.io/</link>
       <atom:link href="https://u2633.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Z@NE.NOTE</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 10 Mar 2020 17:20:29 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Wed, 11 Mar 2020 13:49:56 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>Z@NE.NOTE</title>
       <link>https://u2633.github.io/</link>
     </image>
+    
+    <item>
+      <title>讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證</title>
+      <link>https://u2633.github.io/post/2020/aws-s3-ssl-setup/</link>
+      <pubDate>Wed, 11 Mar 2020 13:49:56 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/aws-s3-ssl-setup/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;大部份 AWS 的使用者都如道 S3 提供一個僅需在管理頁面點擊設定便可以讓 Bucket 變成靜態網頁的方法。
+但也僅提供 HTTP 連線方式，如果我要的是個&lt;code&gt;客制化的 Domain + HTTPS 協定&lt;/code&gt;呢?&lt;/p&gt;
+&lt;p&gt;這時候我們所只需要 
+&lt;a href=&#34;https://aws.amazon.com/cloudfront/?sc_channel=PS&amp;amp;sc_campaign=acquisition_TW&amp;amp;sc_publisher=google&amp;amp;sc_medium=cloudfront_b&amp;amp;sc_content=cloudfront_e&amp;amp;sc_detail=aws%20cloud%20front&amp;amp;sc_category=cloudfront&amp;amp;sc_segment=165240657802&amp;amp;sc_matchtype=e&amp;amp;sc_country=TW&amp;amp;s_kwcid=AL!4422!3!165240657802!e!!g!!aws%20cloud%20front&amp;amp;ef_id=Cj0KCQjw9ZzzBRCKARIsANwXaeKmwmjacNS9IzzJ_mkQYoFHLr9_0uWUt8kGWI3xEu9zQlDm36GLOXAaAuz6EALw_wcB:G:s&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cloudfront&lt;/a&gt; 及 
+&lt;a href=&#34;https://aws.amazon.com/certificate-manager/?nc2=type_a&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Certificate Manager&lt;/a&gt; 這兩個服務來達成我們目的。如果有網域名稱的需求也可以利用 
+&lt;a href=&#34;https://aws.amazon.com/route53/?nc2=type_a&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Route53&lt;/a&gt; 來做購買的動作。&lt;/p&gt;
+&lt;h2 id=&#34;建立-aws-s3-bucket-a-idchapter-1a&#34;&gt;建立 AWS S3 Bucket &lt;a id=&#34;chapter-1&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;假設我已經擁有一個叫&lt;code&gt;www.example.com&lt;/code&gt;的網域名稱，接下來的步驟:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;建立一個與域名相同的 Bucket Name，這裡的範例就會是&lt;code&gt;www.example.com&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;開啟 Bucket 中 &lt;code&gt;Static website hosting&lt;/code&gt; 的功能並且&lt;strong&gt;複制 Endpoint 裡的網址&lt;/strong&gt;。
+&lt;img src=&#34;./aws_s3_web_hosting.png&#34; alt=&#34;S3 Web Hosting&#34;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;設定-aws-cloudfront&#34;&gt;設定 AWS Cloudfront&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h3 id=&#34;選擇-web-delivery-method&#34;&gt;選擇 &lt;strong&gt;&lt;code&gt;Web&lt;/code&gt;&lt;/strong&gt; delivery method。&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;./aws_cloutfront_createion_1.png&#34; alt=&#34;Cloudfront Creattion Step 1&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h3 id=&#34;將-bucket-的-endpointchapter-1-填入-origin-domain-name&#34;&gt;將 
+&lt;a href=&#34;#chapter-1&#34;&gt;Bucket 的 Endpoint&lt;/a&gt; 填入 &lt;code&gt;Origin Domain Name&lt;/code&gt;。&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;./aws_cloutfront_createion_2.png&#34; alt=&#34;Cloudfront Creattion Step 2&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h3 id=&#34;設定協定方式&#34;&gt;設定協定方式&lt;/h3&gt;
+&lt;p&gt;我希望只提供 &lt;strong&gt;HTTPS&lt;/strong&gt; 的連線方式，所以我會選擇自動導向的方式，避免使用者輸入 http 開頭的網址後出現錯誤&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./aws_cloutfront_createion_3.png&#34; alt=&#34;Cloudfront Creation Step 3&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h3 id=&#34;設定域名及憑證&#34;&gt;設定域名及憑證&lt;/h3&gt;
+&lt;p&gt;此範例的域名就是&lt;code&gt;www.example.com&lt;/code&gt;，而憑證的申請並不會太困難，可參考官方文件或是 google 申請的教學。&lt;/p&gt;
+&lt;p&gt;最後只要點擊建立並且等待至少 15 分鐘的時間生效。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./aws_cloutfront_createion_4.png&#34; alt=&#34;Cloudfront Creation Step 4&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;jenkins-自動-deployoptional&#34;&gt;Jenkins 自動 Deploy(optional)&lt;/h2&gt;
+&lt;p&gt;為了可以減少開發中多餘的動作，自動部署的功能就重要多了，這也是 CI/CD 現在被重視的原因了。&lt;/p&gt;
+&lt;p&gt;而這裡我使用的是 Jenkins，動作主要有兩步驟，也就是&lt;code&gt;編譯與部署&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./jenkins_build_script.png&#34; alt=&#34;Jenkins&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;實作中遇到的問題&#34;&gt;實作中遇到的問題&lt;/h2&gt;
+&lt;p&gt;在實作完成後，我也很幸運的遇到問題了，在存取的時候出現下圖的錯誤&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;error_403_404.png&#34; alt=&#34;Error 404/404&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在請教 Google 大神後也找到了
+&lt;a href=&#34;https://github.com/kriasoft/react-firebase-starter/issues/141&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;解法&lt;/a&gt;，
+這裡面提供了兩種解法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://github.com/kriasoft/react-firebase-starter/issues/141#issuecomment-244115218&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;為這個錯誤做重新導向&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://github.com/kriasoft/react-firebase-starter/issues/141#issuecomment-285772833&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;在 S3 的 Web hosting 裡設定錯誤頁面&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我選擇的是直接做導向這個解決方式並且很順利的解決了這個問題，現在也可以正常存取了。&lt;/p&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;AWS 的多元化的服務讓使用者僅需利用介面的操作便能達目的，個人認為是很直覺又方便的一件事，
+這種一條龍的方式也減少了使用者切換平台而造成多餘的時間成本，很值得學習。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>My Leetcode Challenges</title>

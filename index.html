@@ -241,7 +241,7 @@
   <meta property="og:description" content="前端/App工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    <meta property="og:updated_time" content="2020-03-10T17:20:29&#43;08:00">
+    <meta property="og:updated_time" content="2020-03-11T13:49:56&#43;08:00">
   
 
   
@@ -1376,6 +1376,108 @@
   <div class="media-body">
 
     <h3 class="article-title mb-0 mt-0">
+      <a href="/post/2020/aws-s3-ssl-setup/" >讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證</a>
+    </h3>
+
+    
+    <div class="article-style">
+      前言 大部份 AWS 的使用者都如道 S3 提供一個僅需在管理頁面點擊設定便可以讓 Bucket 變成靜態網頁的方法。 但也僅提供 HTTP 連線方式，如果我要的是個客制化的 Domain + HTTPS 協定呢?
+這時候我們所只需要 Cloudfront 及 Certificate Manager 這兩個服務來達成我們目的。如果有網域名稱的需求也可以利用 Route53 來做購買的動作。
+建立 AWS S3 Bucket  假設我已經擁有一個叫www.example.com的網域名稱，接下來的步驟:
+ 建立一個與域名相同的 Bucket Name，這裡的範例就會是www.example.com。 開啟 Bucket 中 Static website hosting 的功能並且複制 Endpoint 裡的網址。   設定 AWS Cloudfront   選擇 Web delivery method。   將 Bucket 的 Endpoint 填入 Origin Domain Name。   設定協定方式 我希望只提供 HTTPS 的連線方式，所以我會選擇自動導向的方式，避免使用者輸入 http 開頭的網址後出現錯誤
+    </div>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/authors/zane/">zane</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020年3月11日
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/cloud/">cloud</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+      
+    
+      
+        
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item">
+  <div class="media-body">
+
+    <h3 class="article-title mb-0 mt-0">
       <a href="/post/2020/leetcode-challenges/" >My Leetcode Challenges</a>
     </h3>
 
@@ -1802,6 +1904,11 @@ import 'package:bloc/bloc.dart'; enum CounterEvent { increment, decrement } clas
           
           
           <a href="/tags/algorithm/" style="font-size:0.7rem">algorithm</a>
+        
+          
+          
+          
+          <a href="/tags/aws/" style="font-size:0.7rem">aws</a>
         
           
           
