@@ -31,9 +31,7 @@
   <meta name="description" content="前端/App工程師">
 
   
-  <link rel="alternate" hreflang="en" href="https://u2633.github.io/en/authors/">
-  
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/authors/">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/tags/bug-fix/">
 
   
 
@@ -215,14 +213,14 @@
 
 
   
-  <link rel="alternate" href="/authors/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
+  <link rel="alternate" href="/tags/bug-fix/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
   
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/authors/">
+  <link rel="canonical" href="https://u2633.github.io/tags/bug-fix/">
 
   
   
@@ -236,12 +234,12 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/authors/">
-  <meta property="og:title" content="Authors | Z@NE.NOTE">
+  <meta property="og:url" content="https://u2633.github.io/tags/bug-fix/">
+  <meta property="og:title" content="bug fix | Z@NE.NOTE">
   <meta property="og:description" content="前端/App工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    <meta property="og:updated_time" content="2020-03-12T21:45:17&#43;08:00">
+    <meta property="og:updated_time" content="2020-03-12T19:58:18&#43;08:00">
   
 
   
@@ -258,7 +256,7 @@
 
 
 
-  <title>Authors | Z@NE.NOTE</title>
+  <title>bug fix | Z@NE.NOTE</title>
 
 </head>
 
@@ -470,22 +468,6 @@
       
 
       
-      <li class="nav-item dropdown i18n-dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
-          <i class="fas fa-globe mr-1" aria-hidden="true"></i><span class="d-none d-lg-inline">中文 (繁體)</span>
-        </a>
-        <div class="dropdown-menu">
-          <div class="dropdown-item i18n-active font-weight-bold">
-            <span>中文 (繁體)</span>
-          </div>
-          
-          <a class="dropdown-item" href="https://u2633.github.io/en/authors/">
-            <span>English</span>
-          </a>
-          
-        </div>
-      </li>
-      
 
     </ul>
 
@@ -506,8 +488,6 @@
 
 
 
-
-
   
 
   
@@ -516,7 +496,7 @@
     
   
 <div class="universal-wrapper pt-3">
-  <h1>Authors</h1>
+  <h1>bug fix</h1>
 
   
 
@@ -528,16 +508,23 @@
 <div class="universal-wrapper">
   
 
-  <ul>
+  
+  
     
     
-      
-      <li><a href="https://u2633.github.io/authors/zane/">zane</a></li>
     
-      
-      <li><a href="https://u2633.github.io/authors/admin/">Zane Chen</a></li>
-    
-  </ul>
+    <div>
+      <h2><a href="/post/2020/fix-modal-popup-twice/" >如何解決Flutter Bottom Modal彈跳兩次的問題</a></h2>
+      <div class="article-style">
+        
+          前言 在開發 Flutter 的時候，不知為何觸發 Bottom Modal 的選單時，總是會觸發兩次，問題如下影片
+  預期的行為 預期只會出現一次
+  解決方法 增加 listener 檢查目前的 Widget 是否已經被 Focus，避免觸發兩次
+_institutionOnFocus.addListener(() { if (_institutionOnFocus.hasFocus) { BottomModalBuilder.items( context, _institutionController, _institutionList.map((i) =&gt; i.name).toList(), ); } }); /// Institution text field Widget _showInstitutionField(CheckupDownloadState state) { return TextFormFieldBuilder( labelText: '健檢機構', hintText: '請選擇', controller: _institutionController, focusNode: _institutionOnFocus, isReadOnly: true, validateFailureMessage: !state.isInsitutionValid ? '請選擇機構' : null, ); }  
+        
+      </div>
+    </div>
+  
 
   
 

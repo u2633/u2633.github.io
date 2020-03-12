@@ -241,7 +241,7 @@
   <meta property="og:description" content="前端/App工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    <meta property="og:updated_time" content="2020-03-11T13:49:56&#43;08:00">
+    <meta property="og:updated_time" content="2020-03-12T21:45:17&#43;08:00">
   
 
   
@@ -550,6 +550,197 @@
   <div class="media-body">
 
     <h3 class="article-title mb-0 mt-0">
+      <a href="/post/2020/install-mosquitto-on-aws-ec2/" >在 AWS EC2 上安裝 Mosquitto(MQTT) Client 套件</a>
+    </h3>
+
+    
+    <div class="article-style">
+      wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -P /tmp sudo yum install -y /tmp/epel-release-latest-7.noarch.rpm sudo yum install libwebsockets sudo yum install mosquitto mosquitto-clients   參考文章
+    </div>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/authors/zane/">zane</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020年3月12日
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/cloud/">cloud</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+    
+  
+    
+      
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item">
+  <div class="media-body">
+
+    <h3 class="article-title mb-0 mt-0">
+      <a href="/post/2020/fix-modal-popup-twice/" >如何解決Flutter Bottom Modal彈跳兩次的問題</a>
+    </h3>
+
+    
+    <div class="article-style">
+      前言 在開發 Flutter 的時候，不知為何觸發 Bottom Modal 的選單時，總是會觸發兩次，問題如下影片
+  預期的行為 預期只會出現一次
+  解決方法 增加 listener 檢查目前的 Widget 是否已經被 Focus，避免觸發兩次
+_institutionOnFocus.addListener(() { if (_institutionOnFocus.hasFocus) { BottomModalBuilder.items( context, _institutionController, _institutionList.map((i) =&gt; i.name).toList(), ); } }); /// Institution text field Widget _showInstitutionField(CheckupDownloadState state) { return TextFormFieldBuilder( labelText: '健檢機構', hintText: '請選擇', controller: _institutionController, focusNode: _institutionOnFocus, isReadOnly: true, validateFailureMessage: !state.isInsitutionValid ? '請選擇機構' : null, ); }  
+    </div>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020年3月12日
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/flutter/">flutter</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+    
+  
+    
+      
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item">
+  <div class="media-body">
+
+    <h3 class="article-title mb-0 mt-0">
       <a href="/post/2020/aws-s3-ssl-setup/" >讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證</a>
     </h3>
 
@@ -652,7 +843,7 @@
   <div class="media-body">
 
     <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/leetcode-challenges/" >My Leetcode Challenges</a>
+      <a href="/post/leetcode-challenges/" >My Leetcode Challenges</a>
     </h3>
 
     

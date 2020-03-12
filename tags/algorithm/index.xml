@@ -14,9 +14,9 @@
     
     <item>
       <title>My Leetcode Challenges</title>
-      <link>https://u2633.github.io/post/2020/leetcode-challenges/</link>
+      <link>https://u2633.github.io/post/leetcode-challenges/</link>
       <pubDate>Tue, 10 Mar 2020 17:20:29 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/leetcode-challenges/</guid>
+      <guid>https://u2633.github.io/post/leetcode-challenges/</guid>
       <description>&lt;h2 id=&#34;1-two-sums&#34;&gt;1. Two Sums&lt;/h2&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def twoSum(self, nums, target):
     &amp;quot;&amp;quot;&amp;quot;

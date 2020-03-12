@@ -5,12 +5,73 @@
     <link>https://u2633.github.io/</link>
       <atom:link href="https://u2633.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Z@NE.NOTE</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Wed, 11 Mar 2020 13:49:56 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Thu, 12 Mar 2020 21:45:17 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>Z@NE.NOTE</title>
       <link>https://u2633.github.io/</link>
     </image>
+    
+    <item>
+      <title>在 AWS EC2 上安裝 Mosquitto(MQTT) Client 套件</title>
+      <link>https://u2633.github.io/post/2020/install-mosquitto-on-aws-ec2/</link>
+      <pubDate>Thu, 12 Mar 2020 21:45:17 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/install-mosquitto-on-aws-ec2/</guid>
+      <description>&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -P /tmp
+sudo yum install -y /tmp/epel-release-latest-7.noarch.rpm
+sudo yum install libwebsockets
+sudo yum install mosquitto mosquitto-clients
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://stackoverflow.com/questions/49746357/installing-linking-libwebsockets-library-in-aws-linux-for-mosquitto-mqtt?answertab=votes#tab-top&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;參考文章&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>如何解決Flutter Bottom Modal彈跳兩次的問題</title>
+      <link>https://u2633.github.io/post/2020/fix-modal-popup-twice/</link>
+      <pubDate>Thu, 12 Mar 2020 19:58:18 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/fix-modal-popup-twice/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;在開發 Flutter 的時候，不知為何觸發 Bottom Modal 的選單時，總是會觸發兩次，問題如下影片&lt;/p&gt;
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://www.youtube.com/embed/RqUUDLlzAkE&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;預期的行為&#34;&gt;預期的行為&lt;/h2&gt;
+&lt;p&gt;預期只會出現一次&lt;/p&gt;
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://www.youtube.com/embed/ntuETYdeMjc&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;解決方法&#34;&gt;解決方法&lt;/h2&gt;
+&lt;p&gt;增加 listener 檢查目前的 Widget 是否已經被 Focus，避免觸發兩次&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;_institutionOnFocus.addListener(() {
+  if (_institutionOnFocus.hasFocus) {
+    BottomModalBuilder.items(
+      context,
+      _institutionController,
+      _institutionList.map((i) =&amp;gt; i.name).toList(),
+    );
+  }
+});
+
+/// Institution text field
+Widget _showInstitutionField(CheckupDownloadState state) {
+  return TextFormFieldBuilder(
+    labelText: &#39;健檢機構&#39;,
+    hintText: &#39;請選擇&#39;,
+    controller: _institutionController,
+    focusNode: _institutionOnFocus,
+    isReadOnly: true,
+    validateFailureMessage: !state.isInsitutionValid ? &#39;請選擇機構&#39; : null,
+  );
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證</title>
@@ -79,9 +140,9 @@
     
     <item>
       <title>My Leetcode Challenges</title>
-      <link>https://u2633.github.io/post/2020/leetcode-challenges/</link>
+      <link>https://u2633.github.io/post/leetcode-challenges/</link>
       <pubDate>Tue, 10 Mar 2020 17:20:29 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/leetcode-challenges/</guid>
+      <guid>https://u2633.github.io/post/leetcode-challenges/</guid>
       <description>&lt;h2 id=&#34;1-two-sums&#34;&gt;1. Two Sums&lt;/h2&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def twoSum(self, nums, target):
     &amp;quot;&amp;quot;&amp;quot;

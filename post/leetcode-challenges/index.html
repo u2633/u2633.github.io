@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="zh-hant">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Zane Chen">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="1. Two Sums def twoSum(self, nums, target): &quot;&quot;&quot; :type nums: List[int] :type target: int :rtype: List[int] &quot;&quot;&quot; for i, v in enumerate(nums): # get the remainder rem = target - v # mark the chosen number nums[i] = &#39;x&#39; # get the index of the remainder if rem in nums: return [i, nums.index(rem)]  Runtime: 940 ms, faster than 31.55% of Python3 online submissions for Two Sum. Memory Usage: 13.8 MB, less than 66.">
+
+  
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/leetcode-challenges/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="rgb(0, 136, 204)">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light" disabled>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark">
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=B612+Mono:400,700%7COrbitron:400,700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://u2633.github.io/post/leetcode-challenges/">
+
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Z@NE.NOTE">
+  <meta property="og:url" content="https://u2633.github.io/post/leetcode-challenges/">
+  <meta property="og:title" content="My Leetcode Challenges | Z@NE.NOTE">
+  <meta property="og:description" content="1. Two Sums def twoSum(self, nums, target): &quot;&quot;&quot; :type nums: List[int] :type target: int :rtype: List[int] &quot;&quot;&quot; for i, v in enumerate(nums): # get the remainder rem = target - v # mark the chosen number nums[i] = &#39;x&#39; # get the index of the remainder if rem in nums: return [i, nums.index(rem)]  Runtime: 940 ms, faster than 31.55% of Python3 online submissions for Two Sum. Memory Usage: 13.8 MB, less than 66."><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
+  
+    
+      <meta property="article:published_time" content="2020-03-10T17:20:29&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-03-10T17:20:29&#43;08:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://u2633.github.io/post/leetcode-challenges/"
+  },
+  "headline": "My Leetcode Challenges",
+  
+  "datePublished": "2020-03-10T17:20:29+08:00",
+  "dateModified": "2020-03-10T17:20:29+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "zane"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Z@NE.NOTE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "1. Two Sums def twoSum(self, nums, target): \u0026quot;\u0026quot;\u0026quot; :type nums: List[int] :type target: int :rtype: List[int] \u0026quot;\u0026quot;\u0026quot; for i, v in enumerate(nums): # get the remainder rem = target - v # mark the chosen number nums[i] = 'x' # get the index of the remainder if rem in nums: return [i, nums.index(rem)]  Runtime: 940 ms, faster than 31.55% of Python3 online submissions for Two Sum. Memory Usage: 13.8 MB, less than 66."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>My Leetcode Challenges | Z@NE.NOTE</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="dark">
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>搜尋</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="搜尋..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Z@NE.NOTE</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="切換導航">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Z@NE.NOTE</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>關於我</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>文章</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>專案</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>聯絡我</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>My Leetcode Challenges</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/authors/zane/">Zane</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020年3月10日
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    17 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/python/">python</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="1-two-sums">1. Two Sums</h2>
+<pre><code class="language-python">def twoSum(self, nums, target):
+    &quot;&quot;&quot;
+    :type nums: List[int]
+    :type target: int
+    :rtype: List[int]
+    &quot;&quot;&quot;
+    for i, v in enumerate(nums):
+        # get the remainder
+        rem = target - v
+        # mark the chosen number
+        nums[i] = 'x'
+        # get the index of the remainder
+        if rem in nums:
+            return [i, nums.index(rem)]
+</code></pre>
+<p>Runtime: <strong>940 ms</strong>, faster than <strong>31.55%</strong> of Python3 online submissions for Two Sum.
+Memory Usage: <strong>13.8 MB</strong>, less than <strong>66.13%</strong> of Python3 online submissions for Two Sum.</p>
+<hr>
+<h2 id="771-jewels-and-stones">771. Jewels and Stones</h2>
+<pre><code class="language-python">def numJewelsInStones(self, J: str, S: str):
+    count = 0
+    # count jewels
+    for i in J:
+        count += S.count(i)
+    return count
+</code></pre>
+<p>Runtime: <strong>36 ms</strong>, faster than <strong>96.62%</strong> of Python3 online submissions for Jewels and Stones.
+Memory Usage: <strong>13 MB</strong>, less than <strong>81.19%</strong> of Python3 online submissions for Jewels and Stones.</p>
+<hr>
+<h2 id="938-range-sum-of-binary-search-tree">938. Range Sum of Binary Search Tree</h2>
+<pre><code class="language-python"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+def rangeSumBST(self, root: TreeNode, L: int, R: int):
+    if not root:
+        return 0
+    elif root.val &gt;= L and root.val &lt;= R:
+        return root.val + self.rangeSumBST(root.left, L, R) + self.rangeSumBST(root.right, L, R)
+    elif root.val &lt; L:
+        return self.rangeSumBST(root.right, L, R)
+    else:
+        return self.rangeSumBST(root.left, L, R)
+</code></pre>
+<p>Runtime: <strong>224 ms</strong>, faster than <strong>92.03%</strong> of Python3 online submissions for Range Sum of BST.
+Memory Usage: <strong>21.7 MB</strong>, less than <strong>58.38%</strong> of Python3 online submissions for Range Sum of BST.</p>
+<hr>
+<h2 id="1021-remove-outermost-parentheses">1021. Remove Outermost Parentheses</h2>
+<pre><code class="language-python">def removeOuterParentheses(self, S: str):
+    count = shift = 0
+    res = ''
+
+    # calculate the range which will be saved
+    for i, p in enumerate(S):
+        if p == '(':
+            count += 1
+        else:
+            count -= 1
+        if count == 0:
+            res += S[shift + 1: i]
+            shift = i + 1
+    return res
+</code></pre>
+<p>Runtime: <strong>44 ms</strong>, faster than <strong>87.14%</strong> of Python3 online submissions for Remove Outermost Parentheses.
+Memory Usage: <strong>13.3 MB</strong>, less than <strong>34.04%</strong> of Python3 online submissions for Remove Outermost Parentheses.</p>
+<hr>
+<h2 id="709-to-lower-case">709. To Lower Case</h2>
+<pre><code class="language-python">def toLowerCase(self, str: str):
+    return str.lower()
+</code></pre>
+<p>Runtime: <strong>20 ms</strong>, faster than <strong>99.99%</strong> of Python3 online submissions for To Lower Case.
+Memory Usage: <strong>13.1 MB</strong>, less than <strong>50.92%</strong> of Python3 online submissions for To Lower Case.</p>
+<hr>
+<h2 id="804-unique-morse-code-words">804. Unique Morse Code Words</h2>
+<pre><code class="language-python">def uniqueMorseRepresentations(self, words: List[str]):
+    morse_code = [&quot;.-&quot;, &quot;-...&quot;, &quot;-.-.&quot;, &quot;-..&quot;, &quot;.&quot;, &quot;..-.&quot;, &quot;--.&quot;,
+                  &quot;....&quot;, &quot;..&quot;, &quot;.---&quot;, &quot;-.-&quot;, &quot;.-..&quot;, &quot;--&quot;, &quot;-.&quot;,
+                  &quot;---&quot;, &quot;.--.&quot;, &quot;--.-&quot;, &quot;.-.&quot;, &quot;...&quot;, &quot;-&quot;, &quot;..-&quot;,
+                  &quot;...-&quot;, &quot;.--&quot;, &quot;-..-&quot;, &quot;-.--&quot;, &quot;--..&quot;]
+
+    # make it unique
+    res = {''.join([morse_code[ord(c) - ord('a')] for c in word]) for word in words}
+    # print(res)
+    return len(res)
+</code></pre>
+<p>Runtime: <strong>36 ms</strong>, faster than <strong>95.38%</strong> of Python3 online submissions for Unique Morse Code Words.
+Memory Usage: <strong>13.1 MB</strong>, less than <strong>60.02%</strong> of Python3 online submissions for Unique Morse Code Words.</p>
+<hr>
+<h2 id="905-sort-array-by-parity">905. Sort Array By Parity</h2>
+<pre><code class="language-python">def sortArrayByParity(self, A: List[int]):
+    return sorted(A, key=lambda i: i % 2 == 0, reverse=True)
+</code></pre>
+<p>Runtime: <strong>60 ms</strong>, faster than <strong>99.35%</strong> of Python3 online submissions for Sort Array By Parity.
+Memory Usage: <strong>13.8 MB</strong>, less than <strong>26.77%</strong> of Python3 online submissions for Sort Array By Parity.</p>
+<hr>
+<h2 id="961-n-repeated-element-in-size-2n-array">961. N-Repeated Element in Size 2N Array</h2>
+<pre><code class="language-python">def repeatedNTimes(self, A: List[int]):
+    d = {i: 0 for i in set(A)}
+    for i in A:
+        d[i] += 1
+
+    d = sorted(d.items(), key=lambda kv: kv[1], reverse=True)
+
+    reutur d[0][0]
+</code></pre>
+<p>Runtime: <strong>84 ms</strong>, faster than <strong>13.09%</strong> of Python3 online submissions for N-Repeated Element in Size 2N Array.
+Memory Usage: <strong>14.3 MB</strong>, less than <strong>20.81%</strong> of Python3 online submissions for N-Repeated Element in Size 2N Array.</p>
+<pre><code class="language-python">def repeatedNTimes(self, A: List[int]) -&amp;gt; int:
+    return collections.Counter(A).most_common(1)[0][0]
+</code></pre>
+<p>Runtime: <strong>52 ms</strong>, faster than <strong>63.96%</strong> of Python3 online submissions for N-Repeated Element in Size 2N Array.
+Memory Usage: <strong>14.2 MB</strong>, less than <strong>42.24%</strong> of Python3 online submissions for N-Repeated Element in Size 2N Array.</p>
+<pre><code class="language-python">def repeatedNTimes(self, A: List[int]):
+    for i in range(1, len(A)):
+        for j in range(len(A) - i):
+            if A[j] == A[j+i]:
+                return A[j]
+</code></pre>
+<p>Runtime: <strong>44 ms</strong>, faster than <strong>97.71%</strong> of Python3 online submissions for N-Repeated Element in Size 2N Array.
+Memory Usage: <strong>14.3 MB</strong>, less than <strong>25.22%</strong> of Python3 online submissions for N-Repeated Element in Size 2N Array.</p>
+<hr>
+<h2 id="832-flipping-an-image">832. Flipping an Image</h2>
+<pre><code class="language-python">def flipAndInvertImage(self, A: List[List[int]]):
+    # reverse list
+    for byte in A:
+        for bit in range(len(byte) // 2):
+            byte[bit], byte[-1 - bit] = byte[-1 - bit], byte[bit]
+
+    # invert list
+    for byte in A:
+        for bit in range(len(byte)):
+            if byte[bit] == 0:
+                byte[bit] = 1
+            else:
+                byte[bit] = 0
+    return A
+</code></pre>
+<p>Runtime: <strong>48 ms</strong>, faster than <strong>84.59%</strong> of Python3 online submissions for Flipping an Image.
+Memory Usage: <strong>13.1 MB</strong>, less than <strong>73.11%</strong> of Python3 online submissions for Flipping an Image.</p>
+<pre><code class="language-python">def flipAndInvertImage(self, A):
+    for row in A:
+        for i in range((len(row) + 1) // 2):
+            &quot;&quot;&quot;
+            In Python, the shortcut row[~i] = row[-i-1] = row[len(row) - 1 - i]
+            helps us find the i-th value of the row, counting from the right.
+            &quot;&quot;&quot;
+            row[i], row[~i] = row[~i] ^ 1, row[i] ^ 1
+    return A
+</code></pre>
+<p>Runtime: <strong>44 ms</strong>, faster than <strong>97.98%</strong> of Python3 online submissions for Flipping an Image.
+Memory Usage: <strong>13.3 MB</strong>, less than <strong>12.00%</strong> of Python3 online submissions for Flipping an Image.</p>
+<hr>
+<h2 id="977-squares-of-a-sorted-array">977. Squares of a Sorted Array</h2>
+<pre><code class="language-python">def sortedSquares(self, A: List[int]):
+    for i, v in enumerate(A):
+        A[i] = v * v
+
+    return sorted(A)
+</code></pre>
+<p>Runtime: <strong>148 ms</strong>, faster than <strong>96.46%</strong> of Python3 online submissions for Squares of a Sorted Array.
+Memory Usage: <strong>14.5 MB</strong>, less than <strong>81.96%</strong> of Python3 online submissions for Squares of a Sorted Array.</p>
+<hr>
+<h2 id="929-unique-email-addresses">929. Unique Email Addresses</h2>
+<pre><code class="language-python">def numUniqueEmails(self, emails: List[str]):
+    for i, v in enumerate(emails):
+        # split email to local and domain name
+        email = v.split('@')
+        # remove '.' char
+        local_name = email[0].replace('.', '')
+        # ignore string  after '+' char
+        if '+' in local_name:
+        local_name = local_name[:local_name.index('+')]
+        # reconstruct the email
+        emails[i] = local_name + '@' + email[1]
+
+    # make email list be unique
+    return len(set(emails))
+</code></pre>
+<p>Runtime: <strong>40 ms</strong>, faster than <strong>99.44%</strong> of Python3 online submissions for Unique Email Addresses.
+Memory Usage: <strong>13.2 MB</strong>, less than <strong>41.53%</strong> of Python3 online submissions for Unique Email Addresses.</p>
+<hr>
+<h2 id="657-robot-return-to-origin">657. Robot Return to Origin</h2>
+<pre><code class="language-python">def judgeCircle(self, moves: str):
+    return moves.count('U') == moves.count('D') and moves.count('R') == moves.count('L')
+</code></pre>
+<p>Runtime: <strong>32 ms</strong>, faster than <strong>99.78%</strong> of Python3 online submissions for Robot Return to Origin.
+Memory Usage: <strong>13.4 MB</strong>, less than <strong>10.24%</strong> of Python3 online submissions for Robot Return to Origin.</p>
+<hr>
+<h2 id="461-hamming-distance">461. Hamming Distance</h2>
+<pre><code class="language-python">def hammingDistance(self, x: int, y: int):
+    x = '{0:032b}'.format(x)
+    y = '{0:032b}'.format(y)
+
+    counter = 0
+    for i in range(len(x)):
+        if x[i] != y[i]:
+            counter += 1
+    return counter
+</code></pre>
+<p>Runtime: <strong>28 ms</strong>, faster than <strong>99.50%</strong> of Python3 online submissions for Hamming Distance.
+Memory Usage: <strong>13.4 MB</strong>, less than <strong>5.25%</strong> of Python3 online submissions for Hamming Distance.</p>
+<pre><code class="language-python">def hammingDistance(self, x: int, y: int) -&amp;gt; int:
+    # convert to bin format
+    x = format(x, 'b')
+    y = format(y, 'b')
+
+    # unify length
+    if len(x) &amp;gt; len(y):
+        y = (str(0) * (len(x) - len(y))) + y
+    else:
+        x = (str(0) * (len(y) - len(x))) + x
+
+    counter = 0
+    for i in range(len(x)):
+        if x[i] != y[i]:
+            counter += 1
+
+    return counter
+</code></pre>
+<p>Runtime: <strong>32 ms</strong>, faster than <strong>97.37%</strong> of Python3 online submissions for Hamming Distance.
+Memory Usage: <strong>13.1 MB</strong>, less than <strong>64.64%</strong> of Python3 online submissions for Hamming Distance.</p>
+<hr>
+<h2 id="617-merge-two-binary-trees">617. Merge Two Binary Trees</h2>
+<pre><code class="language-python">def mergeTrees(self, t1: TreeNode, t2: TreeNode):
+    if not (t1 and t2):
+        return t1 or t2
+    t1.val = t1.val + t2.val
+    t1.left = self.mergeTrees(t1.left, t2.left)
+    t1.right = self.mergeTrees(t1.right, t2.right)
+    return t1
+</code></pre>
+<p>Runtime: <strong>80 ms</strong>, faster than <strong>98.72%</strong> of Python3 online submissions for Merge Two Binary Trees.
+Memory Usage: <strong>13.8 MB</strong>, less than <strong>65.04%</strong> of Python3 online submissions for Merge Two Binary Trees.</p>
+<hr>
+<h2 id="728-self-dividing-numbers">728. Self Dividing Numbers</h2>
+<pre><code class="language-python">def selfDividingNumbers(self, left: int, right: int):
+    res = []
+    for i in range(left, right + 1):
+        i_to_str = str(i)
+        for c in i_to_str:
+            if c == '0' or i % int(c) &amp;gt; 0:
+            break
+        else:
+            res.append(i)
+    return res
+</code></pre>
+<p>Runtime: <strong>48 ms</strong>, faster than <strong>95.37%</strong> of Python3 online submissions for Self Dividing Numbers.
+Memory Usage: <strong>13.3 MB</strong>, less than <strong>19.87%</strong> of Python3 online submissions for Self Dividing Numbers.</p>
+<pre><code class="language-python">def selfDividingNumbers(self, left: int, right: int):
+    res = []
+    for i in range(left, right + 1):
+        curr = i
+        while curr:
+            mod = curr % 10
+            if mod == 0 or i % mod &amp;gt; 0:
+                break
+            if curr == mod:
+                res.append(i)
+            curr = curr // 10
+    return res
+</code></pre>
+<p>Runtime: <strong>40 ms</strong>, faster than <strong>99.68%</strong> of Python3 online submissions for Self Dividing Numbers.
+Memory Usage: <strong>13 MB</strong>, less than <strong>75.83%</strong> of Python3 online submissions for Self Dividing Numbers.</p>
+<hr>
+<h2 id="942-di-string-match">942. DI String Match</h2>
+<pre><code class="language-python">def diStringMatch(self, S: str) -&amp;gt; List[int]:
+    left = len(S)
+    right = 0
+    res = []
+    for s in S:
+        if s == 'I':
+            res.append(right)
+            right += 1
+        else:
+            res.append(left)
+            left -= 1
+    return res + [left]
+</code></pre>
+<p>Runtime: <strong>76 ms</strong>, faster than <strong>100.00%</strong> of Python3 online submissions for DI String Match.
+Memory Usage: <strong>14.2 MB</strong>, less than <strong>64.84%</strong> of Python3 online submissions for DI String Match.</p>
+<hr>
+<h2 id="944-delete-columns-to-make-sorted">944. Delete Columns to Make Sorted</h2>
+<pre><code class="language-python">def minDeletionSize(self, A: List[str]):
+    count = 0
+    for col in zip(*A):
+        if list(col) != sorted(col):
+        count += 1
+    return count
+</code></pre>
+<p>Runtime: <strong>92 ms</strong>, faster than <strong>99.06%</strong> of Python3 online submissions for Delete Columns to Make Sorted.
+Memory Usage: <strong>13.5 MB</strong>, less than <strong>83.51%</strong> of Python3 online submissions for Delete Columns to Make Sorted.</p>
+<hr>
+<h2 id="1051-height-checker">1051. Height Checker</h2>
+<pre><code class="language-python">def heightChecker(self, heights: List[int]):
+    count = 0
+    sorted_heights = sorted(heights)
+
+    for i in range(len(heights)):
+        if sorted_heights[i] != heights[i]:
+            count += 1
+    return count
+</code></pre>
+<p>Runtime: <strong>28 ms</strong>, faster than <strong>97.52%</strong> of Python3 online submissions for Height Checker.
+Memory Usage: <strong>13.2 MB</strong>, less than <strong>100.00%</strong> of Python3 online submissions for Height Checker.</p>
+<hr>
+<h2 id="933-number-of-recent-calls">933. Number of Recent Calls</h2>
+<pre><code class="language-python">class RecentCounter:
+    def __init__(self):
+        self.q = collections.deque()
+
+    def ping(self, t):
+        self.q.append(t)
+        while and self.q[0] &lt; t-3000:
+            self.q.popleft()
+        return len(self.q)
+</code></pre>
+<p>Runtime: <strong>192 ms</strong>, faster than <strong>96.49%</strong> of Python3 online submissions for Number of Recent Calls.
+Memory Usage: <strong>17.8 MB</strong>, less than <strong>36.42%</strong> of Python3 online submissions for Number of Recent Calls.</p>
+<hr>
+<h2 id="561-array-partition-i">561. Array Partition I</h2>
+<pre><code class="language-python">def arrayPairSum(self, nums: List[int]):
+    sorted_nums = sorted(nums)
+
+    sum = 0
+    for i in range(1, len(sorted_nums), 2):
+        sum += min(sorted_nums[i - 1], sorted_nums[i])
+
+    return sum
+</code></pre>
+<p>Runtime: <strong>96 ms</strong>, faster than <strong>78.18%</strong> of Python3 online submissions for Array Partition I.
+Memory Usage: <strong>14.9 MB</strong>, less than <strong>81.43%</strong> of Python3 online submissions for Array Partition I.</p>
+<pre><code class="language-python">def arrayPairSum(self, nums: List[int]):
+    return sum(sorted(nums)[::2])
+</code></pre>
+<p>Runtime: <strong>88 ms</strong>, faster than <strong>98.12%</strong> of Python3 online submissions for Array Partition I.
+Memory Usage: <strong>15 MB</strong>, less than <strong>47.54%</strong> of Python3 online submissions for Array Partition I.</p>
+<hr>
+<h2 id="700-search-in-a-binary-search-tree">700. Search in a Binary Search Tree</h2>
+<pre><code class="language-python"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    res = None
+    def searchBST(self, root: TreeNode, val: int):
+        if root == None:
+            return
+
+        if root.val == val:
+            return root
+        elif val &lt; root.val:
+            return self.searchBST(root.left, val)
+        else:
+            return self.searchBST(root.right, val)
+</code></pre>
+<p>Runtime: <strong>76 ms</strong>, faster than <strong>98.37%</strong> of Python3 online submissions for Search in a Binary Search Tree.
+Memory Usage: <strong>15.2 MB</strong>, less than <strong>70.35%</strong> of Python3 online submissions for Search in a Binary Search Tree.</p>
+<hr>
+<h2 id="344-reverse-string">344. Reverse String</h2>
+<pre><code class="language-python">def reverseString(self, s: List[str]):
+    &quot;&quot;&quot;
+    Do not return anything, modify s in-place instead.
+    &quot;&quot;&quot;
+    s = s.reverse()
+</code></pre>
+<p>Runtime: <strong>156 ms</strong>, faster than <strong>98.99%</strong> of Python3 online submissions for Reverse String.
+Memory Usage: <strong>17.8 MB</strong>, less than <strong>28.10%</strong> of Python3 online submissions for Reverse String.</p>
+<pre><code class="language-python">def reverseString(self, s: List[str]):
+    &quot;&quot;&quot;
+    Do not return anything, modify s in-place instead.
+    &quot;&quot;&quot;
+    for i in range(len(s) // 2):
+        s[i], s[~i] = s[~i], s[i]
+</code></pre>
+<p>Runtime: <strong>160 ms</strong>, faster than <strong>96.82%</strong> of Python3 online submissions for Reverse String.
+Memory Usage: <strong>17.6 MB</strong>, less than <strong>74.60%</strong> of Python3 online submissions for Reverse String.</p>
+<hr>
+<h2 id="104-maximum-depth-of-binary-tree">104. Maximum Depth of Binary Tree</h2>
+<pre><code class="language-python">def maxDepth(self, root: TreeNode):
+    if not root:
+        return 0
+    else:
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+</code></pre>
+<p>Runtime: <strong>40 ms</strong>, faster than <strong>98.38%</strong> of Python3 online submissions for Maximum Depth of Binary Tree.
+Memory Usage: <strong>15.3 MB</strong>, less than <strong>71.96%</strong> of Python3 online submissions for Maximum Depth of Binary Tree.</p>
+<hr>
+<h2 id="136-single-number">136. Single Number</h2>
+<pre><code class="language-python">def singleNumber(self, nums: List[int]):
+    res = nums[0]
+
+    for i in range(1, len(nums)):
+        res = res ^ nums[i]
+
+    return res
+</code></pre>
+<p>Runtime: <strong>40 ms</strong>, faster than <strong>88.77%</strong> of Python3 online submissions for Single Number.
+Memory Usage: <strong>14.7 MB</strong>, less than <strong>78.28%</strong> of Python3 online submissions for Single Number.</p>
+<hr>
+<h2 id="412-fizz-buzz">412. Fizz Buzz</h2>
+<pre><code class="language-python">def fizzBuzz(self, n: int):
+    res = []
+    for i in range(1, n + 1):
+        if i % 3 == 0 and i % 5 == 0:
+            res.append('FizzBuzz')
+        elif i % 3 == 0:
+            res.append('Fizz')
+        elif i % 5 == 0:
+            res.append('Buzz')
+        else:
+            res.append(str(i))
+    return res
+</code></pre>
+<p>Runtime: <strong>56 ms</strong>, faster than <strong>78.08%</strong> of Python3 online submissions for Fizz Buzz.
+Memory Usage: <strong>14.2 MB</strong>, less than <strong>45.92%</strong> of Python3 online submissions for Fizz Buzz.</p>
+<hr>
+<h2 id="206-reverse-linked-list">206. Reverse Linked List</h2>
+<pre><code class="language-python">def reverseList(self, head: ListNode):
+    if not head or not head.next:
+        return head
+    p = self.reverseList(head.next)
+    head.next.next = head
+    head.next = None
+    return p
+</code></pre>
+<p>Runtime: <strong>36 ms</strong>, faster than <strong>95.40%</strong> of Python3 online submissions for Reverse Linked List.
+Memory Usage: <strong>19 MB</strong>, less than <strong>13.04%</strong> of Python3 online submissions for Reverse Linked List.</p>
+<pre><code class="language-python">def reverseList(self, head: ListNode):
+    prev, curr = None, head
+    while curr:
+        curr.next, prev, curr = prev, curr, curr.next
+    return prev
+</code></pre>
+<p>Runtime: <strong>36 ms</strong>, faster than <strong>95.40%</strong> of Python3 online submissions for Reverse Linked List.
+Memory Usage: <strong>14.4 MB</strong>, less than <strong>72.19%</strong> of Python3 online submissions for Reverse Linked List.</p>
+<hr>
+<h2 id="283-move-zeroes">283. Move Zeroes</h2>
+<pre><code class="language-python">def moveZeroes(self, nums: List[int]):
+    &quot;&quot;&quot;
+    Do not return anything, modify nums in-place instead.
+    &quot;&quot;&quot;
+    for i in range(len(nums)):
+        for j in range(i, len(nums)):
+            if nums[i] == 0:
+                nums[i], nums[j] = nums[j], nums[i]
+</code></pre>
+<p>Runtime: <strong>2604 ms</strong>, faster than <strong>5.03%</strong> of Python3 online submissions for Move Zeroes.
+Memory Usage: <strong>14.3 MB</strong>, less than <strong>95.18%</strong> of Python3 online submissions for Move Zeroes.</p>
+<pre><code class="language-python">def moveZeroes(self, nums: List[int]):
+    &quot;&quot;&quot;
+    Do not return anything, modify nums in-place instead.
+    &quot;&quot;&quot;
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] == 0:
+            nums.append(nums.pop(i))
+</code></pre>
+<p>Runtime: <strong>48 ms</strong>, faster than <strong>85.34%</strong> of Python3 online submissions for Move Zeroes.
+Memory Usage: <strong>14.4 MB</strong>, less than <strong>70.20%</strong> of Python3 online submissions for Move Zeroes.</p>
+<pre><code class="language-python">def moveZeroes(self, nums: List[int]):
+    &quot;&quot;&quot;
+    Do not return anything, modify nums in-place instead.
+    &quot;&quot;&quot;
+    j = -1
+    for i in range(len(nums)):
+        if nums[i] != 0:
+            j += 1
+            nums[i], nums[j] = nums[j], nums[i]
+</code></pre>
+<p>Runtime: <strong>48 ms</strong>, faster than <strong>85.34%</strong> of Python3 online submissions for Move Zeroes.
+Memory Usage: <strong>14.4 MB</strong>, less than <strong>74.97%</strong> of Python3 online submissions for Move Zeroes.</p>
+<hr>
+<h2 id="237-delete-node-in-a-linked-list">237. Delete Node in a Linked List</h2>
+<pre><code class="language-python">def deleteNode(self, node):
+    &quot;&quot;&quot;
+    :type node: ListNode
+    :rtype: void Do not return anything, modify node in-place instead.
+    &quot;&quot;&quot;
+    if node:
+        node.val = node.next.val
+        node.next = node.next.next
+</code></pre>
+<p>Runtime: <strong>40 ms</strong>, faster than <strong>93.24%</strong> of Python3 online submissions for Delete Node in a Linked List.
+Memory Usage: <strong>13.5 MB</strong>, less than <strong>78.23%</strong> of Python3 online submissions for Delete Node in a Linked List.</p>
+<hr>
+<h2 id="13-roman-to-integer">13. Roman to Integer</h2>
+<pre><code class="language-python">def romanToInt(self, s: str) -&gt; int:
+    roman = {
+        'I':  1,
+        'V':  5,
+        'X':  10,
+        'L':  50,
+        'C':  100,
+        'D':  500,
+        'M':  1000
+    }
+
+    sum = prev_num = 0
+    for c in s:
+        if roman[c] &gt; prev_num:
+            sum -= 2 * prev_num
+        sum += roman[c]
+        prev_num = roman[c]
+    return sum
+</code></pre>
+<p>Runtime: <strong>52 ms</strong>, faster than <strong>96.69%</strong> of Python3 online submissions for Roman to Integer.
+Memory Usage: <strong>13.2 MB</strong>, less than <strong>71.14%</strong> of Python3 online submissions for Roman to Integer.</p>
+<hr>
+<h2 id="242-valid-anagram">242. Valid Anagram</h2>
+<pre><code class="language-python">def isAnagram(self, s: str, t: str):
+    return ''.join(sorted(s)) == ''.join(sorted(t))
+</code></pre>
+<p>Runtime: <strong>60 ms</strong>, faster than <strong>61.86%</strong> of Python3 online submissions for Valid Anagram.
+Memory Usage: <strong>14 MB</strong>, less than <strong>26.12%</strong> of Python3 online submissions for Valid Anagram.</p>
+<pre><code class="language-python">class Solution:
+    def isAnagram(self, s: str, t: str):
+        return collections.Counter(s) == collections.Counter(t)
+</code></pre>
+<p>Runtime: <strong>44 ms</strong>, faster than <strong>92.83%</strong> of Python3 online submissions for Valid Anagram.
+Memory Usage: <strong>13.2 MB</strong>, less than <strong>89.68%</strong> of Python3 online submissions for Valid Anagram.</p>
+<hr>
+<h2 id="217-contains--duplicate">217. Contains- Duplicate</h2>
+<pre><code class="language-python">def containsDuplicate(self, nums: List[int]):
+    return len(nums) &amp;gt; len(set(nums))
+</code></pre>
+<p>Runtime: <strong>36 ms</strong>, faster than <strong>97.37%</strong> of Python3 online submissions for Contains Duplicate.
+Memory Usage: <strong>18.8 MB</strong>, less than <strong>69.92%</strong> of Python3 online submissions for Contains Duplicate.</p>
+<hr>
+<h2 id="7-reverse-integer">7. Reverse-Integer</h2>
+<pre><code class="language-python">class Solution:
+    MAX_POSITIVE =  (2 ** 31 ) - 1
+    MAX_NEGATIVE = - (2 ** 31)
+
+    def reverse(self, x):
+        if x == 0:
+            return x
+        # reversed string of the number
+        s = (str(abs(x))[::-1]).lstrip('0')
+        # integerize
+        i = int(s) if x &gt; 0 else -(int(s))
+        # check overflow
+        if self.MAX_NEGATIVE &lt;= i &lt;= self.MAX_POSITIVE:
+            return i
+        return 0
+</code></pre>
+<p>Runtime: <strong>32 ms</strong>, faster than <strong>96.26%</strong> of Python3 online submissions for Reverse Integer.
+Memory Usage: <strong>14 MB</strong>, less than <strong>5.26%</strong> of Python3 online submissions for Reverse Integer.</p>
+<hr>
+<h2 id="9-palindrome-number">9. Palindrome Number</h2>
+<pre><code class="language-python">class Solution:
+    def isPalindrome(self, x: int) -&amp;gt; bool:
+        s = str(x)
+        for i in range(len(s) // 2):
+            if s[i] != s[~i]:
+                return False
+        return True
+</code></pre>
+<p>Runtime:** 64 ms**, faster than **82.89%** of Python3 online submissions for Palindrome Number.
+Memory Usage: **12.7 MB**, less than **100.00%** of Python3 online submissions for Palindrome Number.</p>
+<hr>
+<h2 id="122-best-time-to-buy-and-sell-stock-ii">122. Best Time to Buy and Sell Stock II</h2>
+<pre><code class="language-python">class Solution:
+    def maxProfit(self, prices: List[int]) -&amp;gt; int:
+        profit = 0
+        for i in range(len(prices) - 1):
+            if prices[i + 1] &amp;gt; prices[i]:
+                profit += prices[i + 1] - prices[i]
+        return profit
+</code></pre>
+<p>Runtime: <strong>64 ms</strong>, faster than <strong>91.94%</strong> of Python3 online submissions for Best Time to Buy and Sell Stock II.
+Memory Usage: <strong>13.8 MB</strong>, less than <strong>90.24%</strong> of Python3 online submissions for Best Time to Buy and Sell Stock II.</p>
+<hr>
+<h2 id="14-longest-common-prefix">14. Longest Common Prefix</h2>
+<pre><code class="language-python">class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -&amp;gt; str:
+        if not strs:
+            return ''
+        result = ''
+        for i, v in enumerate(strs[0]):
+            result += v
+            for s in strs[1:]:
+                if not s.startswith(result):
+                    return result[:i]
+        return result
+</code></pre>
+<p>Runtime: <strong>32 ms</strong>, faster than <strong>93.72%</strong> of Python3 online submissions for Longest Common Prefix.
+Memory Usage: <strong>12.8 MB</strong>, less than <strong>100.00%</strong> of Python3 online submissions for Longest Common Prefix.</p>
+<hr>
+<h2 id="108-convert-sorted-array-to-binary-search-tree">108. Convert Sorted Array to Binary Search Tree</h2>
+<pre><code class="language-python">class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -&amp;gt; TreeNode:
+        if not nums:
+            return
+        index = len(nums) // 2
+        node = TreeNode(nums[index])
+
+        left = nums[:index]
+        right = nums[index+1:]
+
+        node.left = self.sortedArrayToBST(left)
+        node.right = self.sortedArrayToBST(right)
+
+        return node
+</code></pre>
+<p>Runtime: <strong>68 ms</strong>, faster than <strong>92.38%</strong> of Python3 online submissions for Convert Sorted Array to Binary Search Tree.
+Memory Usage: <strong>15 MB</strong>, less than <strong>100.00%</strong> of Python3 online submissions for Convert Sorted Array to Binary Search Tree.</p>
+<hr>
+<h2 id="171-excel-sheet-column-number">171. Excel Sheet Column Number</h2>
+<pre><code class="language-python">class Solution:
+    def titleToNumber(self, s: str) -&amp;gt; int:
+        result = 0
+        x = {chr(65 + i): i + 1 for i in range(26)}
+        for i, v in enumerate(list(s)):
+            result += (26 ** (len(s) - i - 1)) * x[v.upper()]
+        return result
+</code></pre>
+<p>Runtime: <strong>28 ms</strong>, faster than <strong>95.62%</strong> of Python3 online submissions for Excel Sheet Column Number.
+Memory Usage: <strong>12.8 MB</strong>, less than <strong>100.00%</strong> of Python3 online submissions for Excel Sheet Column Number.</p>
+<hr>
+<h2 id="387-first-unique-character-in-a-string">387. First Unique Character in a String</h2>
+<pre><code class="language-python">from collections import OrderedDict
+
+class Solution:
+    def firstUniqChar(self, s: str) -&amp;gt; int:
+        result = -1
+        words = OrderedDict()
+        for c in (list(s)):
+            if c not in words:
+                words[c] = 1
+            else:
+                words[c] += 1
+
+        for i, v in enumerate(words.items()):
+            print(i, v)
+            if v[1] == 1:
+                result = s.index(v[0])
+                break
+        return result
+</code></pre>
+<p>Runtime: <strong>124 ms</strong>, faster than <strong>64%</strong> of Python3 online submissions for First Unique Character in a String.
+Memory Usage: <strong>13 MB</strong>, less than <strong>100.00%</strong> of Python3 online submissions for First Unique Character in a String.</p>
+<pre><code class="language-python">class Solution:
+    def firstUniqChar(self, s: str) -&amp;gt; int:
+        # build hash map : character and how often it appears
+        count = collections.Counter(s)
+
+        # find the index
+        for idx, ch in enumerate(s):
+            if count[ch] == 1:
+                return idx
+        return -1
+</code></pre>
+<p>Runtime: <strong>80 ms</strong>, faster than <strong>90.43%</strong> of Python3 online submissions for First Unique Character in a String.
+Memory Usage: <strong>12.8 MB</strong>, less than <strong>100.00%</strong> of Python3 online submissions for First Unique Character in a String.</p>
+<hr>
+<h2 id="371-sum-of-two-integers">371. Sum of Two Integers</h2>
+<pre><code class="language-python">class Solution:
+    def getSum(self, a: int, b: int) -&amp;gt; int:
+        return sum([a,b])
+</code></pre>
+<p>Runtime: <strong>24 ms</strong>, faster than <strong>96.24%</strong> of Python3 online submissions for Sum of Two Integers.
+Memory Usage: <strong>12.6 MB</strong>, less than <strong>100.00%</strong> of Python3 online submissions for Sum of Two Integers.</p>
+<hr>
+<h2 id="21-merge-two-sorted-lists">21. Merge Two Sorted Lists</h2>
+<pre><code class="language-python"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -&gt; ListNode:
+        pre_head = ListNode(-1)
+        curr = pre_head
+
+        while l1 and l2:
+            if l1.val&lt;l2.val:
+                curr.next = l1
+                l1 = l1.next
+            else:
+                curr.next = l2
+                l2 = l2.next
+            curr = curr.next
+
+        if l1: curr.next = l1
+        if l2: curr.next = l2
+
+        return pre_head.next
+</code></pre>
+<p>Runtime: <strong>28 ms</strong>, faster than <strong>98.99%</strong> of Python3 online submissions for Merge Two Sorted Lists.
+Memory Usage: <strong>12.8 MB</strong>, less than <strong>100.00%</strong> of Python3 online submissions for Merge Two Sorted Lists.</p>
+<hr>
+<h2 id="1295-find-numbers-with-even-number-of-digits">1295. Find Numbers with Even Number of Digits</h2>
+<pre><code class="language-python">class Solution:
+    def findNumbers(self, nums: List[int]) -&gt; int:
+        count = 0
+        limitValue = 10 ** 5
+
+        if 1 &lt;= len(nums) &lt;= 500:
+            for i in nums:
+                if i &lt;= limitValue and len(str(i)) % 2 == 0:
+                    count = count + 1
+            return count
+        else:
+            raise
+</code></pre>
+<p>Runtime: <strong>44 ms</strong>, faster than <strong>97.79%</strong> of Python3 online submissions for Find Numbers with Even Number of Digits.
+Memory Usage: <strong>12.6 MB</strong>, less than <strong>100.00%</strong> of Python3 online submissions for Find Numbers with Even Number of Digits.</p>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/algorithm/">algorithm</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/leetcode-challenges/&amp;text=My%20Leetcode%20Challenges" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/leetcode-challenges/&amp;t=My%20Leetcode%20Challenges" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=My%20Leetcode%20Challenges&amp;body=https://u2633.github.io/post/leetcode-challenges/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/leetcode-challenges/&amp;title=My%20Leetcode%20Challenges" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js" integrity="sha256-lyWCDMnMeZiXRi7Zl54sZGKYmgQs4izcT7+tKc+KUBk=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"找不到结果","placeholder":"搜尋...","results":"搜尋结果"};
+      const content_type = {
+        'post': "文章",
+        'project': "專案",
+        'publication' : "出版物",
+        'talk' : "演講"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.c816d323c3a55093dae0829b44ea1ca8.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">引用</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> 複製
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> 下載
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

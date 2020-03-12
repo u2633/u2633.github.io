@@ -5,12 +5,27 @@
     <link>https://u2633.github.io/authors/zane/</link>
       <atom:link href="https://u2633.github.io/authors/zane/index.xml" rel="self" type="application/rss+xml" />
     <description>zane</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Wed, 11 Mar 2020 13:49:56 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Thu, 12 Mar 2020 21:45:17 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>zane</title>
       <link>https://u2633.github.io/authors/zane/</link>
     </image>
+    
+    <item>
+      <title>在 AWS EC2 上安裝 Mosquitto(MQTT) Client 套件</title>
+      <link>https://u2633.github.io/post/2020/install-mosquitto-on-aws-ec2/</link>
+      <pubDate>Thu, 12 Mar 2020 21:45:17 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/install-mosquitto-on-aws-ec2/</guid>
+      <description>&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -P /tmp
+sudo yum install -y /tmp/epel-release-latest-7.noarch.rpm
+sudo yum install libwebsockets
+sudo yum install mosquitto mosquitto-clients
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://stackoverflow.com/questions/49746357/installing-linking-libwebsockets-library-in-aws-linux-for-mosquitto-mqtt?answertab=votes#tab-top&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;參考文章&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證</title>
@@ -79,9 +94,9 @@
     
     <item>
       <title>My Leetcode Challenges</title>
-      <link>https://u2633.github.io/post/2020/leetcode-challenges/</link>
+      <link>https://u2633.github.io/post/leetcode-challenges/</link>
       <pubDate>Tue, 10 Mar 2020 17:20:29 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/leetcode-challenges/</guid>
+      <guid>https://u2633.github.io/post/leetcode-challenges/</guid>
       <description>&lt;h2 id=&#34;1-two-sums&#34;&gt;1. Two Sums&lt;/h2&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def twoSum(self, nums, target):
     &amp;quot;&amp;quot;&amp;quot;
