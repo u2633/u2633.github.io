@@ -13,7 +13,7 @@
     </image>
     
     <item>
-      <title>如何解決Flutter Bottom Modal彈跳兩次的問題</title>
+      <title>解決Flutter Bottom Modal彈跳兩次的問題</title>
       <link>https://u2633.github.io/post/2020/fix-modal-popup-twice/</link>
       <pubDate>Thu, 12 Mar 2020 19:58:18 +0800</pubDate>
       <guid>https://u2633.github.io/post/2020/fix-modal-popup-twice/</guid>
@@ -59,7 +59,7 @@ Widget _showInstitutionField(CheckupDownloadState state) {
     </item>
     
     <item>
-      <title>BLoC Design Pattern</title>
+      <title>什麼是BLoC Design Pattern</title>
       <link>https://u2633.github.io/post/2020/bloc-design-pattern/</link>
       <pubDate>Tue, 10 Mar 2020 14:50:24 +0800</pubDate>
       <guid>https://u2633.github.io/post/2020/bloc-design-pattern/</guid>

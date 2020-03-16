@@ -514,13 +514,10 @@
     
     
     <div>
-      <h2><a href="/post/2020/fix-modal-popup-twice/" >如何解決Flutter Bottom Modal彈跳兩次的問題</a></h2>
+      <h2><a href="/post/2020/fix-modal-popup-twice/" >解決Flutter Bottom Modal彈跳兩次的問題</a></h2>
       <div class="article-style">
         
-          前言 在開發 Flutter 的時候，不知為何觸發 Bottom Modal 的選單時，總是會觸發兩次，問題如下影片
-  預期的行為 預期只會出現一次
-  解決方法 增加 listener 檢查目前的 Widget 是否已經被 Focus，避免觸發兩次
-_institutionOnFocus.addListener(() { if (_institutionOnFocus.hasFocus) { BottomModalBuilder.items( context, _institutionController, _institutionList.map((i) =&gt; i.name).toList(), ); } }); /// Institution text field Widget _showInstitutionField(CheckupDownloadState state) { return TextFormFieldBuilder( labelText: '健檢機構', hintText: '請選擇', controller: _institutionController, focusNode: _institutionOnFocus, isReadOnly: true, validateFailureMessage: !state.isInsitutionValid ? '請選擇機構' : null, ); }  
+          紀錄我是如何解決 Flutter Bottom Modal的問題
         
       </div>
     </div>
@@ -529,12 +526,10 @@ _institutionOnFocus.addListener(() { if (_institutionOnFocus.hasFocus) { BottomM
     
     
     <div>
-      <h2><a href="/post/2020/bloc-design-pattern/" >BLoC Design Pattern</a></h2>
+      <h2><a href="/post/2020/bloc-design-pattern/" >什麼是BLoC Design Pattern</a></h2>
       <div class="article-style">
         
-          Business Logic Component Pattern 簡稱 BLoC。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。
- BLoC 主件，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&hellip;else 或是 switch&hellip;case，如下:
-import 'package:bloc/bloc.dart'; enum CounterEvent { increment, decrement } class CounterBloc extends Bloc&lt;CounterEvent, int&gt; { @override int get initialState =&gt; 0; @override Stream&lt;int&gt; mapEventToState(CounterEvent event) async* { switch (event) { case CounterEvent.decrement: yield currentState - 1; break; case CounterEvent.
+          在 Flutter 導入 Business Logic Component Pattern 的學習筆記
         
       </div>
     </div>

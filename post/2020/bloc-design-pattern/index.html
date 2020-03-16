@@ -28,9 +28,7 @@
   
     
   
-  <meta name="description" content="Business Logic Component Pattern 簡稱 BLoC。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。
- BLoC 主件，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&hellip;else 或是 switch&hellip;case，如下:
-import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decrement } class CounterBloc extends Bloc&lt;CounterEvent, int&gt; { @override int get initialState =&gt; 0; @override Stream&lt;int&gt; mapEventToState(CounterEvent event) async* { switch (event) { case CounterEvent.decrement: yield currentState - 1; break; case CounterEvent.">
+  <meta name="description" content="在 Flutter 導入 Business Logic Component Pattern 的學習筆記">
 
   
   <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/bloc-design-pattern/">
@@ -235,10 +233,8 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
   
   <meta property="og:site_name" content="Z@NE.NOTE">
   <meta property="og:url" content="https://u2633.github.io/post/2020/bloc-design-pattern/">
-  <meta property="og:title" content="BLoC Design Pattern | Z@NE.NOTE">
-  <meta property="og:description" content="Business Logic Component Pattern 簡稱 BLoC。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。
- BLoC 主件，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&hellip;else 或是 switch&hellip;case，如下:
-import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decrement } class CounterBloc extends Bloc&lt;CounterEvent, int&gt; { @override int get initialState =&gt; 0; @override Stream&lt;int&gt; mapEventToState(CounterEvent event) async* { switch (event) { case CounterEvent.decrement: yield currentState - 1; break; case CounterEvent."><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:title" content="什麼是BLoC Design Pattern | Z@NE.NOTE">
+  <meta property="og:description" content="在 Flutter 導入 Business Logic Component Pattern 的學習筆記"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
     
@@ -270,7 +266,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
     "@type": "WebPage",
     "@id": "https://u2633.github.io/post/2020/bloc-design-pattern/"
   },
-  "headline": "BLoC Design Pattern",
+  "headline": "什麼是BLoC Design Pattern",
   
   "datePublished": "2020-03-10T14:50:24+08:00",
   "dateModified": "2020-03-10T14:50:24+08:00",
@@ -288,7 +284,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
       "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "Business Logic Component Pattern 簡稱 BLoC。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。\n BLoC 主件，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if\u0026hellip;else 或是 switch\u0026hellip;case，如下:\nimport 'package:bloc/bloc.dart'; enum CounterEvent { increment, decrement } class CounterBloc extends Bloc\u0026lt;CounterEvent, int\u0026gt; { @override int get initialState =\u0026gt; 0; @override Stream\u0026lt;int\u0026gt; mapEventToState(CounterEvent event) async* { switch (event) { case CounterEvent.decrement: yield currentState - 1; break; case CounterEvent."
+  "description": "在 Flutter 導入 Business Logic Component Pattern 的學習筆記"
 }
 </script>
 
@@ -306,7 +302,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
 
 
 
-  <title>BLoC Design Pattern | Z@NE.NOTE</title>
+  <title>什麼是BLoC Design Pattern | Z@NE.NOTE</title>
 
 </head>
 
@@ -546,7 +542,7 @@ import &#39;package:bloc/bloc.dart&#39;; enum CounterEvent { increment, decremen
   
   
 <div class="article-container pt-3">
-  <h1>BLoC Design Pattern</h1>
+  <h1>什麼是BLoC Design Pattern</h1>
 
   
 
@@ -675,7 +671,7 @@ class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;text=BLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;text=%e4%bb%80%e9%ba%bc%e6%98%afBLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -688,7 +684,7 @@ class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;t=BLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;t=%e4%bb%80%e9%ba%bc%e6%98%afBLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -701,7 +697,7 @@ class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
       
       
       <li>
-        <a href="mailto:?subject=BLoC%20Design%20Pattern&amp;body=https://u2633.github.io/post/2020/bloc-design-pattern/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=%e4%bb%80%e9%ba%bc%e6%98%afBLoC%20Design%20Pattern&amp;body=https://u2633.github.io/post/2020/bloc-design-pattern/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -714,7 +710,7 @@ class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;title=BLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/bloc-design-pattern/&amp;title=%e4%bb%80%e9%ba%bc%e6%98%afBLoC%20Design%20Pattern" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>

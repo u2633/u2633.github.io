@@ -28,7 +28,7 @@ sudo yum install mosquitto mosquitto-clients
     </item>
     
     <item>
-      <title>讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證</title>
+      <title>讓你的 AWS S3 擁有自己的網域名稱還具有免費網路憑證</title>
       <link>https://u2633.github.io/post/2020/aws-s3-ssl-setup/</link>
       <pubDate>Wed, 11 Mar 2020 13:49:56 +0800</pubDate>
       <guid>https://u2633.github.io/post/2020/aws-s3-ssl-setup/</guid>

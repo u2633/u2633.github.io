@@ -5,12 +5,156 @@
     <link>https://u2633.github.io/post/</link>
       <atom:link href="https://u2633.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Thu, 12 Mar 2020 21:45:17 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Sun, 15 Mar 2020 17:00:26 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>https://u2633.github.io/post/</link>
     </image>
+    
+    <item>
+      <title>我的 Swift 學習之旅</title>
+      <link>https://u2633.github.io/post/2020/my-swift-learning-note/</link>
+      <pubDate>Sun, 15 Mar 2020 17:00:26 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/my-swift-learning-note/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;終於開始了我&lt;code&gt;正式&lt;/code&gt;的 SWIFT 學習之路，會說正式是因為在過去片段學習的日子裡，我只是看著
+&lt;a href=&#34;https://docs.swift.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官方文件&lt;/a&gt; 並照著各個章節的順序以&lt;code&gt;看&lt;/code&gt;的方式並試著理解文章內容預讀罷了。但是，在瀏覽過網路上許多人的學習方式，我的總結是&lt;code&gt;做筆記&lt;/code&gt;。
+因為做筆記一方面是為了紀錄所學，另一方面是為了能夠把所學利用描述轉化成自己的知識，而且會儘量以能讓人容易理解的文字加以描述。
+這個做法的好處一方面能讓自己在未來的日子裡要復習時更有印象，另一方面可以讓其他使用者在看文章的時候也能快速理解。
+但是，關於&lt;code&gt;如何有效的做筆記&lt;/code&gt;我也仍然還在學習，或許之後也會寫另一篇文章關於這方面的。現在就讓我們接著看下去吧。&lt;/p&gt;
+&lt;h2 id=&#34;宣告&#34;&gt;宣告&lt;/h2&gt;
+&lt;h3 id=&#34;變數與常數&#34;&gt;變數與常數&lt;/h3&gt;
+&lt;p&gt;Swift 只有兩種宣告型態，一種是&lt;em&gt;變數&lt;/em&gt;以&lt;code&gt;var&lt;/code&gt;做前綴的方式，另一種就是&lt;em&gt;常數&lt;/em&gt;以&lt;code&gt;let&lt;/code&gt;為前綴&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;var a = 10  // 可以重新賦值
+let b = 20  // 不可以重新賦值
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;型別註解&#34;&gt;型別註解&lt;/h3&gt;
+&lt;p&gt;宣告時如果已經確定型別也可以直接賦予型別&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;var a: Int = 10
+let b: Double = 20.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;型別推斷&#34;&gt;型別推斷&lt;/h3&gt;
+&lt;p&gt;一般宣告方式如果沒有&lt;code&gt;型別註解&lt;/code&gt;，Swift 會主動幫我們做判斷，稱為&lt;code&gt;型別推斷&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;變數名稱&#34;&gt;變數名稱&lt;/h3&gt;
+&lt;p&gt;Swift 的命名可以使用&lt;code&gt;Unicode&lt;/code&gt;來命名。所以，我們亦可以使用繁體中文做為命名方式&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let Ω = &amp;quot;omega&amp;quot;
+let 狗 = &amp;quot;🐶&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;型別轉換&#34;&gt;型別轉換&lt;/h3&gt;
+&lt;p&gt;Swift 是個強型別的語言。所以，在做非同型別的計算時必需使用轉型語法。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let a: Int = 10
+let b: Double = 10.0
+
+let c = (Double)a + b
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;匿名型別&#34;&gt;匿名型別&lt;/h3&gt;
+&lt;p&gt;有時候為了可讀性，我們可以使用&lt;code&gt;匿名型別&lt;/code&gt;來開發。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;typealias Age = Int
+
+let age: Age = 10
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;基本型別&#34;&gt;基本型別&lt;/h2&gt;
+&lt;h3 id=&#34;整數&#34;&gt;整數&lt;/h3&gt;
+&lt;p&gt;整數在宣告時會根據不同的平台自動使用成&lt;code&gt;Int32&lt;/code&gt;或是&lt;code&gt;Int64&lt;/code&gt;，並且也具有&lt;em&gt;有號整數&lt;/em&gt;&lt;code&gt;Int&lt;/code&gt;與&lt;em&gt;無號整數&lt;/em&gt;&lt;code&gt;UInt&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let minValue = UInt8.min  // 0
+let maxValue = UInt8.max  // 255
+
+let minIntValue = Int8.min  // -128
+let maxIntValue = Int8.max  // 127
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;浮點數&#34;&gt;浮點數&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Double&lt;/code&gt;為 64 位元，&lt;code&gt;float&lt;/code&gt;為 32 位元&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let pi: Double = 3.1415926535
+let weight: Float = 66.8
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;布林值&#34;&gt;布林值&lt;/h3&gt;
+&lt;p&gt;與其他程式語言一樣，也是以&lt;code&gt;true&lt;/code&gt;或&lt;code&gt;false&lt;/code&gt;為值。比較值得一提的是，在 Swift 裡的 if&amp;hellip;else
+描述句裡，條件判斷式的值僅能是&lt;code&gt;布林值&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let isTrue = true
+let isFalse = false
+
+if isTrue {
+  // 可以正常執行
+}
+
+if 1 {
+  // 發生錯誤 &#39;Int&#39; is not convertible to &#39;Bool&#39;
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;元組&#34;&gt;元組&lt;/h3&gt;
+&lt;p&gt;元組為多個值組合而成的群組型別。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let http404Error = (404, &amp;quot;Not Found!&amp;quot;)
+// equal to
+let http404Error:(Int, String) = (404, &amp;quot;Not Found!&amp;quot;)
+
+// 解構賦值
+let (justTheStatusCode, _) = http404Error
+
+// 存取元組
+http404Error.0  // 404
+http404Error.1  // &amp;quot;Not Found!&amp;quot;
+
+// 宣告並賦予元素名稱
+let http200Status = (statusCode: 200, description: &amp;quot;OK&amp;quot;)
+http200Status.statusCode  // 200
+http200Status.description // &amp;quot;OK&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;optional-宣告&#34;&gt;Optional 宣告&lt;/h2&gt;
+&lt;p&gt;Swift 在宣告時必需明確給予值。但如果我們的變數是在後來才被賦值的話，就必需宣告成&lt;code&gt;Optional&lt;/code&gt;型別&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let s: String?
+s = &amp;quot;new string&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;nil-coalescing-運算元&#34;&gt;Nil-Coalescing 運算元&lt;/h3&gt;
+&lt;p&gt;一般的三元運算為&lt;code&gt;a != nil ? a! : b&lt;/code&gt;。Nil-Coalescing 的語法為&lt;code&gt;a ?? b&lt;/code&gt;，如果&lt;code&gt;a&lt;/code&gt;有值則返回&lt;code&gt;a&lt;/code&gt;，
+反之則返回&lt;code&gt;b&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;範圍運算子&#34;&gt;範圍運算子&lt;/h2&gt;
+&lt;h3 id=&#34;closed-range&#34;&gt;Closed Range&lt;/h3&gt;
+&lt;p&gt;語法:&lt;code&gt;1...5&lt;/code&gt;，跌代&lt;code&gt;1~5&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;for index in 1...5 {
+    print(&amp;quot;\(index) times 5 is \(index * 5)&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;half-open-range&#34;&gt;Half-Open Range&lt;/h3&gt;
+&lt;p&gt;語法:&lt;code&gt;1..&amp;lt;5&lt;/code&gt;，僅跌代&lt;code&gt;1-4&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;for i in 0..&amp;lt;5 {
+    print(i)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;單向箢圍&#34;&gt;單向箢圍&lt;/h3&gt;
+&lt;p&gt;語法:&lt;code&gt;...&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let names = [&amp;quot;Anna&amp;quot;, &amp;quot;Alex&amp;quot;, &amp;quot;Brian&amp;quot;, &amp;quot;Jack&amp;quot;]
+
+for name in names[2...] {
+    print(name)
+}
+// Brian
+// Jack
+
+for name in names[...2] {
+    print(name)
+}
+// is equal to
+let range = ...2
+for name in names[range] {
+  print(name)
+}
+
+// Anna
+// Alex
+// Brian
+
+for name in names[..&amp;lt;2] {
+    print(name)
+}
+// Anna
+// Alex
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;字串與字元&#34;&gt;字串與字元&lt;/h2&gt;
+&lt;p&gt;學習中…🤓&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>在 AWS EC2 上安裝 Mosquitto(MQTT) Client 套件</title>
@@ -28,7 +172,7 @@ sudo yum install mosquitto mosquitto-clients
     </item>
     
     <item>
-      <title>如何解決Flutter Bottom Modal彈跳兩次的問題</title>
+      <title>解決Flutter Bottom Modal彈跳兩次的問題</title>
       <link>https://u2633.github.io/post/2020/fix-modal-popup-twice/</link>
       <pubDate>Thu, 12 Mar 2020 19:58:18 +0800</pubDate>
       <guid>https://u2633.github.io/post/2020/fix-modal-popup-twice/</guid>
@@ -74,7 +218,7 @@ Widget _showInstitutionField(CheckupDownloadState state) {
     </item>
     
     <item>
-      <title>讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證</title>
+      <title>讓你的 AWS S3 擁有自己的網域名稱還具有免費網路憑證</title>
       <link>https://u2633.github.io/post/2020/aws-s3-ssl-setup/</link>
       <pubDate>Wed, 11 Mar 2020 13:49:56 +0800</pubDate>
       <guid>https://u2633.github.io/post/2020/aws-s3-ssl-setup/</guid>
@@ -139,7 +283,7 @@ Widget _showInstitutionField(CheckupDownloadState state) {
     </item>
     
     <item>
-      <title>My Leetcode Challenges</title>
+      <title>我的 Leetcode 挑戰</title>
       <link>https://u2633.github.io/post/leetcode-challenges/</link>
       <pubDate>Tue, 10 Mar 2020 17:20:29 +0800</pubDate>
       <guid>https://u2633.github.io/post/leetcode-challenges/</guid>
@@ -860,7 +1004,7 @@ Memory Usage: &lt;strong&gt;12.6 MB&lt;/strong&gt;, less than &lt;strong&gt;100.
     </item>
     
     <item>
-      <title>BLoC Design Pattern</title>
+      <title>什麼是BLoC Design Pattern</title>
       <link>https://u2633.github.io/post/2020/bloc-design-pattern/</link>
       <pubDate>Tue, 10 Mar 2020 14:50:24 +0800</pubDate>
       <guid>https://u2633.github.io/post/2020/bloc-design-pattern/</guid>

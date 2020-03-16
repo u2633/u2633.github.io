@@ -517,7 +517,7 @@
       <h2><a href="/post/2020/install-mosquitto-on-aws-ec2/" >在 AWS EC2 上安裝 Mosquitto(MQTT) Client 套件</a></h2>
       <div class="article-style">
         
-          wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -P /tmp sudo yum install -y /tmp/epel-release-latest-7.noarch.rpm sudo yum install libwebsockets sudo yum install mosquitto mosquitto-clients   參考文章
+          紀錄 MQTT 在 EC2 上的安裝步驟
         
       </div>
     </div>
@@ -526,13 +526,10 @@
     
     
     <div>
-      <h2><a href="/post/2020/aws-s3-ssl-setup/" >讓你的AWS S3擁有自己的網域名稱還具有免費網路憑證</a></h2>
+      <h2><a href="/post/2020/aws-s3-ssl-setup/" >讓你的 AWS S3 擁有自己的網域名稱還具有免費網路憑證</a></h2>
       <div class="article-style">
         
-          前言 大部份 AWS 的使用者都如道 S3 提供一個僅需在管理頁面點擊設定便可以讓 Bucket 變成靜態網頁的方法。 但也僅提供 HTTP 連線方式，如果我要的是個客制化的 Domain + HTTPS 協定呢?
-這時候我們所只需要 Cloudfront 及 Certificate Manager 這兩個服務來達成我們目的。如果有網域名稱的需求也可以利用 Route53 來做購買的動作。
-建立 AWS S3 Bucket  假設我已經擁有一個叫www.example.com的網域名稱，接下來的步驟:
- 建立一個與域名相同的 Bucket Name，這裡的範例就會是www.example.com。 開啟 Bucket 中 Static website hosting 的功能並且複制 Endpoint 裡的網址。   設定 AWS Cloudfront   選擇 Web delivery method。   將 Bucket 的 Endpoint 填入 Origin Domain Name。   設定協定方式 我希望只提供 HTTPS 的連線方式，所以我會選擇自動導向的方式，避免使用者輸入 http 開頭的網址後出現錯誤
+          利用 AWS 服務打造 HTTPS 協定的靜態網站
         
       </div>
     </div>

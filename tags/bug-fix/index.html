@@ -514,13 +514,10 @@
     
     
     <div>
-      <h2><a href="/post/2020/fix-modal-popup-twice/" >如何解決Flutter Bottom Modal彈跳兩次的問題</a></h2>
+      <h2><a href="/post/2020/fix-modal-popup-twice/" >解決Flutter Bottom Modal彈跳兩次的問題</a></h2>
       <div class="article-style">
         
-          前言 在開發 Flutter 的時候，不知為何觸發 Bottom Modal 的選單時，總是會觸發兩次，問題如下影片
-  預期的行為 預期只會出現一次
-  解決方法 增加 listener 檢查目前的 Widget 是否已經被 Focus，避免觸發兩次
-_institutionOnFocus.addListener(() { if (_institutionOnFocus.hasFocus) { BottomModalBuilder.items( context, _institutionController, _institutionList.map((i) =&gt; i.name).toList(), ); } }); /// Institution text field Widget _showInstitutionField(CheckupDownloadState state) { return TextFormFieldBuilder( labelText: '健檢機構', hintText: '請選擇', controller: _institutionController, focusNode: _institutionOnFocus, isReadOnly: true, validateFailureMessage: !state.isInsitutionValid ? '請選擇機構' : null, ); }  
+          紀錄我是如何解決 Flutter Bottom Modal的問題
         
       </div>
     </div>
