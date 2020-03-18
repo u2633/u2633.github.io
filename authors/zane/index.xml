@@ -5,12 +5,47 @@
     <link>https://u2633.github.io/authors/zane/</link>
       <atom:link href="https://u2633.github.io/authors/zane/index.xml" rel="self" type="application/rss+xml" />
     <description>zane</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Sun, 15 Mar 2020 17:00:26 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Mon, 16 Mar 2020 11:21:20 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>zane</title>
       <link>https://u2633.github.io/authors/zane/</link>
     </image>
+    
+    <item>
+      <title>將網域名稱指向Github Page</title>
+      <link>https://u2633.github.io/post/2020/make-your-github-page-with-costomized-domain-name/</link>
+      <pubDate>Mon, 16 Mar 2020 11:21:20 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/make-your-github-page-with-costomized-domain-name/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;在架設完個人 Blog 後，當然也要賦予它一個獨一無二的域名了，我選擇的是 
+&lt;a href=&#34;https://dcc.godaddy.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Goddady&lt;/a&gt;的服務，並且使用 
+&lt;a href=&#34;https://dash.cloudflare.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cloudflare&lt;/a&gt; 的免費方案來提供憑證。&lt;/p&gt;
+&lt;h2 id=&#34;設定-goddady&#34;&gt;設定 Goddady&lt;/h2&gt;
+&lt;p&gt;註冊且購買好網域後點擊&lt;strong&gt;&lt;code&gt;所有網域&lt;/code&gt;&lt;/strong&gt;進行設定&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./godaddy_domain_setting_1.png&#34; alt=&#34;All domains&#34;&gt;&lt;/p&gt;
+&lt;p&gt;進入頁面後，可以看到目前擁有的域名。點擊欲管理的域名進去網域設定頁面&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./my_domain.png&#34; alt=&#34;My domain&#34;&gt;&lt;/p&gt;
+&lt;p&gt;進入網域設定後，點擊 DNS 進入 DNS 管理頁面(&lt;code&gt;由於我目前的 DNS 已經轉由 Cloudflare 托管，所以下面的紀錄是從 Cloudflare 截圖的&lt;/code&gt;)，接著將自己的 Domain 指向你 Blog 的位置。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;godaddy_cname.png&#34; alt=&#34;CNAME setup&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;設定-cloudflare&#34;&gt;設定 Cloudflare&lt;/h2&gt;
+&lt;p&gt;註冊後&lt;code&gt;選擇免費方案&lt;/code&gt;即可。接下來輸入你註冊的網域名稱並點擊&lt;code&gt;Add Site&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./cloudflare_add_site.png&#34; alt=&#34;Cloudflare add site&#34;&gt;&lt;/p&gt;
+&lt;p&gt;很快就能看到 Cloudflare 處理完後的畫面，如下&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./cloudflare_records.png&#34; alt=&#34;Cloudflare records&#34;&gt;&lt;/p&gt;
+&lt;p&gt;接下來設定你的 SSL/TLS。進入頁後，選擇&lt;code&gt;Full&lt;/code&gt;，Cloudflare 的設定就完成了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./cloudflare_ssl_setup.png&#34; alt=&#34;Cloudflare SSL/TLS&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;設定-goddady-的網域名稱伺服器&#34;&gt;設定 Goddady 的網域名稱伺服器&lt;/h2&gt;
+&lt;p&gt;因為我們要使用 Cloudflare 的免費憑證，所以 DNS Server 要改成 Cloudflare 的。
+進入 Godaddy 的 DNS 管理頁面，並且在網域名稱伺服器功能區塊點擊&lt;code&gt;變更&lt;/code&gt;(&lt;code&gt;我的已經變更過了&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./godaddy_new_dns_server.png&#34; alt=&#34;Godaddy DNS Server&#34;&gt;&lt;/p&gt;
+&lt;p&gt;選擇&lt;code&gt;我要用自己的名稱伺服器&lt;/code&gt;並且填入&lt;code&gt;ridge.ns.cloudflare.com&lt;/code&gt;及&lt;code&gt;wally.ns.cloudflare.com&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./godaddy_dns_server_setup.png&#34; alt=&#34;Godaddy DNS Server Setup&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;結論&#34;&gt;結論&lt;/h2&gt;
+&lt;p&gt;購買一個域名的成本並不會太高，而且其實除了 Cloudflare 之外還有其他服務也有提供免費的憑證，如: 
+&lt;a href=&#34;https://letsencrypt.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Let&amp;rsquo;s Encrypt&lt;/a&gt; 就是其中之一。所以，只要花點小錢就能給自己的 Blog 一個獨一無二的網名了，很不錯吧!?&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>我的 Swift 學習之旅</title>
