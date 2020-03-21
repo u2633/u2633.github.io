@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="Swift 學習重點紀錄">
+  <meta name="description" content="Swift 語法重點紀錄">
 
   
   <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/my-swift-learning-note/">
@@ -234,7 +234,7 @@
   <meta property="og:site_name" content="Z@NE.NOTE">
   <meta property="og:url" content="https://u2633.github.io/post/2020/my-swift-learning-note/">
   <meta property="og:title" content="我的 Swift 學習之旅 | Z@NE.NOTE">
-  <meta property="og:description" content="Swift 學習重點紀錄"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:description" content="Swift 語法重點紀錄"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
     
@@ -284,7 +284,7 @@
       "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "Swift 學習重點紀錄"
+  "description": "Swift 語法重點紀錄"
 }
 </script>
 
@@ -580,7 +580,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    2 閱讀時間（分鐘）
+    3 閱讀時間（分鐘）
   </span>
   
 
@@ -623,7 +623,7 @@
       <h2 id="前言">前言</h2>
 <p>終於開始了我<code>正式</code>的 SWIFT 學習之路，會說正式是因為在過去片段學習的日子裡，我只是看著
 <a href="https://docs.swift.org/" target="_blank" rel="noopener">官方文件</a> 並照著各個章節的順序以<code>看</code>的方式並試著理解文章內容預讀罷了。但是，在瀏覽過網路上許多人的學習方式，我的總結是<code>做筆記</code>。
-因為做筆記一方面是為了紀錄所學，另一方面是為了能夠把所學利用描述轉化成自己的知識，而且會儘量以能讓人容易理解的文字加以描述。
+因為，做筆記一方面是為了紀錄所學，另一方面是為了能夠把所學利用描述轉化成自己的知識，而且會儘量以能讓人容易理解的文字加以描述。
 這個做法的好處一方面能讓自己在未來的日子裡要復習時更有印象，另一方面可以讓其他使用者在看文章的時候也能快速理解。
 但是，關於<code>如何有效的做筆記</code>我也仍然還在學習，或許之後也會寫另一篇文章關於這方面的。現在就讓我們接著看下去吧。</p>
 <h2 id="宣告">宣告</h2>
@@ -714,18 +714,18 @@ s = &quot;new string&quot;
 反之則返回<code>b</code></p>
 <h2 id="範圍運算子">範圍運算子</h2>
 <h3 id="closed-range">Closed Range</h3>
-<p>語法:<code>1...5</code>，跌代<code>1~5</code></p>
+<p>語法:<code>1...5</code>，迭代<code>1~5</code></p>
 <pre><code class="language-swift">for index in 1...5 {
     print(&quot;\(index) times 5 is \(index * 5)&quot;)
 }
 </code></pre>
 <h3 id="half-open-range">Half-Open Range</h3>
-<p>語法:<code>1..&lt;5</code>，僅跌代<code>1-4</code></p>
+<p>語法:<code>1..&lt;5</code>，僅迭代<code>1-4</code></p>
 <pre><code class="language-swift">for i in 0..&lt;5 {
     print(i)
 }
 </code></pre>
-<h3 id="單向箢圍">單向箢圍</h3>
+<h3 id="單向範圍">單向範圍</h3>
 <p>語法:<code>...</code></p>
 <pre><code class="language-swift">let names = [&quot;Anna&quot;, &quot;Alex&quot;, &quot;Brian&quot;, &quot;Jack&quot;]
 
@@ -755,6 +755,78 @@ for name in names[..&lt;2] {
 // Alex
 </code></pre>
 <h2 id="字串與字元">字串與字元</h2>
+<p>字串為<code>值型別</code>。
+字串可以多行並且保留原始格式</p>
+<pre><code class="language-swift">let s: String = &quot;&quot;&quot;
+你好
+   這是第二行，且啟始位置有兩個空格
+這是第三行
+&quot;&quot;&quot;
+</code></pre>
+<h2 id="集合型別">集合型別</h2>
+<p>Swift 有三種集合型別，<code>Array</code>、<code>Set</code> 及 <code>Dictionary</code>，關念也與其他語言一樣。</p>
+<p><img src="./collection_type.png" alt="Collection types"></p>
+<p>集合型別預設為<code>可修改(mutable)</code>狀態，如果要令其成員無法被修改，僅需要使用<code>let</code>宣告</p>
+<pre><code class="language-swift">let a = [String]()        // array
+let s = Set&lt;Character&gt;()  // set
+let d = [Int: String]()   // dictionary
+</code></pre>
+<h3 id="陣列array">陣列(Array)</h3>
+<p>陣列原始宣告語法為<code>Array&lt;TYPE&gt;()</code>，短語法為<code>[]</code></p>
+<pre><code class="language-swift">var a1 = Array(repeating: 0.0, count: 3)   // 原始語法
+var a2 = [0.0, 0.0, 0.0]                    // 短語法
+</code></pre>
+<p>陣列相加可以得到新的陣列</p>
+<pre><code class="language-swift">let a1 = [1, 2, 3]
+let a2 = [3, 4, 5]
+
+let a3 = a1 + a2 // [1, 2, 3, 4, 5]
+</code></pre>
+<p>若是想迭代陣列元素，可以直接存取元素或是以<strong>列舉</strong>(<code>enumerated</code>)的方式取得<code>索引值</code>及<code>元素</code></p>
+<pre><code class="language-swift">// 直取
+for item in someArray {
+  print(item)
+}
+
+// 列舉
+for (index, value) in someArray {
+  print(&quot;Item \(index + 1): \(value)&quot;)
+}
+
+</code></pre>
+<h3 id="集合set">集合(Set)</h3>
+<p>一種<code>無序</code>且僅具有<code>唯一值</code>的集合型別。宣告語法為<code>Set&lt;TYPE&gt;()</code>，</p>
+<pre><code class="language-swift">let set1 = Set&lt;Int&gt;()           // 空集合
+let set2: Set&lt;Int&gt; = [1, 2, 3]  // 字面值
+</code></pre>
+<p>Set 可以做<code>交集(intersection)</code>、<code>聯集(union)</code>、<code>差集(subtracting)</code>及<code>對稱差集(symmetric difference)</code></p>
+<pre><code class="language-swift">let oddDigits: Set = [1, 3, 5, 7, 9]
+let evenDigits: Set = [0, 2, 4, 6, 8]
+let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
+
+// intersection
+oddDigits.intersection(evenDigits).sorted()
+
+// union
+oddDigits.union(evenDigits).sorted()  // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+// subtracting
+oddDigits.subtracting(singleDigitPrimeNumbers).sorted() // [1, 9]
+
+// symmetric difference
+oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted() // [1, 2, 9]
+</code></pre>
+<h3 id="字典dictionary">字典(Dictionary)</h3>
+<p>以<code>唯一鍵值(key)</code>與<code>值(value)</code>組合而成的集合型別。原始宣告語法為<code>Dictionary&lt;Key, Value&gt;</code>。</p>
+<pre><code class="language-swift">var d1 = [Int: String]()    // 空字典
+var d2 = [&quot;1&quot;: 1, &quot;2&quot;: 2]   // 字面值宣告
+d2 = [:]                    // 清空字典
+
+// 迭代字典
+for (k, v) in d2 {
+  print(&quot;\(k): \(v)&quot;)
+}
+</code></pre>
 <p>學習中…🤓</p>
 
     </div>

@@ -13,7 +13,7 @@
     </image>
     
     <item>
-      <title>將網域名稱指向Github Page</title>
+      <title>為你的 Github Page 設定個人網域名稱</title>
       <link>https://u2633.github.io/post/2020/make-your-github-page-with-costomized-domain-name/</link>
       <pubDate>Mon, 16 Mar 2020 11:21:20 +0800</pubDate>
       <guid>https://u2633.github.io/post/2020/make-your-github-page-with-costomized-domain-name/</guid>
@@ -55,7 +55,7 @@
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;終於開始了我&lt;code&gt;正式&lt;/code&gt;的 SWIFT 學習之路，會說正式是因為在過去片段學習的日子裡，我只是看著
 &lt;a href=&#34;https://docs.swift.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官方文件&lt;/a&gt; 並照著各個章節的順序以&lt;code&gt;看&lt;/code&gt;的方式並試著理解文章內容預讀罷了。但是，在瀏覽過網路上許多人的學習方式，我的總結是&lt;code&gt;做筆記&lt;/code&gt;。
-因為做筆記一方面是為了紀錄所學，另一方面是為了能夠把所學利用描述轉化成自己的知識，而且會儘量以能讓人容易理解的文字加以描述。
+因為，做筆記一方面是為了紀錄所學，另一方面是為了能夠把所學利用描述轉化成自己的知識，而且會儘量以能讓人容易理解的文字加以描述。
 這個做法的好處一方面能讓自己在未來的日子裡要復習時更有印象，另一方面可以讓其他使用者在看文章的時候也能快速理解。
 但是，關於&lt;code&gt;如何有效的做筆記&lt;/code&gt;我也仍然還在學習，或許之後也會寫另一篇文章關於這方面的。現在就讓我們接著看下去吧。&lt;/p&gt;
 &lt;h2 id=&#34;宣告&#34;&gt;宣告&lt;/h2&gt;
@@ -146,18 +146,18 @@ s = &amp;quot;new string&amp;quot;
 反之則返回&lt;code&gt;b&lt;/code&gt;&lt;/p&gt;
 &lt;h2 id=&#34;範圍運算子&#34;&gt;範圍運算子&lt;/h2&gt;
 &lt;h3 id=&#34;closed-range&#34;&gt;Closed Range&lt;/h3&gt;
-&lt;p&gt;語法:&lt;code&gt;1...5&lt;/code&gt;，跌代&lt;code&gt;1~5&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;語法:&lt;code&gt;1...5&lt;/code&gt;，迭代&lt;code&gt;1~5&lt;/code&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;for index in 1...5 {
     print(&amp;quot;\(index) times 5 is \(index * 5)&amp;quot;)
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;half-open-range&#34;&gt;Half-Open Range&lt;/h3&gt;
-&lt;p&gt;語法:&lt;code&gt;1..&amp;lt;5&lt;/code&gt;，僅跌代&lt;code&gt;1-4&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;語法:&lt;code&gt;1..&amp;lt;5&lt;/code&gt;，僅迭代&lt;code&gt;1-4&lt;/code&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;for i in 0..&amp;lt;5 {
     print(i)
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;單向箢圍&#34;&gt;單向箢圍&lt;/h3&gt;
+&lt;h3 id=&#34;單向範圍&#34;&gt;單向範圍&lt;/h3&gt;
 &lt;p&gt;語法:&lt;code&gt;...&lt;/code&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let names = [&amp;quot;Anna&amp;quot;, &amp;quot;Alex&amp;quot;, &amp;quot;Brian&amp;quot;, &amp;quot;Jack&amp;quot;]
 
@@ -187,6 +187,78 @@ for name in names[..&amp;lt;2] {
 // Alex
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;字串與字元&#34;&gt;字串與字元&lt;/h2&gt;
+&lt;p&gt;字串為&lt;code&gt;值型別&lt;/code&gt;。
+字串可以多行並且保留原始格式&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let s: String = &amp;quot;&amp;quot;&amp;quot;
+你好
+   這是第二行，且啟始位置有兩個空格
+這是第三行
+&amp;quot;&amp;quot;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;集合型別&#34;&gt;集合型別&lt;/h2&gt;
+&lt;p&gt;Swift 有三種集合型別，&lt;code&gt;Array&lt;/code&gt;、&lt;code&gt;Set&lt;/code&gt; 及 &lt;code&gt;Dictionary&lt;/code&gt;，關念也與其他語言一樣。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./collection_type.png&#34; alt=&#34;Collection types&#34;&gt;&lt;/p&gt;
+&lt;p&gt;集合型別預設為&lt;code&gt;可修改(mutable)&lt;/code&gt;狀態，如果要令其成員無法被修改，僅需要使用&lt;code&gt;let&lt;/code&gt;宣告&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let a = [String]()        // array
+let s = Set&amp;lt;Character&amp;gt;()  // set
+let d = [Int: String]()   // dictionary
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;陣列array&#34;&gt;陣列(Array)&lt;/h3&gt;
+&lt;p&gt;陣列原始宣告語法為&lt;code&gt;Array&amp;lt;TYPE&amp;gt;()&lt;/code&gt;，短語法為&lt;code&gt;[]&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;var a1 = Array(repeating: 0.0, count: 3)   // 原始語法
+var a2 = [0.0, 0.0, 0.0]                    // 短語法
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;陣列相加可以得到新的陣列&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let a1 = [1, 2, 3]
+let a2 = [3, 4, 5]
+
+let a3 = a1 + a2 // [1, 2, 3, 4, 5]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;若是想迭代陣列元素，可以直接存取元素或是以&lt;strong&gt;列舉&lt;/strong&gt;(&lt;code&gt;enumerated&lt;/code&gt;)的方式取得&lt;code&gt;索引值&lt;/code&gt;及&lt;code&gt;元素&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;// 直取
+for item in someArray {
+  print(item)
+}
+
+// 列舉
+for (index, value) in someArray {
+  print(&amp;quot;Item \(index + 1): \(value)&amp;quot;)
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;集合set&#34;&gt;集合(Set)&lt;/h3&gt;
+&lt;p&gt;一種&lt;code&gt;無序&lt;/code&gt;且僅具有&lt;code&gt;唯一值&lt;/code&gt;的集合型別。宣告語法為&lt;code&gt;Set&amp;lt;TYPE&amp;gt;()&lt;/code&gt;，&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let set1 = Set&amp;lt;Int&amp;gt;()           // 空集合
+let set2: Set&amp;lt;Int&amp;gt; = [1, 2, 3]  // 字面值
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Set 可以做&lt;code&gt;交集(intersection)&lt;/code&gt;、&lt;code&gt;聯集(union)&lt;/code&gt;、&lt;code&gt;差集(subtracting)&lt;/code&gt;及&lt;code&gt;對稱差集(symmetric difference)&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let oddDigits: Set = [1, 3, 5, 7, 9]
+let evenDigits: Set = [0, 2, 4, 6, 8]
+let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
+
+// intersection
+oddDigits.intersection(evenDigits).sorted()
+
+// union
+oddDigits.union(evenDigits).sorted()  // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+// subtracting
+oddDigits.subtracting(singleDigitPrimeNumbers).sorted() // [1, 9]
+
+// symmetric difference
+oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted() // [1, 2, 9]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;字典dictionary&#34;&gt;字典(Dictionary)&lt;/h3&gt;
+&lt;p&gt;以&lt;code&gt;唯一鍵值(key)&lt;/code&gt;與&lt;code&gt;值(value)&lt;/code&gt;組合而成的集合型別。原始宣告語法為&lt;code&gt;Dictionary&amp;lt;Key, Value&amp;gt;&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;var d1 = [Int: String]()    // 空字典
+var d2 = [&amp;quot;1&amp;quot;: 1, &amp;quot;2&amp;quot;: 2]   // 字面值宣告
+d2 = [:]                    // 清空字典
+
+// 迭代字典
+for (k, v) in d2 {
+  print(&amp;quot;\(k): \(v)&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;學習中…🤓&lt;/p&gt;
 </description>
     </item>
