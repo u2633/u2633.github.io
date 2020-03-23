@@ -224,7 +224,261 @@ for (k, v) in d2 {
   print(&amp;quot;\(k): \(v)&amp;quot;)
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;學習中…🤓&lt;/p&gt;
+&lt;h2 id=&#34;流程控制&#34;&gt;流程控制&lt;/h2&gt;
+&lt;h3 id=&#34;for-in&#34;&gt;For-In&lt;/h3&gt;
+&lt;p&gt;For-In 可以忽略迭代的值&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;for _ in 1...5 {
+  print(&amp;quot;hi&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;while&#34;&gt;While&lt;/h3&gt;
+&lt;p&gt;與其他語言相似，差別只在 Swift 中的條件式都只能接受布林值(Bool)，也就是 True/False，
+不然會報錯。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let condition = true
+while condition {
+  print(&amp;quot;Hello&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;repeat-while&#34;&gt;Repeat-While&lt;/h3&gt;
+&lt;p&gt;有些語言叫&lt;code&gt;do...while&lt;/code&gt;，但其目的都一樣，一定會執行一次程式區段。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let condition = true
+repeat {
+  print(&amp;quot;Hello&amp;quot;)
+} while condition
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;if&#34;&gt;If&lt;/h3&gt;
+&lt;p&gt;其判斷式也僅接受布林值(Bool)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let condition = true
+if condition {
+  print(&amp;quot;Hello&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;switch&#34;&gt;Switch&lt;/h3&gt;
+&lt;p&gt;Switch 判斷式讓我覺得很彈性變得更大且運用得當的話，反而能讓程式碼更簡潔。&lt;/p&gt;
+&lt;p&gt;基本語法會自動跳離(&lt;code&gt;break&lt;/code&gt;)執行成立的區段&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let c = &amp;quot;z&amp;quot;
+switch c {
+  case &amp;quot;a&amp;quot;:
+    print(&amp;quot;a&amp;quot;)
+  case &amp;quot;z&amp;quot;:
+    print(&amp;quot;z&amp;quot;)
+  default:
+    print(&amp;quot;unknown&amp;quot;)
+}
+// print &amp;quot;z&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;具有多個相同狀態的條件&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let c = &amp;quot;Z&amp;quot;
+switch c {
+  case &amp;quot;a&amp;quot;:
+    print(&amp;quot;a&amp;quot;)
+  case &amp;quot;z&amp;quot;, &amp;quot;Z&amp;quot;:
+    print(&amp;quot;z&amp;quot;)
+  default:
+    print(&amp;quot;unknown&amp;quot;)
+}
+// print &amp;quot;z&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;區間匹配&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let i = 52
+switch i {
+  case 0:
+    print(&amp;quot;0&amp;quot;)
+  case 1..&amp;lt;25:
+    print(&amp;quot;1~25, not include 25&amp;quot;)
+  case 25..&amp;lt;50:
+    print(&amp;quot;25~50, not include 50&amp;quot;)
+  case 50..&amp;lt;100:
+    print(&amp;quot;50~100, not include 100&amp;quot;)
+  default:
+    print(&amp;quot;not in the range of number&amp;quot;)
+}
+// print &amp;quot;50~100, not include 100&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;元組(Tuple)條件式&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let point = (1, 1)
+switch point {
+  case (0, 0):
+    print(&amp;quot;\(point) is at the origin&amp;quot;)
+  case (_, 0):
+    print(&amp;quot;\(point) is on the x-axis&amp;quot;)
+  case (0, _):
+    print(&amp;quot;\(point) is on the y-axis&amp;quot;)
+  case (-2...2, -2...2):
+    print(&amp;quot;\(point) is inside the box&amp;quot;)
+  default:
+    print(&amp;quot;outside!&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;若有使用條件式的數值需求，可使用&lt;code&gt;數值綁定&lt;/code&gt;功能實現&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let point = (2, 0)
+switch point {
+  case (let x, 0):
+  case (0, let y):
+  case let (x, y):
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在使用&lt;code&gt;數值綁定&lt;/code&gt;後可再利用&lt;code&gt;where&lt;/code&gt;進行條件判斷&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let point = (1, -1)
+switch point {
+  case let (x, y) where x == y:
+    print(&amp;quot;(\(x), \(y)) is on the line x == y&amp;quot;)
+  case let (x, y) where x == -y:
+    print(&amp;quot;(\(x), \(y)) is on the line x == -y&amp;quot;)
+  case let (x, y):
+    print(&amp;quot;(\(x), \(y)) is just some arbitrary point&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如需讓下一個&lt;code&gt;case&lt;/code&gt;執行，只需要在執行區塊中最後加入&lt;code&gt;fallthrough&lt;/code&gt;關鍵字&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;let i = 5
+switch i {
+  case 5:
+    print(&amp;quot;it is 5&amp;quot;)
+    fallthrough
+  default:
+    print(&amp;quot; and it is end&amp;quot;)
+}
+// print &amp;quot;it is 5 and it is end&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;標簽陳述&#34;&gt;標簽陳述&lt;/h3&gt;
+&lt;p&gt;標簽陳述(Labeled Statements)可嵌套在&lt;code&gt;條件判斷式&lt;/code&gt;或是&lt;code&gt;迴圈&lt;/code&gt;中&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-Swift&#34;&gt;myLabel: if true {
+    for _ in 1...1000 {
+        for _ in 1...1000 {
+            print(&amp;quot;hello&amp;quot;)
+            break myLabel
+        }
+    }
+}
+
+if true {
+    myLabel: for _ in 1...1000 {
+        for _ in 1...1000 {
+            print(&amp;quot;hello&amp;quot;)
+            break myLabel
+        }
+    }
+}
+
+myLabel: while true {
+    print(&amp;quot;hello&amp;quot;)
+    break myLabel
+}
+
+// 上述三個標簽陳述句結果都僅列印一次&amp;quot;hello&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;guard&#34;&gt;Guard&lt;/h3&gt;
+&lt;p&gt;簡單說，&lt;code&gt;Guard&lt;/code&gt;就是一種反向的&lt;code&gt;if&lt;/code&gt;，也就是&lt;code&gt;條件不成立則執行程式區塊&lt;/code&gt;，只是與&lt;code&gt;if&lt;/code&gt;的差別在於永遠會有&lt;code&gt;else&lt;/code&gt;區塊
+以及&lt;code&gt;guard let&lt;/code&gt;後的常數可以在後續使用，但&lt;code&gt;if let&lt;/code&gt;後的常數僅能使用在執行區塊內&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;func greet(person: [String: String]) {
+  guard let name = person[&amp;quot;name&amp;quot; ] else {
+    return
+  }
+
+  print(&amp;quot;Hello \(name)&amp;quot;)
+
+  guard let location = person[&amp;quot;location&amp;quot;] else {
+    print(&amp;quot;I hope the weather is nice near you.&amp;quot;)
+    return
+  }
+  print (&amp;quot;I hope the weather is nice in \(location).&amp;quot;)
+}
+
+// multiple guard
+
+guard let a = a1, let b = b1, let, c = c1 else {
+  return
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;api-可用性檢查&#34;&gt;API 可用性檢查&lt;/h3&gt;
+&lt;p&gt;使用者不可能全部都是使用一樣的作業系統版本，但為了能使一套程式碼通用，API 的可用性檢查就重要多了&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;if #available(iOS 10, macOS 10.22, *) {
+  // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS
+} else {
+  // Do something
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;函數&#34;&gt;函數&lt;/h2&gt;
+&lt;p&gt;可傳回多個值&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;func myFunc() -&amp;gt; (Int, Int) {
+  return (1, 2)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;若回傳的數值可能為&lt;code&gt;nil&lt;/code&gt;，必需在回傳敘述最後加上&lt;code&gt;選擇性(optional, ?)&lt;/code&gt;關鍵字&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;func myFunc() -&amp;gt; (Int, Int)? {
+  return (nil, nil)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以定義&lt;code&gt;參數標簽(Argument Labels)&lt;/code&gt;及&lt;code&gt;參數名稱(Parameter Names)&lt;/code&gt;，如果沒有定義標簽，
+預設會與名稱相同。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;func myFunc(param: String) {
+  print(param)
+}
+
+myFunc(param: &amp;quot;Hi&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;func myFunc(argumentLabel parameterName: String) {
+  print(parameterName)
+}
+
+myFunc(argumentLabel: &amp;quot;Hi&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;宣告時可以忽略&lt;code&gt;參數標簽&lt;/code&gt;，呼叫時會很方便，但個人覺得會失去可讀性&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;func myFunc(_ paramName: String) {
+  print(paramName)
+}
+
+myFunc(&amp;quot;Hi&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可賦予參數初始值，&lt;code&gt;但僅能放在一般參數之後&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;func myFunc(_ paramWithoutDefault: Int, _ paramWithDefault: Int = 10) {
+  print(paramWithoutDefault, paramWithDefault)
+}
+
+myFunc(1, 3)  // Prints &amp;quot;1, 3&amp;quot;
+myFunc(1)     // Prints &amp;quot;1, 10&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可使用不定長度參數&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;func myFunc(_ numbers: Int...) -&amp;gt; Int {
+  var sum = 0
+  for i in numbers {
+    sum += i
+  }
+  return sum
+}
+
+myFunc(1, 2, 3) // Prints 7
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;參數預設為&lt;code&gt;常數&lt;/code&gt;，若對其做改變會造成&lt;code&gt;compile-error&lt;/code&gt;，如果改變參數本身的值需要在&lt;code&gt;型別&lt;/code&gt;前加上
+&lt;code&gt;inout&lt;/code&gt;關鍵字，並且在呼叫函式時在傳入的變數前面加上&lt;code&gt;取值運算子(&amp;amp;)&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;func myFunc(_ a: inout Int) {
+  a += 10
+}
+
+var a = 10
+
+myFunc(&amp;amp;i)
+
+print(a)  // 20
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;閉包&#34;&gt;閉包&lt;/h2&gt;
+&lt;h2 id=&#34;列舉&#34;&gt;列舉&lt;/h2&gt;
+&lt;h2 id=&#34;結構與類別&#34;&gt;結構與類別&lt;/h2&gt;
+&lt;h2 id=&#34;屬性&#34;&gt;屬性&lt;/h2&gt;
+&lt;h2 id=&#34;方法&#34;&gt;方法&lt;/h2&gt;
+&lt;h2 id=&#34;下標&#34;&gt;下標&lt;/h2&gt;
+&lt;h2 id=&#34;繼承&#34;&gt;繼承&lt;/h2&gt;
+&lt;h2 id=&#34;建構式&#34;&gt;建構式&lt;/h2&gt;
+&lt;h2 id=&#34;解構式&#34;&gt;解構式&lt;/h2&gt;
+&lt;h2 id=&#34;可選鏈&#34;&gt;可選鏈&lt;/h2&gt;
+&lt;h2 id=&#34;錯誤處理&#34;&gt;錯誤處理&lt;/h2&gt;
+&lt;h2 id=&#34;型別檢查&#34;&gt;型別檢查&lt;/h2&gt;
+&lt;h2 id=&#34;巢狀型別&#34;&gt;巢狀型別&lt;/h2&gt;
+&lt;h2 id=&#34;擴展&#34;&gt;擴展&lt;/h2&gt;
+&lt;h2 id=&#34;協定&#34;&gt;協定&lt;/h2&gt;
+&lt;h2 id=&#34;泛型&#34;&gt;泛型&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     

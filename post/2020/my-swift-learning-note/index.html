@@ -580,7 +580,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    3 閱讀時間（分鐘）
+    6 閱讀時間（分鐘）
   </span>
   
 
@@ -827,7 +827,261 @@ for (k, v) in d2 {
   print(&quot;\(k): \(v)&quot;)
 }
 </code></pre>
-<p>學習中…🤓</p>
+<h2 id="流程控制">流程控制</h2>
+<h3 id="for-in">For-In</h3>
+<p>For-In 可以忽略迭代的值</p>
+<pre><code class="language-swift">for _ in 1...5 {
+  print(&quot;hi&quot;)
+}
+</code></pre>
+<h3 id="while">While</h3>
+<p>與其他語言相似，差別只在 Swift 中的條件式都只能接受布林值(Bool)，也就是 True/False，
+不然會報錯。</p>
+<pre><code class="language-swift">let condition = true
+while condition {
+  print(&quot;Hello&quot;)
+}
+</code></pre>
+<h3 id="repeat-while">Repeat-While</h3>
+<p>有些語言叫<code>do...while</code>，但其目的都一樣，一定會執行一次程式區段。</p>
+<pre><code class="language-swift">let condition = true
+repeat {
+  print(&quot;Hello&quot;)
+} while condition
+</code></pre>
+<h3 id="if">If</h3>
+<p>其判斷式也僅接受布林值(Bool)</p>
+<pre><code class="language-swift">let condition = true
+if condition {
+  print(&quot;Hello&quot;)
+}
+</code></pre>
+<h3 id="switch">Switch</h3>
+<p>Switch 判斷式讓我覺得很彈性變得更大且運用得當的話，反而能讓程式碼更簡潔。</p>
+<p>基本語法會自動跳離(<code>break</code>)執行成立的區段</p>
+<pre><code class="language-swift">let c = &quot;z&quot;
+switch c {
+  case &quot;a&quot;:
+    print(&quot;a&quot;)
+  case &quot;z&quot;:
+    print(&quot;z&quot;)
+  default:
+    print(&quot;unknown&quot;)
+}
+// print &quot;z&quot;
+</code></pre>
+<p>具有多個相同狀態的條件</p>
+<pre><code class="language-swift">let c = &quot;Z&quot;
+switch c {
+  case &quot;a&quot;:
+    print(&quot;a&quot;)
+  case &quot;z&quot;, &quot;Z&quot;:
+    print(&quot;z&quot;)
+  default:
+    print(&quot;unknown&quot;)
+}
+// print &quot;z&quot;
+</code></pre>
+<p>區間匹配</p>
+<pre><code class="language-swift">let i = 52
+switch i {
+  case 0:
+    print(&quot;0&quot;)
+  case 1..&lt;25:
+    print(&quot;1~25, not include 25&quot;)
+  case 25..&lt;50:
+    print(&quot;25~50, not include 50&quot;)
+  case 50..&lt;100:
+    print(&quot;50~100, not include 100&quot;)
+  default:
+    print(&quot;not in the range of number&quot;)
+}
+// print &quot;50~100, not include 100&quot;
+</code></pre>
+<p>元組(Tuple)條件式</p>
+<pre><code class="language-swift">let point = (1, 1)
+switch point {
+  case (0, 0):
+    print(&quot;\(point) is at the origin&quot;)
+  case (_, 0):
+    print(&quot;\(point) is on the x-axis&quot;)
+  case (0, _):
+    print(&quot;\(point) is on the y-axis&quot;)
+  case (-2...2, -2...2):
+    print(&quot;\(point) is inside the box&quot;)
+  default:
+    print(&quot;outside!&quot;)
+}
+</code></pre>
+<p>若有使用條件式的數值需求，可使用<code>數值綁定</code>功能實現</p>
+<pre><code class="language-swift">let point = (2, 0)
+switch point {
+  case (let x, 0):
+  case (0, let y):
+  case let (x, y):
+}
+</code></pre>
+<p>在使用<code>數值綁定</code>後可再利用<code>where</code>進行條件判斷</p>
+<pre><code class="language-swift">let point = (1, -1)
+switch point {
+  case let (x, y) where x == y:
+    print(&quot;(\(x), \(y)) is on the line x == y&quot;)
+  case let (x, y) where x == -y:
+    print(&quot;(\(x), \(y)) is on the line x == -y&quot;)
+  case let (x, y):
+    print(&quot;(\(x), \(y)) is just some arbitrary point&quot;)
+}
+</code></pre>
+<p>如需讓下一個<code>case</code>執行，只需要在執行區塊中最後加入<code>fallthrough</code>關鍵字</p>
+<pre><code class="language-swift">let i = 5
+switch i {
+  case 5:
+    print(&quot;it is 5&quot;)
+    fallthrough
+  default:
+    print(&quot; and it is end&quot;)
+}
+// print &quot;it is 5 and it is end&quot;
+</code></pre>
+<h3 id="標簽陳述">標簽陳述</h3>
+<p>標簽陳述(Labeled Statements)可嵌套在<code>條件判斷式</code>或是<code>迴圈</code>中</p>
+<pre><code class="language-Swift">myLabel: if true {
+    for _ in 1...1000 {
+        for _ in 1...1000 {
+            print(&quot;hello&quot;)
+            break myLabel
+        }
+    }
+}
+
+if true {
+    myLabel: for _ in 1...1000 {
+        for _ in 1...1000 {
+            print(&quot;hello&quot;)
+            break myLabel
+        }
+    }
+}
+
+myLabel: while true {
+    print(&quot;hello&quot;)
+    break myLabel
+}
+
+// 上述三個標簽陳述句結果都僅列印一次&quot;hello&quot;
+</code></pre>
+<h3 id="guard">Guard</h3>
+<p>簡單說，<code>Guard</code>就是一種反向的<code>if</code>，也就是<code>條件不成立則執行程式區塊</code>，只是與<code>if</code>的差別在於永遠會有<code>else</code>區塊
+以及<code>guard let</code>後的常數可以在後續使用，但<code>if let</code>後的常數僅能使用在執行區塊內</p>
+<pre><code class="language-swift">func greet(person: [String: String]) {
+  guard let name = person[&quot;name&quot; ] else {
+    return
+  }
+
+  print(&quot;Hello \(name)&quot;)
+
+  guard let location = person[&quot;location&quot;] else {
+    print(&quot;I hope the weather is nice near you.&quot;)
+    return
+  }
+  print (&quot;I hope the weather is nice in \(location).&quot;)
+}
+
+// multiple guard
+
+guard let a = a1, let b = b1, let, c = c1 else {
+  return
+}
+</code></pre>
+<h3 id="api-可用性檢查">API 可用性檢查</h3>
+<p>使用者不可能全部都是使用一樣的作業系統版本，但為了能使一套程式碼通用，API 的可用性檢查就重要多了</p>
+<pre><code class="language-swift">if #available(iOS 10, macOS 10.22, *) {
+  // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS
+} else {
+  // Do something
+}
+</code></pre>
+<h2 id="函數">函數</h2>
+<p>可傳回多個值</p>
+<pre><code class="language-swift">func myFunc() -&gt; (Int, Int) {
+  return (1, 2)
+}
+</code></pre>
+<p>若回傳的數值可能為<code>nil</code>，必需在回傳敘述最後加上<code>選擇性(optional, ?)</code>關鍵字</p>
+<pre><code class="language-swift">func myFunc() -&gt; (Int, Int)? {
+  return (nil, nil)
+}
+</code></pre>
+<p>可以定義<code>參數標簽(Argument Labels)</code>及<code>參數名稱(Parameter Names)</code>，如果沒有定義標簽，
+預設會與名稱相同。</p>
+<pre><code class="language-swift">func myFunc(param: String) {
+  print(param)
+}
+
+myFunc(param: &quot;Hi&quot;)
+</code></pre>
+<pre><code class="language-swift">func myFunc(argumentLabel parameterName: String) {
+  print(parameterName)
+}
+
+myFunc(argumentLabel: &quot;Hi&quot;)
+</code></pre>
+<p>宣告時可以忽略<code>參數標簽</code>，呼叫時會很方便，但個人覺得會失去可讀性</p>
+<pre><code class="language-swift">func myFunc(_ paramName: String) {
+  print(paramName)
+}
+
+myFunc(&quot;Hi&quot;)
+</code></pre>
+<p>可賦予參數初始值，<code>但僅能放在一般參數之後</code></p>
+<pre><code class="language-swift">func myFunc(_ paramWithoutDefault: Int, _ paramWithDefault: Int = 10) {
+  print(paramWithoutDefault, paramWithDefault)
+}
+
+myFunc(1, 3)  // Prints &quot;1, 3&quot;
+myFunc(1)     // Prints &quot;1, 10&quot;
+</code></pre>
+<p>可使用不定長度參數</p>
+<pre><code class="language-swift">func myFunc(_ numbers: Int...) -&gt; Int {
+  var sum = 0
+  for i in numbers {
+    sum += i
+  }
+  return sum
+}
+
+myFunc(1, 2, 3) // Prints 7
+</code></pre>
+<p>參數預設為<code>常數</code>，若對其做改變會造成<code>compile-error</code>，如果改變參數本身的值需要在<code>型別</code>前加上
+<code>inout</code>關鍵字，並且在呼叫函式時在傳入的變數前面加上<code>取值運算子(&amp;)</code></p>
+<pre><code class="language-swift">func myFunc(_ a: inout Int) {
+  a += 10
+}
+
+var a = 10
+
+myFunc(&amp;i)
+
+print(a)  // 20
+</code></pre>
+<h2 id="閉包">閉包</h2>
+<h2 id="列舉">列舉</h2>
+<h2 id="結構與類別">結構與類別</h2>
+<h2 id="屬性">屬性</h2>
+<h2 id="方法">方法</h2>
+<h2 id="下標">下標</h2>
+<h2 id="繼承">繼承</h2>
+<h2 id="建構式">建構式</h2>
+<h2 id="解構式">解構式</h2>
+<h2 id="可選鏈">可選鏈</h2>
+<h2 id="錯誤處理">錯誤處理</h2>
+<h2 id="型別檢查">型別檢查</h2>
+<h2 id="巢狀型別">巢狀型別</h2>
+<h2 id="擴展">擴展</h2>
+<h2 id="協定">協定</h2>
+<h2 id="泛型">泛型</h2>
+<pre><code>
+</code></pre>
 
     </div>
 
