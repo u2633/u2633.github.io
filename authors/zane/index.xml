@@ -5,7 +5,7 @@
     <link>https://u2633.github.io/authors/zane/</link>
       <atom:link href="https://u2633.github.io/authors/zane/index.xml" rel="self" type="application/rss+xml" />
     <description>zane</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Mon, 16 Mar 2020 11:21:20 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Thu, 09 Apr 2020 09:41:26 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>zane</title>
@@ -13,10 +13,179 @@
     </image>
     
     <item>
+      <title>Firebase Cloud Messaging - Android</title>
+      <link>https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/</link>
+      <pubDate>Thu, 09 Apr 2020 09:41:26 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近 Flutter 的專案上剛好需要導入 
+&lt;a href=&#34;https://firebase.google.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Firebase&lt;/a&gt; 的
+
+&lt;a href=&#34;https://firebase.google.com/docs/cloud-messaging&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cloud Messaging&lt;/a&gt; 功能，
+也紀錄一下實作的步驟以及遇到問題。&lt;/p&gt;
+&lt;h2 id=&#34;firebase-cloud-messaging&#34;&gt;Firebase Cloud Messaging&lt;/h2&gt;
+&lt;p&gt;Firebase Cloud Messaging(FCM), 是 
+&lt;a href=&#34;https://firebase.google.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Firebase&lt;/a&gt; 提供的服務之一，
+讓使用者進行&lt;code&gt;訊息(message)&lt;/code&gt;發送與接收。主要負責:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;傳送推播(&lt;code&gt;Notification&lt;/code&gt;)與資料(&lt;code&gt;data&lt;/code&gt;)訊息&lt;/li&gt;
+&lt;li&gt;提供三種發送方式
+&lt;ul&gt;
+&lt;li&gt;單一裝置(&lt;code&gt;Single&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;群組發送(&lt;code&gt;Groups&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;訂閱群發送(&lt;code&gt;Subscribed&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;從客戶端(&lt;code&gt;Client&lt;/code&gt;)發送訊息(&lt;code&gt;雙向&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其基礎結構為
+&lt;img src=&#34;fcm_architecture.png&#34; alt=&#34;fcm_arch&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;message-type&#34;&gt;Message Type&lt;/h3&gt;
+&lt;p&gt;FCM 目前提供兩種訊息的傳輸模式&lt;code&gt;Notification&lt;/code&gt;及&lt;code&gt;Data&lt;/code&gt;。&lt;code&gt;Notification&lt;/code&gt;是 SDK 在處理的，
+而&lt;code&gt;Data&lt;/code&gt;是 Client 處理。簡單說，在接收到&lt;code&gt;Notification&lt;/code&gt;時，SDK 會將收到的訊息顯示在
+手機上的訊息列並根據 
+&lt;a href=&#34;https://developer.android.com/training/notify-user/channels&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Notification Channel ID&lt;/a&gt;
+決定是否顯示訊息提示窗，而&lt;code&gt;Data&lt;/code&gt;可以讓 Client 經過處理後再決定是否要顯示或是執行其他的功能。
+就我看來這兩者基本上的差別就是&lt;code&gt;Notification&lt;/code&gt;預設有訊息提示窗而&lt;code&gt;Data&lt;/code&gt;沒有。&lt;/p&gt;
+&lt;p&gt;FCM Notification Composer 沒有提供傳送&lt;code&gt;Data&lt;/code&gt;的方法，需要使用 Call API 的方式。&lt;/p&gt;
+&lt;p&gt;主要的步驟只有兩個 - 
+&lt;a href=&#34;https://firebase.google.com/docs/flutter/setup?platform=android&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Firebase 的基本設定&lt;/a&gt;及
+安裝官方提供的 flutter 的 cloud messaging 函式庫 - 
+&lt;a href=&#34;https://pub.dev/packages/firebase_messaging#-readme-tab-&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;firebase_messaging&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;基本設定的部份，官方文件已經詳解了，在此就不加以說明了。&lt;/p&gt;
+&lt;h2 id=&#34;設定-flutter-fcm-library---firebase_messaginglink_flutter_firebase_messaging&#34;&gt;設定 Flutter FCM Library - 
+&lt;a href=&#34;https://pub.dev/packages/firebase_messaging#-readme-tab-&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;firebase_messaging&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;flutter pub 上的文件也已經詳解如何整合至 Android 或 iOS 了，基本上照做都能順利整合。
+需要注意的是，如果希望 Client 在點擊訊息時能觸發&lt;code&gt;onResume&lt;/code&gt;、&lt;code&gt;oLaunch&lt;/code&gt;的 Handler ，
+就必需在&lt;code&gt;android/app/src/main/AndroidManifest.xml&lt;/code&gt;裡加上 filter&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;intent-filter&amp;gt;
+    &amp;lt;action android:name=&amp;quot;FLUTTER_NOTIFICATION_CLICK&amp;quot; /&amp;gt;
+    &amp;lt;category android:name=&amp;quot;android.intent.category.DEFAULT&amp;quot; /&amp;gt;
+&amp;lt;/intent-filter&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;先來看一下各個 Handler 在&lt;code&gt;Notification&lt;/code&gt;及&lt;code&gt;Data&lt;/code&gt; 的 Spec
+&lt;img src=&#34;./fcm_handler_spec.png&#34; alt=&#34;fcm_handler&#34;&gt;&lt;/p&gt;
+&lt;p&gt;讓我使用 
+&lt;a href=&#34;https://www.postman.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Postman&lt;/a&gt; 來測試&lt;code&gt;Notification&lt;/code&gt;與&lt;code&gt;Data&lt;/code&gt;這兩種傳送方式。&lt;/p&gt;
+&lt;p&gt;打的 Payload 如下&lt;/p&gt;
+&lt;p&gt;Notification:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;notification&amp;quot;: {
+    &amp;quot;body&amp;quot;: &amp;quot;this is a body&amp;quot;,
+    &amp;quot;title&amp;quot;: &amp;quot;this is a title&amp;quot;
+  },
+  &amp;quot;priority&amp;quot;: &amp;quot;high&amp;quot;,
+  &amp;quot;data&amp;quot;: {
+    &amp;quot;click_action&amp;quot;: &amp;quot;FLUTTER_NOTIFICATION_CLICK&amp;quot;,
+    &amp;quot;id&amp;quot;: &amp;quot;high&amp;quot;,
+    &amp;quot;status&amp;quot;: &amp;quot;done&amp;quot;
+  },
+  &amp;quot;to&amp;quot;: &amp;quot;YOUR CLIENT TOKEN&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Data:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;priority&amp;quot;: &amp;quot;high&amp;quot;,
+  &amp;quot;data&amp;quot;: {
+    &amp;quot;click_action&amp;quot;: &amp;quot;FLUTTER_NOTIFICATION_CLICK&amp;quot;,
+    &amp;quot;id&amp;quot;: &amp;quot;high&amp;quot;,
+    &amp;quot;status&amp;quot;: &amp;quot;done&amp;quot;
+  },
+  &amp;quot;to&amp;quot;: &amp;quot;YOUR CLIENT TOKEN&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;讓我們觀察 &lt;code&gt;Foreground&lt;/code&gt;, &lt;code&gt;Background&lt;/code&gt; 及 &lt;code&gt;Terminated&lt;/code&gt; 的行為吧&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Foreground:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Notification&lt;/p&gt;
+&lt;p&gt;觸發的 Handler - onMessage&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (28543): on Message: {notification: {title: this is a title, body: this is a body}, data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Data&lt;/p&gt;
+&lt;p&gt;觸發的 Handler - onMessage&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (28543): on Message: {notification: {title: null, body: null}, data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;與文件的描述相符。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Background:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Notification&lt;/p&gt;
+&lt;p&gt;出現訊息提示窗
+&lt;img src=&#34;notification_background.png&#34; alt=&#34;fcm_notification_background&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在點擊後回復 APP 至前景並觸發 Handler - onResume&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (28543): on Resume: {notification: {}, data: {collapse_key: &amp;quot;秘密&amp;quot;, google.original_priority: high, google.sent_time: 1586406396631, google.delivered_priority: high, google.ttl: 2419200, from: 217808926832, id: high, click_action: FLUTTER_NOTIFICATION_CLICK, google.message_id: 0:1586406396651621%4e2e62744e2e6274, status: done}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Data&lt;/p&gt;
+&lt;p&gt;結果，發生錯誤了!!!找不到相對應的 Callback function
+&lt;img src=&#34;data_background_fatal_error.png&#34; alt=&#34;data_background_error&#34;&gt;&lt;/p&gt;
+&lt;p&gt;但在參考
+&lt;a href=&#34;https://pub.dev/documentation/firebase_messaging/latest/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pub 文件&lt;/a&gt; 並實作&lt;code&gt;onBackgroundMessage&lt;/code&gt;這個 Handler 後就可以接到資料&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (31277): on Background data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;Data&lt;/code&gt;的反應跟文件上有落差…，文件上表示應該觸發&lt;code&gt;onMessage&lt;/code&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Terminated:&lt;/p&gt;
+&lt;p&gt;因為 Terminated 的狀態會看不到 Debug 的訊息，所以我用 Toast Message 來觀察行為，
+&lt;code&gt;Data&lt;/code&gt;的部份文件已經表明會遺失，&lt;code&gt;Notification&lt;/code&gt;試了之後也發現會出現提示窗，
+但自帶的 Data 也是遺失。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;troubleshooting&#34;&gt;Troubleshooting&lt;/h2&gt;
+&lt;h3 id=&#34;error---pluginregistry-cannot-be-converted-to-flutterengine&#34;&gt;Error - &amp;ldquo;PluginRegistry cannot be converted to FlutterEngine&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;在實作&lt;code&gt;onBackgroundMessage&lt;/code&gt;的時候，&lt;code&gt;Application.java&lt;/code&gt;如果是參考 pub 裡的實作會發生錯誤
+&lt;img src=&#34;error_on_registerWith_function.png&#34; alt=&#34;registerWith error&#34;&gt;，
+參考
+&lt;a href=&#34;https://stackoverflow.com/questions/59446933/pluginregistry-cannot-be-converted-to-flutterengine&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;這篇&lt;/a&gt;後，實作新的 Class 並取代舊的即可解決&lt;/p&gt;
+&lt;h3 id=&#34;接收的到訊息但無法顯示彈跳視窗&#34;&gt;接收的到訊息但無法顯示彈跳視窗&lt;/h3&gt;
+&lt;p&gt;這問題在下列兩種使用方式都有出現&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;從 Firebase Cloud Message 的 Composer&lt;/li&gt;
+&lt;li&gt;利用 Call API 的方式觸發(如: cURL, postman&amp;hellip;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;發生原因主要是因為沒有設定 Default Channel ID，其定義如下
+&lt;img src=&#34;importance_level.png&#34; alt=&#34;Importance Level&#34;&gt;&lt;/p&gt;
+&lt;p&gt;解法:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;code&gt;AndroidManifest.xml&lt;/code&gt;加入下面的 meta&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;&amp;lt;meta-data
+ android:name=&amp;quot;com.google.firebase.messaging.default_notification_channel_id&amp;quot;
+ android:value=&amp;quot;high&amp;quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;&lt;code&gt;***測試後發現，如果希望在 Call API 的方式下能正常顯示提示窗，這個 meta 必需存在***&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;code&gt;Application.java&lt;/code&gt;裡面實作&lt;code&gt;Notification Channel&lt;/code&gt;
+&lt;img src=&#34;./notification_implementation.png&#34; alt=&#34;notification_implementation&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;結論&#34;&gt;結論&lt;/h2&gt;
+&lt;p&gt;FCM 提供了我目前所有的需求了，重點是它每個月的免費額度也高，除非客戶量很驚人，
+否則幾乎用不完，即使用完了也不用擔心，因為，我相信這代表你的業務也已經成長到可以負擔這此費用的層級了。&lt;/p&gt;
+&lt;!-- external links --&gt;
+&lt;!-- some decent posts --&gt;
+</description>
+    </item>
+    
+    <item>
       <title>為你的 Github Page 設定個人網域名稱</title>
-      <link>https://u2633.github.io/post/2020/make-your-github-page-with-costomized-domain-name/</link>
+      <link>https://u2633.github.io/post/2020/03/make-your-github-page-with-costomized-domain-name/</link>
       <pubDate>Mon, 16 Mar 2020 11:21:20 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/make-your-github-page-with-costomized-domain-name/</guid>
+      <guid>https://u2633.github.io/post/2020/03/make-your-github-page-with-costomized-domain-name/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;在架設完個人 Blog 後，當然也要賦予它一個獨一無二的域名了，我選擇的是 
 &lt;a href=&#34;https://dcc.godaddy.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Goddady&lt;/a&gt;的服務，並且使用 
@@ -995,9 +1164,9 @@ stepCounter.totalSteps = 896
     
     <item>
       <title>在 AWS EC2 上安裝 Mosquitto(MQTT) Client 套件</title>
-      <link>https://u2633.github.io/post/2020/install-mosquitto-on-aws-ec2/</link>
+      <link>https://u2633.github.io/post/2020/03/install-mosquitto-on-aws-ec2/</link>
       <pubDate>Thu, 12 Mar 2020 21:45:17 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/install-mosquitto-on-aws-ec2/</guid>
+      <guid>https://u2633.github.io/post/2020/03/install-mosquitto-on-aws-ec2/</guid>
       <description>&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -P /tmp
 sudo yum install -y /tmp/epel-release-latest-7.noarch.rpm
 sudo yum install libwebsockets
@@ -1010,9 +1179,9 @@ sudo yum install mosquitto mosquitto-clients
     
     <item>
       <title>解決Flutter Bottom Modal彈跳兩次的問題</title>
-      <link>https://u2633.github.io/post/2020/fix-modal-popup-twice/</link>
+      <link>https://u2633.github.io/post/2020/03/fix-modal-popup-twice/</link>
       <pubDate>Thu, 12 Mar 2020 19:58:18 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/fix-modal-popup-twice/</guid>
+      <guid>https://u2633.github.io/post/2020/03/fix-modal-popup-twice/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;在開發 Flutter 的時候，不知為何觸發 Bottom Modal 的選單時，總是會觸發兩次，問題如下影片&lt;/p&gt;
 
@@ -1056,9 +1225,9 @@ Widget _showInstitutionField(CheckupDownloadState state) {
     
     <item>
       <title>讓你的 AWS S3 擁有自己的網域名稱還具有免費網路憑證</title>
-      <link>https://u2633.github.io/post/2020/aws-s3-ssl-setup/</link>
+      <link>https://u2633.github.io/post/2020/03/aws-s3-ssl-setup/</link>
       <pubDate>Wed, 11 Mar 2020 13:49:56 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/aws-s3-ssl-setup/</guid>
+      <guid>https://u2633.github.io/post/2020/03/aws-s3-ssl-setup/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;大部份 AWS 的使用者都如道 S3 提供一個僅需在管理頁面點擊設定便可以讓 Bucket 變成靜態網頁的方法。
 但也僅提供 HTTP 連線方式，如果我要的是個&lt;code&gt;客制化的 Domain + HTTPS 協定&lt;/code&gt;呢?&lt;/p&gt;
@@ -1842,9 +2011,9 @@ Memory Usage: &lt;strong&gt;12.6 MB&lt;/strong&gt;, less than &lt;strong&gt;100.
     
     <item>
       <title>什麼是BLoC Design Pattern</title>
-      <link>https://u2633.github.io/post/2020/bloc-design-pattern/</link>
+      <link>https://u2633.github.io/post/2020/03/bloc-design-pattern/</link>
       <pubDate>Tue, 10 Mar 2020 14:50:24 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/bloc-design-pattern/</guid>
+      <guid>https://u2633.github.io/post/2020/03/bloc-design-pattern/</guid>
       <description>&lt;p&gt;Business Logic Component Pattern 簡稱 
 &lt;a href=&#34;https://bloclibrary.dev/#/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC&lt;/a&gt;。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。&lt;/p&gt;
 &lt;p&gt;
@@ -1875,9 +2044,9 @@ class CounterBloc extends Bloc&amp;lt;CounterEvent, int&amp;gt; {
     
     <item>
       <title>First Commit</title>
-      <link>https://u2633.github.io/post/2020/first-commit/</link>
+      <link>https://u2633.github.io/post/2020/03/first-commit/</link>
       <pubDate>Mon, 09 Mar 2020 15:20:02 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/first-commit/</guid>
+      <guid>https://u2633.github.io/post/2020/03/first-commit/</guid>
       <description>&lt;p&gt;今天終於把自己的 Blog 建起來了，當然免不了要發第一篇文章。&lt;/p&gt;
 &lt;p&gt;其實，早在之前就在自己的 NAS 上建立過
 &lt;a href=&#34;https://u2633.w3rfamily.myds.me/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wordpress&lt;/a&gt;，並且也發過幾篇文了，但為什麼要再重新研究 Hugo，然後再重建自己的 Blog 呢?我的動機其實蠻簡單的，就是 Github 提供的

@@ -14,9 +14,9 @@
     
     <item>
       <title>在 AWS EC2 上安裝 Mosquitto(MQTT) Client 套件</title>
-      <link>https://u2633.github.io/post/2020/install-mosquitto-on-aws-ec2/</link>
+      <link>https://u2633.github.io/post/2020/03/install-mosquitto-on-aws-ec2/</link>
       <pubDate>Thu, 12 Mar 2020 21:45:17 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/install-mosquitto-on-aws-ec2/</guid>
+      <guid>https://u2633.github.io/post/2020/03/install-mosquitto-on-aws-ec2/</guid>
       <description>&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -P /tmp
 sudo yum install -y /tmp/epel-release-latest-7.noarch.rpm
 sudo yum install libwebsockets

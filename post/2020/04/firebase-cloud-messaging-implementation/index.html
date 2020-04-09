@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="zh-hant">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Zane Chen">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="在 Android 上實作 FCM">
+
+  
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="rgb(0, 136, 204)">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light" disabled>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark">
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=B612+Mono:400,700%7COrbitron:400,700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/">
+
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Z@NE.NOTE">
+  <meta property="og:url" content="https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/">
+  <meta property="og:title" content="Firebase Cloud Messaging - Android | Z@NE.NOTE">
+  <meta property="og:description" content="在 Android 上實作 FCM"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
+  
+    
+      <meta property="article:published_time" content="2020-04-09T09:41:26&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-04-09T09:41:26&#43;08:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/"
+  },
+  "headline": "Firebase Cloud Messaging - Android",
+  
+  "datePublished": "2020-04-09T09:41:26+08:00",
+  "dateModified": "2020-04-09T09:41:26+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "zane"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Z@NE.NOTE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "在 Android 上實作 FCM"
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Firebase Cloud Messaging - Android | Z@NE.NOTE</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="dark">
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>搜尋</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="搜尋..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Z@NE.NOTE</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="切換導航">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Z@NE.NOTE</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>關於我</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>文章</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>專案</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>聯絡我</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Firebase Cloud Messaging - Android</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/authors/zane/">zane</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020年4月9日
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/cloud/">cloud</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="前言">前言</h2>
+<p>最近 Flutter 的專案上剛好需要導入 
+<a href="https://firebase.google.com/" target="_blank" rel="noopener">Firebase</a> 的
+
+<a href="https://firebase.google.com/docs/cloud-messaging" target="_blank" rel="noopener">Cloud Messaging</a> 功能，
+也紀錄一下實作的步驟以及遇到問題。</p>
+<h2 id="firebase-cloud-messaging">Firebase Cloud Messaging</h2>
+<p>Firebase Cloud Messaging(FCM), 是 
+<a href="https://firebase.google.com/" target="_blank" rel="noopener">Firebase</a> 提供的服務之一，
+讓使用者進行<code>訊息(message)</code>發送與接收。主要負責:</p>
+<ul>
+<li>傳送推播(<code>Notification</code>)與資料(<code>data</code>)訊息</li>
+<li>提供三種發送方式
+<ul>
+<li>單一裝置(<code>Single</code>)</li>
+<li>群組發送(<code>Groups</code>)</li>
+<li>訂閱群發送(<code>Subscribed</code>)</li>
+</ul>
+</li>
+<li>從客戶端(<code>Client</code>)發送訊息(<code>雙向</code>)</li>
+</ul>
+<p>其基礎結構為
+<img src="fcm_architecture.png" alt="fcm_arch"></p>
+<h3 id="message-type">Message Type</h3>
+<p>FCM 目前提供兩種訊息的傳輸模式<code>Notification</code>及<code>Data</code>。<code>Notification</code>是 SDK 在處理的，
+而<code>Data</code>是 Client 處理。簡單說，在接收到<code>Notification</code>時，SDK 會將收到的訊息顯示在
+手機上的訊息列並根據 
+<a href="https://developer.android.com/training/notify-user/channels" target="_blank" rel="noopener">Notification Channel ID</a>
+決定是否顯示訊息提示窗，而<code>Data</code>可以讓 Client 經過處理後再決定是否要顯示或是執行其他的功能。
+就我看來這兩者基本上的差別就是<code>Notification</code>預設有訊息提示窗而<code>Data</code>沒有。</p>
+<p>FCM Notification Composer 沒有提供傳送<code>Data</code>的方法，需要使用 Call API 的方式。</p>
+<p>主要的步驟只有兩個 - 
+<a href="https://firebase.google.com/docs/flutter/setup?platform=android" target="_blank" rel="noopener">Firebase 的基本設定</a>及
+安裝官方提供的 flutter 的 cloud messaging 函式庫 - 
+<a href="https://pub.dev/packages/firebase_messaging#-readme-tab-" target="_blank" rel="noopener">firebase_messaging</a></p>
+<p>基本設定的部份，官方文件已經詳解了，在此就不加以說明了。</p>
+<h2 id="設定-flutter-fcm-library---firebase_messaginglink_flutter_firebase_messaging">設定 Flutter FCM Library - 
+<a href="https://pub.dev/packages/firebase_messaging#-readme-tab-" target="_blank" rel="noopener">firebase_messaging</a></h2>
+<p>flutter pub 上的文件也已經詳解如何整合至 Android 或 iOS 了，基本上照做都能順利整合。
+需要注意的是，如果希望 Client 在點擊訊息時能觸發<code>onResume</code>、<code>oLaunch</code>的 Handler ，
+就必需在<code>android/app/src/main/AndroidManifest.xml</code>裡加上 filter</p>
+<pre><code class="language-xml">&lt;intent-filter&gt;
+    &lt;action android:name=&quot;FLUTTER_NOTIFICATION_CLICK&quot; /&gt;
+    &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
+&lt;/intent-filter&gt;
+</code></pre>
+<p>先來看一下各個 Handler 在<code>Notification</code>及<code>Data</code> 的 Spec
+<img src="./fcm_handler_spec.png" alt="fcm_handler"></p>
+<p>讓我使用 
+<a href="https://www.postman.com/" target="_blank" rel="noopener">Postman</a> 來測試<code>Notification</code>與<code>Data</code>這兩種傳送方式。</p>
+<p>打的 Payload 如下</p>
+<p>Notification:</p>
+<pre><code class="language-json">{
+  &quot;notification&quot;: {
+    &quot;body&quot;: &quot;this is a body&quot;,
+    &quot;title&quot;: &quot;this is a title&quot;
+  },
+  &quot;priority&quot;: &quot;high&quot;,
+  &quot;data&quot;: {
+    &quot;click_action&quot;: &quot;FLUTTER_NOTIFICATION_CLICK&quot;,
+    &quot;id&quot;: &quot;high&quot;,
+    &quot;status&quot;: &quot;done&quot;
+  },
+  &quot;to&quot;: &quot;YOUR CLIENT TOKEN&quot;
+}
+</code></pre>
+<p>Data:</p>
+<pre><code class="language-json">{
+  &quot;priority&quot;: &quot;high&quot;,
+  &quot;data&quot;: {
+    &quot;click_action&quot;: &quot;FLUTTER_NOTIFICATION_CLICK&quot;,
+    &quot;id&quot;: &quot;high&quot;,
+    &quot;status&quot;: &quot;done&quot;
+  },
+  &quot;to&quot;: &quot;YOUR CLIENT TOKEN&quot;
+}
+</code></pre>
+<p>讓我們觀察 <code>Foreground</code>, <code>Background</code> 及 <code>Terminated</code> 的行為吧</p>
+<ul>
+<li>
+<p>Foreground:</p>
+<ul>
+<li>
+<p>Notification</p>
+<p>觸發的 Handler - onMessage</p>
+<pre><code class="language-text">I/flutter (28543): on Message: {notification: {title: this is a title, body: this is a body}, data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}}
+</code></pre>
+</li>
+<li>
+<p>Data</p>
+<p>觸發的 Handler - onMessage</p>
+<pre><code class="language-text">I/flutter (28543): on Message: {notification: {title: null, body: null}, data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}}
+</code></pre>
+<p>與文件的描述相符。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Background:</p>
+<ul>
+<li>
+<p>Notification</p>
+<p>出現訊息提示窗
+<img src="notification_background.png" alt="fcm_notification_background"></p>
+<p>在點擊後回復 APP 至前景並觸發 Handler - onResume</p>
+<pre><code class="language-text">I/flutter (28543): on Resume: {notification: {}, data: {collapse_key: &quot;秘密&quot;, google.original_priority: high, google.sent_time: 1586406396631, google.delivered_priority: high, google.ttl: 2419200, from: 217808926832, id: high, click_action: FLUTTER_NOTIFICATION_CLICK, google.message_id: 0:1586406396651621%4e2e62744e2e6274, status: done}}
+</code></pre>
+</li>
+<li>
+<p>Data</p>
+<p>結果，發生錯誤了!!!找不到相對應的 Callback function
+<img src="data_background_fatal_error.png" alt="data_background_error"></p>
+<p>但在參考
+<a href="https://pub.dev/documentation/firebase_messaging/latest/" target="_blank" rel="noopener">pub 文件</a> 並實作<code>onBackgroundMessage</code>這個 Handler 後就可以接到資料</p>
+<pre><code class="language-text">I/flutter (31277): on Background data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}
+</code></pre>
+</li>
+</ul>
+<p><code>Data</code>的反應跟文件上有落差…，文件上表示應該觸發<code>onMessage</code>。</p>
+</li>
+<li>
+<p>Terminated:</p>
+<p>因為 Terminated 的狀態會看不到 Debug 的訊息，所以我用 Toast Message 來觀察行為，
+<code>Data</code>的部份文件已經表明會遺失，<code>Notification</code>試了之後也發現會出現提示窗，
+但自帶的 Data 也是遺失。</p>
+</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="error---pluginregistry-cannot-be-converted-to-flutterengine">Error - &ldquo;PluginRegistry cannot be converted to FlutterEngine&rdquo;</h3>
+<p>在實作<code>onBackgroundMessage</code>的時候，<code>Application.java</code>如果是參考 pub 裡的實作會發生錯誤
+<img src="error_on_registerWith_function.png" alt="registerWith error">，
+參考
+<a href="https://stackoverflow.com/questions/59446933/pluginregistry-cannot-be-converted-to-flutterengine" target="_blank" rel="noopener">這篇</a>後，實作新的 Class 並取代舊的即可解決</p>
+<h3 id="接收的到訊息但無法顯示彈跳視窗">接收的到訊息但無法顯示彈跳視窗</h3>
+<p>這問題在下列兩種使用方式都有出現</p>
+<ul>
+<li>從 Firebase Cloud Message 的 Composer</li>
+<li>利用 Call API 的方式觸發(如: cURL, postman&hellip;)</li>
+</ul>
+<p>發生原因主要是因為沒有設定 Default Channel ID，其定義如下
+<img src="importance_level.png" alt="Importance Level"></p>
+<p>解法:</p>
+<ol>
+<li>
+<p>在<code>AndroidManifest.xml</code>加入下面的 meta</p>
+<pre><code class="language-text">&lt;meta-data
+ android:name=&quot;com.google.firebase.messaging.default_notification_channel_id&quot;
+ android:value=&quot;high&quot; /&gt;
+</code></pre>
+<p><em><code>***測試後發現，如果希望在 Call API 的方式下能正常顯示提示窗，這個 meta 必需存在***</code></em></p>
+</li>
+<li>
+<p>在<code>Application.java</code>裡面實作<code>Notification Channel</code>
+<img src="./notification_implementation.png" alt="notification_implementation"></p>
+</li>
+</ol>
+<h2 id="結論">結論</h2>
+<p>FCM 提供了我目前所有的需求了，重點是它每個月的免費額度也高，除非客戶量很驚人，
+否則幾乎用不完，即使用完了也不用擔心，因為，我相信這代表你的業務也已經成長到可以負擔這此費用的層級了。</p>
+<!-- external links -->
+<!-- some decent posts -->
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/firebase/">firebase</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/&amp;text=Firebase%20Cloud%20Messaging%20-%20Android" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/&amp;t=Firebase%20Cloud%20Messaging%20-%20Android" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Firebase%20Cloud%20Messaging%20-%20Android&amp;body=https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/&amp;title=Firebase%20Cloud%20Messaging%20-%20Android" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js" integrity="sha256-lyWCDMnMeZiXRi7Zl54sZGKYmgQs4izcT7+tKc+KUBk=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"找不到结果","placeholder":"搜尋...","results":"搜尋结果"};
+      const content_type = {
+        'post': "文章",
+        'project': "專案",
+        'publication' : "出版物",
+        'talk' : "演講"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.c816d323c3a55093dae0829b44ea1ca8.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">引用</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> 複製
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> 下載
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

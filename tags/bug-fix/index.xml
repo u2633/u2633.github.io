@@ -14,9 +14,9 @@
     
     <item>
       <title>解決Flutter Bottom Modal彈跳兩次的問題</title>
-      <link>https://u2633.github.io/post/2020/fix-modal-popup-twice/</link>
+      <link>https://u2633.github.io/post/2020/03/fix-modal-popup-twice/</link>
       <pubDate>Thu, 12 Mar 2020 19:58:18 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/fix-modal-popup-twice/</guid>
+      <guid>https://u2633.github.io/post/2020/03/fix-modal-popup-twice/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;在開發 Flutter 的時候，不知為何觸發 Bottom Modal 的選單時，總是會觸發兩次，問題如下影片&lt;/p&gt;
 

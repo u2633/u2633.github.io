@@ -14,9 +14,9 @@
     
     <item>
       <title>什麼是BLoC Design Pattern</title>
-      <link>https://u2633.github.io/post/2020/bloc-design-pattern/</link>
+      <link>https://u2633.github.io/post/2020/03/bloc-design-pattern/</link>
       <pubDate>Tue, 10 Mar 2020 14:50:24 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/bloc-design-pattern/</guid>
+      <guid>https://u2633.github.io/post/2020/03/bloc-design-pattern/</guid>
       <description>&lt;p&gt;Business Logic Component Pattern 簡稱 
 &lt;a href=&#34;https://bloclibrary.dev/#/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC&lt;/a&gt;。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。&lt;/p&gt;
 &lt;p&gt;
