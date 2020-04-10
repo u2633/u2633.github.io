@@ -53,7 +53,7 @@
 安裝官方提供的 flutter 的 cloud messaging 函式庫 - 
 &lt;a href=&#34;https://pub.dev/packages/firebase_messaging#-readme-tab-&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;firebase_messaging&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;基本設定的部份，官方文件已經詳解了，在此就不加以說明了。&lt;/p&gt;
-&lt;h2 id=&#34;設定-flutter-fcm-library---firebase_messaginglink_flutter_firebase_messaging&#34;&gt;設定 Flutter FCM Library - 
+&lt;h2 id=&#34;fcm_impl&#34;&gt;設定 Flutter FCM Library - 
 &lt;a href=&#34;https://pub.dev/packages/firebase_messaging#-readme-tab-&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;firebase_messaging&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;flutter pub 上的文件也已經詳解如何整合至 Android 或 iOS 了，基本上照做都能順利整合。
 需要注意的是，如果希望 Client 在點擊訊息時能觸發&lt;code&gt;onResume&lt;/code&gt;、&lt;code&gt;oLaunch&lt;/code&gt;的 Handler ，
@@ -67,8 +67,8 @@
 &lt;img src=&#34;./fcm_handler_spec.png&#34; alt=&#34;fcm_handler&#34;&gt;&lt;/p&gt;
 &lt;p&gt;讓我使用 
 &lt;a href=&#34;https://www.postman.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Postman&lt;/a&gt; 來測試&lt;code&gt;Notification&lt;/code&gt;與&lt;code&gt;Data&lt;/code&gt;這兩種傳送方式。&lt;/p&gt;
-&lt;p&gt;打的 Payload 如下&lt;/p&gt;
-&lt;p&gt;Notification:&lt;/p&gt;
+&lt;p&gt;打的 Payload 如下
+Notification:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
   &amp;quot;notification&amp;quot;: {
     &amp;quot;body&amp;quot;: &amp;quot;this is a body&amp;quot;,
@@ -149,7 +149,7 @@
 &lt;p&gt;在實作&lt;code&gt;onBackgroundMessage&lt;/code&gt;的時候，&lt;code&gt;Application.java&lt;/code&gt;如果是參考 pub 裡的實作會發生錯誤
 &lt;img src=&#34;error_on_registerWith_function.png&#34; alt=&#34;registerWith error&#34;&gt;，
 參考
-&lt;a href=&#34;https://stackoverflow.com/questions/59446933/pluginregistry-cannot-be-converted-to-flutterengine&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;這篇&lt;/a&gt;後，實作新的 Class 並取代舊的即可解決&lt;/p&gt;
+&lt;a href=&#34;https://stackoverflow.com/questions/59446933/pluginregistry-cannot-be-converted-to-flutterengine&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;此文&lt;/a&gt;並實作新的 Class 取代舊的即可解決此問題&lt;/p&gt;
 &lt;h3 id=&#34;接收的到訊息但無法顯示彈跳視窗&#34;&gt;接收的到訊息但無法顯示彈跳視窗&lt;/h3&gt;
 &lt;p&gt;這問題在下列兩種使用方式都有出現&lt;/p&gt;
 &lt;ul&gt;
@@ -176,6 +176,16 @@
 &lt;h2 id=&#34;結論&#34;&gt;結論&lt;/h2&gt;
 &lt;p&gt;FCM 提供了我目前所有的需求了，重點是它是&lt;strong&gt;免費的&lt;/strong&gt;。
 &lt;img src=&#34;fcm_free.png&#34; alt=&#34;fcm_free&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;補充&#34;&gt;補充&lt;/h2&gt;
+&lt;h3 id=&#34;20200410&#34;&gt;20200410&lt;/h3&gt;
+&lt;p&gt;在前面利用 Postman 
+&lt;a href=&#34;#fcm_impl&#34;&gt;測試的章節&lt;/a&gt; 中，我們只對單一裝置進行測試，
+但如果我們希望所有的裝置都能收到呢?
+這裡就會必需 Client 端先做&lt;code&gt;訂閱(Subscribe)&lt;/code&gt;的動作。
+在 Flutter 裡僅需加一行程式碼即可，詳見
+&lt;a href=&#34;https://stackoverflow.com/questions/38237559/how-do-you-send-a-firebase-notification-to-all-devices-via-curl&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;此文&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-flutter&#34;&gt;firebaseMessaging.subscribeToTopic(&amp;quot;all&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
 &lt;!-- external links --&gt;
 &lt;!-- some decent posts --&gt;
 </description>

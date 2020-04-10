@@ -508,10 +508,6 @@
       
 
       
-      <li class="nav-item">
-        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
-      </li>
-      
 
       
 
@@ -656,7 +652,7 @@
 安裝官方提供的 flutter 的 cloud messaging 函式庫 - 
 <a href="https://pub.dev/packages/firebase_messaging#-readme-tab-" target="_blank" rel="noopener">firebase_messaging</a></p>
 <p>基本設定的部份，官方文件已經詳解了，在此就不加以說明了。</p>
-<h2 id="設定-flutter-fcm-library---firebase_messaginglink_flutter_firebase_messaging">設定 Flutter FCM Library - 
+<h2 id="fcm_impl">設定 Flutter FCM Library - 
 <a href="https://pub.dev/packages/firebase_messaging#-readme-tab-" target="_blank" rel="noopener">firebase_messaging</a></h2>
 <p>flutter pub 上的文件也已經詳解如何整合至 Android 或 iOS 了，基本上照做都能順利整合。
 需要注意的是，如果希望 Client 在點擊訊息時能觸發<code>onResume</code>、<code>oLaunch</code>的 Handler ，
@@ -670,8 +666,8 @@
 <img src="./fcm_handler_spec.png" alt="fcm_handler"></p>
 <p>讓我使用 
 <a href="https://www.postman.com/" target="_blank" rel="noopener">Postman</a> 來測試<code>Notification</code>與<code>Data</code>這兩種傳送方式。</p>
-<p>打的 Payload 如下</p>
-<p>Notification:</p>
+<p>打的 Payload 如下
+Notification:</p>
 <pre><code class="language-json">{
   &quot;notification&quot;: {
     &quot;body&quot;: &quot;this is a body&quot;,
@@ -752,7 +748,7 @@
 <p>在實作<code>onBackgroundMessage</code>的時候，<code>Application.java</code>如果是參考 pub 裡的實作會發生錯誤
 <img src="error_on_registerWith_function.png" alt="registerWith error">，
 參考
-<a href="https://stackoverflow.com/questions/59446933/pluginregistry-cannot-be-converted-to-flutterengine" target="_blank" rel="noopener">這篇</a>後，實作新的 Class 並取代舊的即可解決</p>
+<a href="https://stackoverflow.com/questions/59446933/pluginregistry-cannot-be-converted-to-flutterengine" target="_blank" rel="noopener">此文</a>並實作新的 Class 取代舊的即可解決此問題</p>
 <h3 id="接收的到訊息但無法顯示彈跳視窗">接收的到訊息但無法顯示彈跳視窗</h3>
 <p>這問題在下列兩種使用方式都有出現</p>
 <ul>
@@ -779,6 +775,16 @@
 <h2 id="結論">結論</h2>
 <p>FCM 提供了我目前所有的需求了，重點是它是<strong>免費的</strong>。
 <img src="fcm_free.png" alt="fcm_free"></p>
+<h2 id="補充">補充</h2>
+<h3 id="20200410">20200410</h3>
+<p>在前面利用 Postman 
+<a href="#fcm_impl">測試的章節</a> 中，我們只對單一裝置進行測試，
+但如果我們希望所有的裝置都能收到呢?
+這裡就會必需 Client 端先做<code>訂閱(Subscribe)</code>的動作。
+在 Flutter 裡僅需加一行程式碼即可，詳見
+<a href="https://stackoverflow.com/questions/38237559/how-do-you-send-a-firebase-notification-to-all-devices-via-curl" target="_blank" rel="noopener">此文</a></p>
+<pre><code class="language-flutter">firebaseMessaging.subscribeToTopic(&quot;all&quot;);
+</code></pre>
 <!-- external links -->
 <!-- some decent posts -->
 
