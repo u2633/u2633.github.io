@@ -637,8 +637,8 @@
 </li>
 <li>從客戶端(<code>Client</code>)發送訊息(<code>雙向</code>)</li>
 </ul>
-<p>其基礎結構為
-<img src="fcm_architecture.png" alt="fcm_arch"></p>
+<p>其基礎結構為</p>
+<p><img src="fcm_architecture.png" alt="fcm_arch"></p>
 <h3 id="message-type">Message Type</h3>
 <p>FCM 目前提供兩種訊息的傳輸模式<code>Notification</code>及<code>Data</code>。<code>Notification</code>是 SDK 在處理的，
 而<code>Data</code>是 Client 處理。簡單說，在接收到<code>Notification</code>時，SDK 會將收到的訊息顯示在
@@ -662,12 +662,12 @@
     &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
 &lt;/intent-filter&gt;
 </code></pre>
-<p>先來看一下各個 Handler 在<code>Notification</code>及<code>Data</code> 的 Spec
-<img src="./fcm_handler_spec.png" alt="fcm_handler"></p>
-<p>讓我使用 
+<p>先來看一下各個 Handler 在<code>Notification</code>及<code>Data</code> 的 Spec</p>
+<p><img src="./fcm_handler_spec.png" alt="fcm_handler"></p>
+<p>讓我們使用 
 <a href="https://www.postman.com/" target="_blank" rel="noopener">Postman</a> 來測試<code>Notification</code>與<code>Data</code>這兩種傳送方式。</p>
-<p>打的 Payload 如下
-Notification:</p>
+<p>Payload 如下</p>
+<p>Notification:</p>
 <pre><code class="language-json">{
   &quot;notification&quot;: {
     &quot;body&quot;: &quot;this is a body&quot;,
@@ -693,23 +693,23 @@ Notification:</p>
   &quot;to&quot;: &quot;YOUR CLIENT TOKEN&quot;
 }
 </code></pre>
-<p>讓我們觀察 <code>Foreground</code>, <code>Background</code> 及 <code>Terminated</code> 的行為吧</p>
+<p>觀察 <code>Foreground</code>, <code>Background</code> 及 <code>Terminated</code> 的行為</p>
 <ul>
 <li>
 <p>Foreground:</p>
 <ul>
 <li>
 <p>Notification</p>
-<p>觸發的 Handler - onMessage</p>
+<p>觸發 Handler - onMessage</p>
 <pre><code class="language-text">I/flutter (28543): on Message: {notification: {title: this is a title, body: this is a body}, data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}}
 </code></pre>
 </li>
 <li>
 <p>Data</p>
-<p>觸發的 Handler - onMessage</p>
+<p>觸發 Handler - onMessage</p>
 <pre><code class="language-text">I/flutter (28543): on Message: {notification: {title: null, body: null}, data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}}
 </code></pre>
-<p>與文件的描述相符。</p>
+<p>與文件相符。</p>
 </li>
 </ul>
 </li>
@@ -718,17 +718,17 @@ Notification:</p>
 <ul>
 <li>
 <p>Notification</p>
-<p>出現訊息提示窗
-<img src="notification_background.png" alt="fcm_notification_background"></p>
+<p>出現訊息提示窗</p>
+<p><img src="notification_background.png" alt="fcm_notification_background"></p>
 <p>在點擊後回復 APP 至前景並觸發 Handler - onResume</p>
 <pre><code class="language-text">I/flutter (28543): on Resume: {notification: {}, data: {collapse_key: &quot;秘密&quot;, google.original_priority: high, google.sent_time: 1586406396631, google.delivered_priority: high, google.ttl: 2419200, from: 217808926832, id: high, click_action: FLUTTER_NOTIFICATION_CLICK, google.message_id: 0:1586406396651621%4e2e62744e2e6274, status: done}}
 </code></pre>
 </li>
 <li>
 <p>Data</p>
-<p>結果，發生錯誤了!!!找不到相對應的 Callback function
-<img src="data_background_fatal_error.png" alt="data_background_error"></p>
-<p>但在參考
+<p>發生錯誤了!找不到相對應的 Callback function</p>
+<p><img src="data_background_fatal_error.png" alt="data_background_error"></p>
+<p>參考
 <a href="https://pub.dev/documentation/firebase_messaging/latest/" target="_blank" rel="noopener">pub 文件</a> 並實作<code>onBackgroundMessage</code>這個 Handler 後就可以接到資料</p>
 <pre><code class="language-text">I/flutter (31277): on Background data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}
 </code></pre>
@@ -744,12 +744,12 @@ Notification:</p>
 </li>
 </ul>
 <h2 id="troubleshooting">Troubleshooting</h2>
-<h3 id="error---pluginregistry-cannot-be-converted-to-flutterengine">Error - &ldquo;PluginRegistry cannot be converted to FlutterEngine&rdquo;</h3>
-<p>在實作<code>onBackgroundMessage</code>的時候，<code>Application.java</code>如果是參考 pub 裡的實作會發生錯誤
-<img src="error_on_registerWith_function.png" alt="registerWith error">，
-參考
+<h3 id="pluginregistry-cannot-be-converted-to-flutterengine-錯誤">&ldquo;PluginRegistry cannot be converted to FlutterEngine&rdquo; 錯誤</h3>
+<p>在實作<code>onBackgroundMessage</code>的時候，<code>Application.java</code>如果是參考 pub 裡的實作會發生錯誤</p>
+<p><img src="error_on_registerWith_function.png" alt="registerWith error"></p>
+<p>參考
 <a href="https://stackoverflow.com/questions/59446933/pluginregistry-cannot-be-converted-to-flutterengine" target="_blank" rel="noopener">此文</a>並實作新的 Class 取代舊的即可解決此問題</p>
-<h3 id="接收的到訊息但無法顯示彈跳視窗">接收的到訊息但無法顯示彈跳視窗</h3>
+<h3 id="接收的到訊息但沒有顯示提示視窗">接收的到訊息但沒有顯示提示視窗</h3>
 <p>這問題在下列兩種使用方式都有出現</p>
 <ul>
 <li>從 Firebase Cloud Message 的 Composer</li>
@@ -768,13 +768,13 @@ Notification:</p>
 <p><em><code>***測試後發現，如果希望在 Call API 的方式下能正常顯示提示窗，這個 meta 必需存在***</code></em></p>
 </li>
 <li>
-<p>在<code>Application.java</code>裡面實作<code>Notification Channel</code>
-<img src="./notification_implementation.png" alt="notification_implementation"></p>
+<p>在<code>Application.java</code>裡面實作<code>Notification Channel</code></p>
+<p><img src="./notification_implementation.png" alt="notification_implementation"></p>
 </li>
 </ol>
 <h2 id="結論">結論</h2>
-<p>FCM 提供了我目前所有的需求了，重點是它是<strong>免費的</strong>。
-<img src="fcm_free.png" alt="fcm_free"></p>
+<p>FCM 提供了我目前所有的需求了，重點是它是<strong>免費的</strong>。</p>
+<p><img src="fcm_free.png" alt="fcm_free"></p>
 <h2 id="補充">補充</h2>
 <h3 id="20200410">20200410</h3>
 <p>在前面利用 Postman 
@@ -784,6 +784,21 @@ Notification:</p>
 在 Flutter 裡僅需加一行程式碼即可，詳見
 <a href="https://stackoverflow.com/questions/38237559/how-do-you-send-a-firebase-notification-to-all-devices-via-curl" target="_blank" rel="noopener">此文</a></p>
 <pre><code class="language-flutter">firebaseMessaging.subscribeToTopic(&quot;all&quot;);
+</code></pre>
+<p>在 Request 的時候<code>to</code>的值取代成</p>
+<pre><code class="language-json">{
+  &quot;notification&quot;: {
+    &quot;body&quot;: &quot;this is a body&quot;,
+    &quot;title&quot;: &quot;this is a title&quot;
+  },
+  &quot;priority&quot;: &quot;high&quot;,
+  &quot;data&quot;: {
+    &quot;click_action&quot;: &quot;FLUTTER_NOTIFICATION_CLICK&quot;,
+    &quot;id&quot;: &quot;high&quot;,
+    &quot;status&quot;: &quot;done&quot;
+  },
+  &quot;to&quot;: &quot;/topics/all&quot;
+}
 </code></pre>
 <!-- external links -->
 <!-- some decent posts -->

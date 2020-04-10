@@ -38,8 +38,8 @@
 &lt;/li&gt;
 &lt;li&gt;從客戶端(&lt;code&gt;Client&lt;/code&gt;)發送訊息(&lt;code&gt;雙向&lt;/code&gt;)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;其基礎結構為
-&lt;img src=&#34;fcm_architecture.png&#34; alt=&#34;fcm_arch&#34;&gt;&lt;/p&gt;
+&lt;p&gt;其基礎結構為&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;fcm_architecture.png&#34; alt=&#34;fcm_arch&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;message-type&#34;&gt;Message Type&lt;/h3&gt;
 &lt;p&gt;FCM 目前提供兩種訊息的傳輸模式&lt;code&gt;Notification&lt;/code&gt;及&lt;code&gt;Data&lt;/code&gt;。&lt;code&gt;Notification&lt;/code&gt;是 SDK 在處理的，
 而&lt;code&gt;Data&lt;/code&gt;是 Client 處理。簡單說，在接收到&lt;code&gt;Notification&lt;/code&gt;時，SDK 會將收到的訊息顯示在
@@ -63,12 +63,12 @@
     &amp;lt;category android:name=&amp;quot;android.intent.category.DEFAULT&amp;quot; /&amp;gt;
 &amp;lt;/intent-filter&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;先來看一下各個 Handler 在&lt;code&gt;Notification&lt;/code&gt;及&lt;code&gt;Data&lt;/code&gt; 的 Spec
-&lt;img src=&#34;./fcm_handler_spec.png&#34; alt=&#34;fcm_handler&#34;&gt;&lt;/p&gt;
-&lt;p&gt;讓我使用 
+&lt;p&gt;先來看一下各個 Handler 在&lt;code&gt;Notification&lt;/code&gt;及&lt;code&gt;Data&lt;/code&gt; 的 Spec&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./fcm_handler_spec.png&#34; alt=&#34;fcm_handler&#34;&gt;&lt;/p&gt;
+&lt;p&gt;讓我們使用 
 &lt;a href=&#34;https://www.postman.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Postman&lt;/a&gt; 來測試&lt;code&gt;Notification&lt;/code&gt;與&lt;code&gt;Data&lt;/code&gt;這兩種傳送方式。&lt;/p&gt;
-&lt;p&gt;打的 Payload 如下
-Notification:&lt;/p&gt;
+&lt;p&gt;Payload 如下&lt;/p&gt;
+&lt;p&gt;Notification:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
   &amp;quot;notification&amp;quot;: {
     &amp;quot;body&amp;quot;: &amp;quot;this is a body&amp;quot;,
@@ -94,23 +94,23 @@ Notification:&lt;/p&gt;
   &amp;quot;to&amp;quot;: &amp;quot;YOUR CLIENT TOKEN&amp;quot;
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;讓我們觀察 &lt;code&gt;Foreground&lt;/code&gt;, &lt;code&gt;Background&lt;/code&gt; 及 &lt;code&gt;Terminated&lt;/code&gt; 的行為吧&lt;/p&gt;
+&lt;p&gt;觀察 &lt;code&gt;Foreground&lt;/code&gt;, &lt;code&gt;Background&lt;/code&gt; 及 &lt;code&gt;Terminated&lt;/code&gt; 的行為&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Foreground:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Notification&lt;/p&gt;
-&lt;p&gt;觸發的 Handler - onMessage&lt;/p&gt;
+&lt;p&gt;觸發 Handler - onMessage&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (28543): on Message: {notification: {title: this is a title, body: this is a body}, data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Data&lt;/p&gt;
-&lt;p&gt;觸發的 Handler - onMessage&lt;/p&gt;
+&lt;p&gt;觸發 Handler - onMessage&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (28543): on Message: {notification: {title: null, body: null}, data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}}
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;與文件的描述相符。&lt;/p&gt;
+&lt;p&gt;與文件相符。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -119,17 +119,17 @@ Notification:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Notification&lt;/p&gt;
-&lt;p&gt;出現訊息提示窗
-&lt;img src=&#34;notification_background.png&#34; alt=&#34;fcm_notification_background&#34;&gt;&lt;/p&gt;
+&lt;p&gt;出現訊息提示窗&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;notification_background.png&#34; alt=&#34;fcm_notification_background&#34;&gt;&lt;/p&gt;
 &lt;p&gt;在點擊後回復 APP 至前景並觸發 Handler - onResume&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (28543): on Resume: {notification: {}, data: {collapse_key: &amp;quot;秘密&amp;quot;, google.original_priority: high, google.sent_time: 1586406396631, google.delivered_priority: high, google.ttl: 2419200, from: 217808926832, id: high, click_action: FLUTTER_NOTIFICATION_CLICK, google.message_id: 0:1586406396651621%4e2e62744e2e6274, status: done}}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Data&lt;/p&gt;
-&lt;p&gt;結果，發生錯誤了!!!找不到相對應的 Callback function
-&lt;img src=&#34;data_background_fatal_error.png&#34; alt=&#34;data_background_error&#34;&gt;&lt;/p&gt;
-&lt;p&gt;但在參考
+&lt;p&gt;發生錯誤了!找不到相對應的 Callback function&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;data_background_fatal_error.png&#34; alt=&#34;data_background_error&#34;&gt;&lt;/p&gt;
+&lt;p&gt;參考
 &lt;a href=&#34;https://pub.dev/documentation/firebase_messaging/latest/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pub 文件&lt;/a&gt; 並實作&lt;code&gt;onBackgroundMessage&lt;/code&gt;這個 Handler 後就可以接到資料&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (31277): on Background data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}
 &lt;/code&gt;&lt;/pre&gt;
@@ -145,12 +145,12 @@ Notification:&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;troubleshooting&#34;&gt;Troubleshooting&lt;/h2&gt;
-&lt;h3 id=&#34;error---pluginregistry-cannot-be-converted-to-flutterengine&#34;&gt;Error - &amp;ldquo;PluginRegistry cannot be converted to FlutterEngine&amp;rdquo;&lt;/h3&gt;
-&lt;p&gt;在實作&lt;code&gt;onBackgroundMessage&lt;/code&gt;的時候，&lt;code&gt;Application.java&lt;/code&gt;如果是參考 pub 裡的實作會發生錯誤
-&lt;img src=&#34;error_on_registerWith_function.png&#34; alt=&#34;registerWith error&#34;&gt;，
-參考
+&lt;h3 id=&#34;pluginregistry-cannot-be-converted-to-flutterengine-錯誤&#34;&gt;&amp;ldquo;PluginRegistry cannot be converted to FlutterEngine&amp;rdquo; 錯誤&lt;/h3&gt;
+&lt;p&gt;在實作&lt;code&gt;onBackgroundMessage&lt;/code&gt;的時候，&lt;code&gt;Application.java&lt;/code&gt;如果是參考 pub 裡的實作會發生錯誤&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;error_on_registerWith_function.png&#34; alt=&#34;registerWith error&#34;&gt;&lt;/p&gt;
+&lt;p&gt;參考
 &lt;a href=&#34;https://stackoverflow.com/questions/59446933/pluginregistry-cannot-be-converted-to-flutterengine&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;此文&lt;/a&gt;並實作新的 Class 取代舊的即可解決此問題&lt;/p&gt;
-&lt;h3 id=&#34;接收的到訊息但無法顯示彈跳視窗&#34;&gt;接收的到訊息但無法顯示彈跳視窗&lt;/h3&gt;
+&lt;h3 id=&#34;接收的到訊息但沒有顯示提示視窗&#34;&gt;接收的到訊息但沒有顯示提示視窗&lt;/h3&gt;
 &lt;p&gt;這問題在下列兩種使用方式都有出現&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;從 Firebase Cloud Message 的 Composer&lt;/li&gt;
@@ -169,13 +169,13 @@ Notification:&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;&lt;code&gt;***測試後發現，如果希望在 Call API 的方式下能正常顯示提示窗，這個 meta 必需存在***&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;在&lt;code&gt;Application.java&lt;/code&gt;裡面實作&lt;code&gt;Notification Channel&lt;/code&gt;
-&lt;img src=&#34;./notification_implementation.png&#34; alt=&#34;notification_implementation&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;Application.java&lt;/code&gt;裡面實作&lt;code&gt;Notification Channel&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./notification_implementation.png&#34; alt=&#34;notification_implementation&#34;&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;結論&#34;&gt;結論&lt;/h2&gt;
-&lt;p&gt;FCM 提供了我目前所有的需求了，重點是它是&lt;strong&gt;免費的&lt;/strong&gt;。
-&lt;img src=&#34;fcm_free.png&#34; alt=&#34;fcm_free&#34;&gt;&lt;/p&gt;
+&lt;p&gt;FCM 提供了我目前所有的需求了，重點是它是&lt;strong&gt;免費的&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;fcm_free.png&#34; alt=&#34;fcm_free&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;補充&#34;&gt;補充&lt;/h2&gt;
 &lt;h3 id=&#34;20200410&#34;&gt;20200410&lt;/h3&gt;
 &lt;p&gt;在前面利用 Postman 
@@ -185,6 +185,21 @@ Notification:&lt;/p&gt;
 在 Flutter 裡僅需加一行程式碼即可，詳見
 &lt;a href=&#34;https://stackoverflow.com/questions/38237559/how-do-you-send-a-firebase-notification-to-all-devices-via-curl&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;此文&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-flutter&#34;&gt;firebaseMessaging.subscribeToTopic(&amp;quot;all&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 Request 的時候&lt;code&gt;to&lt;/code&gt;的值取代成&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;notification&amp;quot;: {
+    &amp;quot;body&amp;quot;: &amp;quot;this is a body&amp;quot;,
+    &amp;quot;title&amp;quot;: &amp;quot;this is a title&amp;quot;
+  },
+  &amp;quot;priority&amp;quot;: &amp;quot;high&amp;quot;,
+  &amp;quot;data&amp;quot;: {
+    &amp;quot;click_action&amp;quot;: &amp;quot;FLUTTER_NOTIFICATION_CLICK&amp;quot;,
+    &amp;quot;id&amp;quot;: &amp;quot;high&amp;quot;,
+    &amp;quot;status&amp;quot;: &amp;quot;done&amp;quot;
+  },
+  &amp;quot;to&amp;quot;: &amp;quot;/topics/all&amp;quot;
+}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;!-- external links --&gt;
 &lt;!-- some decent posts --&gt;
