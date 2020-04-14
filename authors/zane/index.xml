@@ -5,12 +5,105 @@
     <link>https://u2633.github.io/authors/zane/</link>
       <atom:link href="https://u2633.github.io/authors/zane/index.xml" rel="self" type="application/rss+xml" />
     <description>zane</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Thu, 09 Apr 2020 09:41:26 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Thu, 09 Apr 2020 14:34:42 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>zane</title>
       <link>https://u2633.github.io/authors/zane/</link>
     </image>
+    
+    <item>
+      <title>Extensible Messaging and Presence Protocol (XMPP)</title>
+      <link>https://u2633.github.io/post/2020/04/xmpp-learning-note/</link>
+      <pubDate>Thu, 09 Apr 2020 14:34:42 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/04/xmpp-learning-note/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近在串 Firebase Cloud Messaging 的時候在官方文件看到了 XMPP 這個通訊協定，
+雖然這並不是新的技術，但過去也沒看過，就來學點新知識吧。&lt;/p&gt;
+&lt;h2 id=&#34;what&#34;&gt;What&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://xmpp.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;XMPP, eXtensible Messaging and Presence Protocol&lt;/a&gt;
+是一種基於
+&lt;a href=&#34;https://zh.wikipedia.org/wiki/XML&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;XML&lt;/a&gt;，用於傳遞&lt;code&gt;訊息及狀態&lt;/code&gt;的&lt;code&gt;開放式標準&lt;/code&gt;通訊協定。可應用於如: WebRTC, IoT, Gaming
+, Instant Message(IM)等許多領域中。&lt;/p&gt;
+&lt;p&gt;目前一些科技大廠如: Google, Apple 的&lt;code&gt;Push Notification&lt;/code&gt;也是使用此通訊協定。
+IM 中較國內知名的就屬
+&lt;a href=&#34;http://whatsapp.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;WhatsApp&lt;/a&gt;。
+Gaming 中
+&lt;a href=&#34;https://www.nintendo.com/switch/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Nintendo Switch&lt;/a&gt; 也利用它當作&lt;code&gt;Push Notification Server&lt;/code&gt;，
+另一個 Gaming Use Case 就是
+&lt;a href=&#34;https://leagueoflegends.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;League of Legends&lt;/a&gt; - 將其利用作為&lt;code&gt;聊天室&lt;/code&gt;與&lt;code&gt;遊戲邀請&lt;/code&gt;的通訊協定。
+有興趣多了解可參考
+&lt;a href=&#34;https://xmpp.org/uses/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官方 Uses&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;why&#34;&gt;Why&lt;/h2&gt;
+&lt;p&gt;優點:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;開放&lt;/p&gt;
+&lt;p&gt;XMPP協議是自由、開放、公開的，並且易於瞭解。而且在客戶端、伺服器、元件、原始碼庫等方面，都已經各自有多種實作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;標準&lt;/p&gt;
+&lt;p&gt;網際網路工程工作小組（IETF）已經將Jabber的核心XML串流協定以XMPP之名，正式列為認可的即時通訊及Presence技術。而XMPP的技術規格已被定義在RFC 3920及RFC 3921。任何IM供應商在遵循XMPP協定下，都可與Google Talk實現連接。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;證實可用&lt;/p&gt;
+&lt;p&gt;第一個Jabber（現在XMPP）技術是Jeremie Miller在1998年開發的，現在已經相當穩定；數以百計的開發者為XMPP技術而努力。今日的網際網路上有數以萬計的XMPP伺服器運作著，並有數以百萬計的人們使用XMPP即時傳訊軟體。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;分散式&lt;/p&gt;
+&lt;p&gt;XMPP網路的架構和電子郵件十分相像；XMPP核心協定通信方式是先建立一個stream，XMPP以TCP傳遞XML資料流，沒有中央主伺服器。任何人都可以運行自己的XMPP伺服器，使個人及組織能夠掌控他們的即時傳訊體驗。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安全&lt;/p&gt;
+&lt;p&gt;任何XMPP協定的伺服器可以獨立於公眾XMPP網路（例如在企業內部網路中），而使用SASL及TLS等技術的可靠安全性，已內建於核心XMPP技術規格中。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;可擴展&lt;/p&gt;
+&lt;p&gt;XML命名空間的威力可使任何人在核心協定的基礎上建造客製化的功能；為了維持通透性，常見的擴充套件由XMPP標準基金會。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;彈性佳&lt;/p&gt;
+&lt;p&gt;XMPP除了可用在即時通訊的應用程式，還能用在網路管理、內容供稿、協同工具、檔案共享、遊戲、遠端系統監控等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;多樣性&lt;/p&gt;
+&lt;p&gt;用XMPP協定來建造及布署即時應用程式及服務的公司及開放原始碼計劃分布在各種領域；用XMPP技術開發軟體，資源及支援的來源是多樣的，使得使你不會陷於被「綁架」的困境。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;缺點&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;資料負載太重&lt;/p&gt;
+&lt;p&gt;隨著通常超過70％的XMPP協定的伺服器的資料流量的存在和近60％的被重複轉發，XMPP協定目前擁有一個大型架空中存在的資料提供給多個收件人。新的議定書正在研究，以減輕這一問題。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;二進制資料傳輸受限&lt;/p&gt;
+&lt;p&gt;XMPP傳輸單一的XML檔案，因此要透過XMPP傳輸二進制資料，需先將二進制資料以Base64編碼。但是大量的二進制資料傳輸，較佳的作法是用外部的其他協定傳輸，而以XMPP進行溝通。至於其他二進制資料加密會話（encrypted conversations）或圖形圖標（graphic icons）以嵌入式使用相同的方法。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;how&#34;&gt;How&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;XMPP Client&lt;/code&gt; 的傳輸都&lt;strong&gt;必需&lt;/strong&gt;經過 &lt;code&gt;XMPP Server&lt;/code&gt;，但這 Server 不是官方控制的(&lt;strong&gt;Jabber.org的公眾伺服器上有大量的用戶，但它並不是官方的&lt;/strong&gt;)。
+任何人都可以在自己或是公司的網域架設 XMPP Server，例如:&lt;/p&gt;
+&lt;p&gt;朱麗葉（juliet@capulet.com）想和羅密歐（romeo@montague.net）通話，他們兩人的帳號分別在Capulet.com及Montague.net的伺服器上。
+其流程為&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;朱麗葉的 XMPP客戶端 將她的訊息傳送到 Capulet.com XMPP 伺服器。&lt;/li&gt;
+&lt;li&gt;Capulet.com XMPP 伺服器開啟與 Montague.net XMPP 伺服器的連接。&lt;/li&gt;
+&lt;li&gt;Montague.net XMPP 伺服器將訊息寄送給羅密歐。如果他目前不在線上，那麼儲存訊息以待稍後寄送。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在上述的過程中，訊息會在傳送時被 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/OMEMO&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;OMEMO&lt;/a&gt; 的加密方式處理過後再送出。&lt;/p&gt;
+&lt;p&gt;XMPP 亦支援跨協定傳輸，稱為 &lt;code&gt;Transport 或是 Gateway&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://xmpp.org/software/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官方這裡&lt;/a&gt; 也整理不少實作 XMPP 協定的 Client 與 Server 軟體。&lt;/p&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;在網路上也不少 XMPP 與 
+&lt;a href=&#34;http://mqtt.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MQTT&lt;/a&gt; 比較的文章，尤其是在 IoT 的領域中，這兩種𠦢定都是可以被利用的。
+但是，MQTT 由於其&lt;code&gt;低功耗&lt;/code&gt;且&lt;code&gt;低頻寬消耗&lt;/code&gt;的特性，所以更適合在 IoT 領域，開發者認為它就是個&lt;code&gt;機器對機器的通訊協定&lt;/code&gt;。
+相對的，XMPP 也因&lt;code&gt;高安全性&lt;/code&gt;及&lt;code&gt;易擴展&lt;/code&gt;等特性讓它能夠在不同的領域中被廣泛使用。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Firebase Cloud Messaging - Android</title>
