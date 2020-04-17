@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>flutter | Z@NE.NOTE</title>
-    <link>https://u2633.github.io/categories/flutter/</link>
-      <atom:link href="https://u2633.github.io/categories/flutter/index.xml" rel="self" type="application/rss+xml" />
-    <description>flutter</description>
+    <title>state management | Z@NE.NOTE</title>
+    <link>https://u2633.github.io/tags/state-management/</link>
+      <atom:link href="https://u2633.github.io/tags/state-management/index.xml" rel="self" type="application/rss+xml" />
+    <description>state management</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 14 Apr 2020 13:56:46 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
-      <title>flutter</title>
-      <link>https://u2633.github.io/categories/flutter/</link>
+      <title>state management</title>
+      <link>https://u2633.github.io/tags/state-management/</link>
     </image>
     
     <item>
@@ -235,85 +235,6 @@ class _CounterExampleState extends State&amp;lt;CounterExample&amp;gt; {
 &lt;p&gt;雖然 MobX 還是得借助額外的函式庫來幫我們產生底層的程式碼，但與 BLoC 比起來,確實可以少寫點 Code。
 文件說明也蠻詳儘的，也有把使用者可能會有的疑問也在文件中加以說明。另外，也有不少範例可以參考。
 但在學習的曲線上，BLoC 還是讓我覺得比較易懂跟直覺。該學哪種呢?當然是兩種都學!!!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>解決Flutter Bottom Modal彈跳兩次的問題</title>
-      <link>https://u2633.github.io/post/2020/03/fix-modal-popup-twice/</link>
-      <pubDate>Thu, 12 Mar 2020 19:58:18 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/03/fix-modal-popup-twice/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
-&lt;p&gt;在開發 Flutter 的時候，不知為何觸發 Bottom Modal 的選單時，總是會觸發兩次，問題如下影片&lt;/p&gt;
-
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-  &lt;iframe src=&#34;https://www.youtube.com/embed/RqUUDLlzAkE&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&#34;預期的行為&#34;&gt;預期的行為&lt;/h2&gt;
-&lt;p&gt;預期只會出現一次&lt;/p&gt;
-
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-  &lt;iframe src=&#34;https://www.youtube.com/embed/ntuETYdeMjc&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&#34;解決方法&#34;&gt;解決方法&lt;/h2&gt;
-&lt;p&gt;增加 listener 檢查目前的 Widget 是否已經被 Focus，避免觸發兩次&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;_institutionOnFocus.addListener(() {
-  if (_institutionOnFocus.hasFocus) {
-    BottomModalBuilder.items(
-      context,
-      _institutionController,
-      _institutionList.map((i) =&amp;gt; i.name).toList(),
-    );
-  }
-});
-
-/// Institution text field
-Widget _showInstitutionField(CheckupDownloadState state) {
-  return TextFormFieldBuilder(
-    labelText: &#39;健檢機構&#39;,
-    hintText: &#39;請選擇&#39;,
-    controller: _institutionController,
-    focusNode: _institutionOnFocus,
-    isReadOnly: true,
-    validateFailureMessage: !state.isInsitutionValid ? &#39;請選擇機構&#39; : null,
-  );
-}
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>什麼是BLoC Design Pattern</title>
-      <link>https://u2633.github.io/post/2020/03/bloc-design-pattern/</link>
-      <pubDate>Tue, 10 Mar 2020 14:50:24 +0800</pubDate>
-      <guid>https://u2633.github.io/post/2020/03/bloc-design-pattern/</guid>
-      <description>&lt;p&gt;Business Logic Component Pattern 簡稱 
-&lt;a href=&#34;https://bloclibrary.dev/#/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC&lt;/a&gt;。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。&lt;/p&gt;
-&lt;p&gt;
-&lt;a href=&#34;https://bloclibrary.dev/#/coreconcepts?id=blocs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC 主件&lt;/a&gt;，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&amp;hellip;else 或是 switch&amp;hellip;case，如下:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:bloc/bloc.dart&#39;;
-
-enum CounterEvent { increment, decrement }
-
-class CounterBloc extends Bloc&amp;lt;CounterEvent, int&amp;gt; {
-  @override
-  int get initialState =&amp;gt; 0;
-
-  @override
-  Stream&amp;lt;int&amp;gt; mapEventToState(CounterEvent event) async* {
-    switch (event) {
-      case CounterEvent.decrement:
-        yield currentState - 1;
-        break;
-      case CounterEvent.increment:
-        yield currentState + 1;
-        break;
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
