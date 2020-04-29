@@ -5,12 +5,46 @@
     <link>https://u2633.github.io/authors/zane/</link>
       <atom:link href="https://u2633.github.io/authors/zane/index.xml" rel="self" type="application/rss+xml" />
     <description>zane</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 14 Apr 2020 13:56:46 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 28 Apr 2020 19:40:57 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>zane</title>
       <link>https://u2633.github.io/authors/zane/</link>
     </image>
+    
+    <item>
+      <title>Flutter SDK 1.12.13 Proguard 功能預設已變更為開啟狀態</title>
+      <link>https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/</link>
+      <pubDate>Tue, 28 Apr 2020 19:40:57 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近在更新 Flutter SDK 到 1.12.13 之後，Release 的版本在執行時會報錯，Google 後發現原來是 Proguard 的問題，
+來紀錄一下解決的方法吧。&lt;/p&gt;
+&lt;h2 id=&#34;問題描述&#34;&gt;問題描述&lt;/h2&gt;
+&lt;p&gt;在 Flutter 升到 Stable 的最新版 - &lt;code&gt;1.12.13&lt;/code&gt; 之後，build 的過程都很順利，原本想說可以無痛的。
+結果，該來的還是躲不過，執行 APP 後居然一直在登入頁面轉圈圈。在交叉比對後發現，
+執行 Debug 版本居然是正常的。再來看一下 logcat，找找看錯誤發生的原因。
+果然…，就是有錯，而真正造成錯誤居然是被混淆的程式碼，如下:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;logcat_info.png&#34; alt=&#34;Logcat Info&#34;&gt;&lt;/p&gt;
+&lt;p&gt;就之前的經驗，Proguard 應該是手動加入的，這時候第一個直覺先想到的就是，先看一下 1.12.13 的 Release Note，
+果不其然，在這個版本的 Relase Note 發現了程式被混淆的原因。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;proguard_enable.png&#34; alt=&#34;Proguard is default&#34;&gt;&lt;/p&gt;
+&lt;p&gt;沒錯，由於這個版本的 
+&lt;a href=&#34;https://flutter.dev/docs/deployment/android#shrinking-your-code-with-r8&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;R8&lt;/a&gt; 預設為開啟狀態，所以，Proguard 在 Release Mode 被設成 &lt;code&gt;Default&lt;/code&gt; 了。即然知道原因那就好解決…，再次請教大神…。&lt;/p&gt;
+&lt;h2 id=&#34;解決方法&#34;&gt;解決方法&lt;/h2&gt;
+&lt;p&gt;解決辨法有兩種，第一種就是在 Build Command 後面多下個 flag - &lt;code&gt;--no-shrink&lt;/code&gt;，另一種就是在所有的 JNI 函數上下 Annotatin - &lt;code&gt;@keep&lt;/code&gt;，
+去避免程式碼進行混淆的動作。而我是選擇第二種比較合理的作法。&lt;/p&gt;
+&lt;h2 id=&#34;參考文件&#34;&gt;參考文件&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://flutter.dev/docs/development/tools/sdk/release-notes/release-notes-1.12.13&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Flutter 1.12.13 Release Note&lt;/a&gt;
+
+&lt;a href=&#34;https://github.com/flutter/flutter/issues/48015#issuecomment-571043492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;How to fix proguard issue&lt;/a&gt;
+
+&lt;a href=&#34;https://medium.com/@JamesQI/proguard-d8cc2e67211&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Proguard 教學&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;結論&#34;&gt;結論&lt;/h2&gt;
+&lt;p&gt;雖然這個問題並沒有花費太多時間解進，但這個經驗又讓我學到，要更新工具之前，最好先詳閱它的 Release Note&amp;hellip;。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>狀態管理工具 - MobX</title>

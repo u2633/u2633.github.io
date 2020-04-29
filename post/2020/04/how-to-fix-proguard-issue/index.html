@@ -28,12 +28,10 @@
   
     
   
-  <meta name="description" content="前端/Flutter 工程師">
+  <meta name="description" content="解決更新 Flutter SDK 後程式碼混淆造成的錯誤">
 
   
-  <link rel="alternate" hreflang="en" href="https://u2633.github.io/en/authors/">
-  
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/authors/">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/">
 
   
 
@@ -215,14 +213,12 @@
 
 
   
-  <link rel="alternate" href="/authors/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/authors/">
+  <link rel="canonical" href="https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/">
 
   
   
@@ -236,18 +232,63 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/authors/">
-  <meta property="og:title" content="Authors | Z@NE.NOTE">
-  <meta property="og:description" content="前端/Flutter 工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/">
+  <meta property="og:title" content="Flutter SDK 1.12.13 Proguard 功能預設已變更為開啟狀態 | Z@NE.NOTE">
+  <meta property="og:description" content="解決更新 Flutter SDK 後程式碼混淆造成的錯誤"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    <meta property="og:updated_time" content="2020-04-28T19:40:57&#43;08:00">
+    
+      <meta property="article:published_time" content="2020-04-28T19:40:57&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-04-28T19:40:57&#43;08:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/"
+  },
+  "headline": "Flutter SDK 1.12.13 Proguard 功能預設已變更為開啟狀態",
+  
+  "datePublished": "2020-04-28T19:40:57+08:00",
+  "dateModified": "2020-04-28T19:40:57+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "zane"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Z@NE.NOTE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "解決更新 Flutter SDK 後程式碼混淆造成的錯誤"
+}
+</script>
+
+  
 
   
 
@@ -255,10 +296,13 @@
   
 
 
+  
 
 
 
-  <title>Authors | Z@NE.NOTE</title>
+
+
+  <title>Flutter SDK 1.12.13 Proguard 功能預設已變更為開啟狀態 | Z@NE.NOTE</title>
 
 </head>
 
@@ -470,22 +514,6 @@
       
 
       
-      <li class="nav-item dropdown i18n-dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
-          <i class="fas fa-globe mr-1" aria-hidden="true"></i><span class="d-none d-lg-inline">中文 (繁體)</span>
-        </a>
-        <div class="dropdown-menu">
-          <div class="dropdown-item i18n-active font-weight-bold">
-            <span>中文 (繁體)</span>
-          </div>
-          
-          <a class="dropdown-item" href="https://u2633.github.io/en/authors/">
-            <span>English</span>
-          </a>
-          
-        </div>
-      </li>
-      
 
     </ul>
 
@@ -493,55 +521,261 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>Flutter SDK 1.12.13 Proguard 功能預設已變更為開啟狀態</h1>
+
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>Authors</h1>
+
+
+<div class="article-metadata">
 
   
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/authors/zane/">zane</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020年4月28日
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/mobile-app/">mobile app</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  <ul>
+    <div class="article-style">
+      <h2 id="前言">前言</h2>
+<p>最近在更新 Flutter SDK 到 1.12.13 之後，Release 的版本在執行時會報錯，Google 後發現原來是 Proguard 的問題，
+來紀錄一下解決的方法吧。</p>
+<h2 id="問題描述">問題描述</h2>
+<p>在 Flutter 升到 Stable 的最新版 - <code>1.12.13</code> 之後，build 的過程都很順利，原本想說可以無痛的。
+結果，該來的還是躲不過，執行 APP 後居然一直在登入頁面轉圈圈。在交叉比對後發現，
+執行 Debug 版本居然是正常的。再來看一下 logcat，找找看錯誤發生的原因。
+果然…，就是有錯，而真正造成錯誤居然是被混淆的程式碼，如下:</p>
+<p><img src="logcat_info.png" alt="Logcat Info"></p>
+<p>就之前的經驗，Proguard 應該是手動加入的，這時候第一個直覺先想到的就是，先看一下 1.12.13 的 Release Note，
+果不其然，在這個版本的 Relase Note 發現了程式被混淆的原因。</p>
+<p><img src="proguard_enable.png" alt="Proguard is default"></p>
+<p>沒錯，由於這個版本的 
+<a href="https://flutter.dev/docs/deployment/android#shrinking-your-code-with-r8" target="_blank" rel="noopener">R8</a> 預設為開啟狀態，所以，Proguard 在 Release Mode 被設成 <code>Default</code> 了。即然知道原因那就好解決…，再次請教大神…。</p>
+<h2 id="解決方法">解決方法</h2>
+<p>解決辨法有兩種，第一種就是在 Build Command 後面多下個 flag - <code>--no-shrink</code>，另一種就是在所有的 JNI 函數上下 Annotatin - <code>@keep</code>，
+去避免程式碼進行混淆的動作。而我是選擇第二種比較合理的作法。</p>
+<h2 id="參考文件">參考文件</h2>
+<p>
+<a href="https://flutter.dev/docs/development/tools/sdk/release-notes/release-notes-1.12.13" target="_blank" rel="noopener">Flutter 1.12.13 Release Note</a>
+
+<a href="https://github.com/flutter/flutter/issues/48015#issuecomment-571043492" target="_blank" rel="noopener">How to fix proguard issue</a>
+
+<a href="https://medium.com/@JamesQI/proguard-d8cc2e67211" target="_blank" rel="noopener">Proguard 教學</a></p>
+<h2 id="結論">結論</h2>
+<p>雖然這個問題並沒有花費太多時間解進，但這個經驗又讓我學到，要更新工具之前，最好先詳閱它的 Release Note&hellip;。</p>
+
+    </div>
+
     
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/flutter/">flutter</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
     
       
-      <li><a href="https://u2633.github.io/authors/zane/">zane</a></li>
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/&amp;text=Flutter%20SDK%201.12.13%20Proguard%20%e5%8a%9f%e8%83%bd%e9%a0%90%e8%a8%ad%e5%b7%b2%e8%ae%8a%e6%9b%b4%e7%82%ba%e9%96%8b%e5%95%9f%e7%8b%80%e6%85%8b" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
     
       
-      <li><a href="https://u2633.github.io/authors/admin/">Zane Chen</a></li>
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/&amp;t=Flutter%20SDK%201.12.13%20Proguard%20%e5%8a%9f%e8%83%bd%e9%a0%90%e8%a8%ad%e5%b7%b2%e8%ae%8a%e6%9b%b4%e7%82%ba%e9%96%8b%e5%95%9f%e7%8b%80%e6%85%8b" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Flutter%20SDK%201.12.13%20Proguard%20%e5%8a%9f%e8%83%bd%e9%a0%90%e8%a8%ad%e5%b7%b2%e8%ae%8a%e6%9b%b4%e7%82%ba%e9%96%8b%e5%95%9f%e7%8b%80%e6%85%8b&amp;body=https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/&amp;title=Flutter%20SDK%201.12.13%20Proguard%20%e5%8a%9f%e8%83%bd%e9%a0%90%e8%a8%ad%e5%b7%b2%e8%ae%8a%e6%9b%b4%e7%82%ba%e9%96%8b%e5%95%9f%e7%8b%80%e6%85%8b" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
     
   </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
 
   
 
-</div>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
 
       
 
