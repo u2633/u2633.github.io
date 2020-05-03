@@ -28,12 +28,10 @@
   
     
   
-  <meta name="description" content="前端/Flutter 工程師">
+  <meta name="description" content="在 Unity Export 時客制化 iOS 設定檔">
 
   
-  <link rel="alternate" hreflang="en" href="https://u2633.github.io/en/post/">
-  
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/">
 
   
 
@@ -215,14 +213,12 @@
 
 
   
-  <link rel="alternate" href="/post/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/post/">
+  <link rel="canonical" href="https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/">
 
   
   
@@ -236,18 +232,63 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/post/">
-  <meta property="og:title" content="Posts | Z@NE.NOTE">
-  <meta property="og:description" content="前端/Flutter 工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/">
+  <meta property="og:title" content="Unity Export vs iOS Build Configuration | Z@NE.NOTE">
+  <meta property="og:description" content="在 Unity Export 時客制化 iOS 設定檔"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    <meta property="og:updated_time" content="2020-04-30T10:02:21&#43;08:00">
+    
+      <meta property="article:published_time" content="2020-04-30T10:02:21&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-04-30T10:02:21&#43;08:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/"
+  },
+  "headline": "Unity Export vs iOS Build Configuration",
+  
+  "datePublished": "2020-04-30T10:02:21+08:00",
+  "dateModified": "2020-04-30T10:02:21+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "zane"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Z@NE.NOTE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "在 Unity Export 時客制化 iOS 設定檔"
+}
+</script>
+
+  
 
   
 
@@ -255,10 +296,13 @@
   
 
 
+  
 
 
 
-  <title>Posts | Z@NE.NOTE</title>
+
+
+  <title>Unity Export vs iOS Build Configuration | Z@NE.NOTE</title>
 
 </head>
 
@@ -470,22 +514,6 @@
       
 
       
-      <li class="nav-item dropdown i18n-dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
-          <i class="fas fa-globe mr-1" aria-hidden="true"></i><span class="d-none d-lg-inline">中文 (繁體)</span>
-        </a>
-        <div class="dropdown-menu">
-          <div class="dropdown-item i18n-active font-weight-bold">
-            <span>中文 (繁體)</span>
-          </div>
-          
-          <a class="dropdown-item" href="https://u2633.github.io/en/post/">
-            <span>English</span>
-          </a>
-          
-        </div>
-      </li>
-      
 
     </ul>
 
@@ -493,78 +521,33 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>Unity Export vs iOS Build Configuration</h1>
+
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>Posts</h1>
-
-  
-
-  
-</div>
-
-
-
-<div class="universal-wrapper">
-
-  
-
-  
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/04/add-flavors-on-ios-from-unity-export/" >Unity Export vs iOS Build Configuration</a>
-    </h3>
-
-    
-    <div class="article-style">
-      在 Unity Export 時客制化 iOS 設定檔
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
 
 
 <div class="article-metadata">
@@ -614,925 +597,219 @@
 
 </div>
 
-      
-    </div>
-
     
 
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 </div>
 
-    
-  
-    
-      
 
 
+  <div class="article-container">
 
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/04/how-to-fix-proguard-issue/" >Flutter SDK 1.12.13 Proguard 功能預設已變更為開啟狀態</a>
-    </h3>
-
-    
     <div class="article-style">
-      解決更新 Flutter SDK 後程式碼混淆造成的錯誤
+      <h2 id="前言">前言</h2>
+<p>目前因為需求的關係，需要將專案分成五個不同的執行環境。而且，因為專案有導入<code>Firebase</code>的關係，
+我們利用 <code>Flavor</code> 來區分各別環境。專案中又有使用到 Unity 模組。在<code>Android</code>的環境上執行都很順利
+，但是，在執行 iOS 的時候卻會出現錯誤。來紀錄一下我的問題發生經過及解決方式吧。</p>
+<h2 id="project-level-configs-vs-trage-level-congis">Project Level Configs vs Trage Level Congis</h2>
+<p>在此之前，我們先來了解一下 iOS 中 <code>Project Level Target</code> 與 <code>Native Level Targes</code> 之間的關係及差別吧。</p>
+<p>在這就先道破吧 -  <code>Target Level</code> 比 <code>Project Level</code> 的層級高。所以，有衝突的設定會以 Target Level 為先。</p>
+<p><img src="configs_level.png" alt="Config Level"></p>
+<p>簡單說，Project 就是像是 <code>Common 設定</code>，而 Target 會再根據需求加入或是修改設定。
+在 <code>Target Level</code> 中，與 <code>Project Level</code> 同名的稱 <code>Main Target</code></p>
+<h2 id="如何手動解決外部模組-build-flavor-錯誤">如何手動解決外部模組 Build Flavor 錯誤</h2>
+<p>
+<a href="https://medium.com/@salvatoregiordanoo/flavoring-flutter-392aaa875f36" target="_blank" rel="noopener">Flavor 的設定</a>由於 Google 上的教學很詳細了，
+在此就不多做敘述。</p>
+<p>在下<code>flutter build ios --no-codesign -t lib/main_prod.dart --flavor production</code>時，馬上就會出現編譯錯誤。
+原因就是來自外部匯入的模組 - <code>Unity-iPhone</code>上。在花了不少時間找答案卻沒什麼結果的時候，我忽然靈光一閃，
+想說為什麼我不試試看也在這外部模組中多加入跟我主要專案上一樣的設定檔就好。結果，還真的被我編譯成功且能正常執行。
+雖然高興了一下，但接著遇到的問題是，這個外部模組是個異動性極高，也就是說，即使我這次已經改成功了，
+但下次也會因為重新匯出而造成我目前的設定檔被重置。我不可能每次重新匯入後就去改一次那個設定檔，
+太不 Make Sence 了!!!</p>
+<p>好吧，即然無法在專案內動手腳，那我就在匯出的時候動手腳了!</p>
+<h2 id="修改-unity-匯出腳本">修改 Unity 匯出腳本</h2>
+<p>我相信，這種問題我絕對不是第一個。果然，
+Unity 官方已經有提供現有的
+<a href="https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.html" target="_blank" rel="noopener">API</a>，
+幫我們解決這方面的需求了，讓我們可以完整存取 <code>Project Level</code> 及 <code>Target Level</code>的設定。
+但因為小弟不熟悉的關係，所以，花了兩天 Try and Error 才把這問題解決。而整個過程中我只有使用到少數幾支 API</p>
+<p>取得 Project GUID 的 
+<a href="https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.ProjectGuid.html" target="_blank" rel="noopener">API</a></p>
+<pre><code class="language-c#">public string ProjectGuid();
+</code></pre>
+<p>取得 Unity Framework 的 
+<a href="https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.GetUnityFrameworkTargetGuid.html" target="_blank" rel="noopener">API</a></p>
+<pre><code class="language-c#">PBXProject.GetUnityFrameworkTargetGuid();
+</code></pre>
+<p>取得 Unity Test 的 API。這裡我是利用另一種方式取得的，不是官方文件所提到的<code>GetUnityTestTargetName</code></p>
+<pre><code class="language-c#">PBXProject.TargetGuidByName(&quot;Unity-iPhone Tests&quot;);
+</code></pre>
+<p>取得 Build Configs 的 
+<a href="https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.BuildConfigByName.html" target="_blank" rel="noopener">API</a></p>
+<pre><code class="language-c#">public string BuildConfigByName(string targetGuid, string name);
+</code></pre>
+<p><code>targetGuid</code>就是上述中的<code>ProjectGuid</code>、<code>GetUnityFrameworkTargetGuid</code>及<code>TargetGuidByName(&quot;Unity-iPhone Tests&quot;)</code>所得到的24碼GUID，
+<code>name</code>就是 Build Type 與各別 Flavor 形成的的設定檔名稱，如: <code>Debug-development</code>或是<code>Release Production</code>。</p>
+<p>加入 Build Property 的 
+<a href="https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.AddBuildPropertyForConfig.html" target="_blank" rel="noopener">API</a></p>
+<p>它有兩種建構型態</p>
+<pre><code class="language-c#">public void AddBuildPropertyForConfig(string configGuid, string name, string value);
+public void AddBuildPropertyForConfig(IEnumerable&lt;string&gt; configGuids, string name, string value);
+</code></pre>
+<p>接下來，就是把設定加入到對應的設定檔即可。</p>
+<h2 id="後記">後記</h2>
+<p>這問題讓我花較多時間的部份就只有在設定的收集及編排成可用格式上，這個部份比較瑣碎且費工。
+另外，也因為之前不了解 Xcode 中 <code>.xbproject</code> 的架構，所以，花了點時間在 Try and Error 上。</p>
+<h2 id="參考資料">參考資料</h2>
+<p><a href="https://medium.com/@animeshjain/build-flavors-in-flutter-android-and-ios-with-different-firebase-projects-per-flavor-27c5c5dac10b">https://medium.com/@animeshjain/build-flavors-in-flutter-android-and-ios-with-different-firebase-projects-per-flavor-27c5c5dac10b</a>
+<a href="https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.html">https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.html</a>
+<a href="https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.AddBuildConfig.html">https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.AddBuildConfig.html</a></p>
+<p><a href="https://unity3d.com/get-unity/download?_ga=2.81909398.1631348832.1588208861-1076366319.1588208861">https://unity3d.com/get-unity/download?_ga=2.81909398.1631348832.1588208861-1076366319.1588208861</a>
+<a href="https://unity3d.com/get-unity/download/archive">https://unity3d.com/get-unity/download/archive</a></p>
+
     </div>
+
     
 
-    <div class="stream-meta article-metadata">
 
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/unity-export/">unity export</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
       
-
+      
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/&amp;text=Unity%20Export%20vs%20iOS%20Build%20Configuration" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
     
       
-    
-    2020年4月28日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/mobile-app/">mobile app</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/04/mobx-learning-note/" >狀態管理工具 - MobX</a>
-    </h3>
-
-    
-    <div class="article-style">
-      學習 MobX 並且在 Flutter 專案中實作
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/&amp;t=Unity%20Export%20vs%20iOS%20Build%20Configuration" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
     
       
-    
-    2020年4月14日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/flutter/">flutter</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/04/xmpp-learning-note/" >Extensible Messaging and Presence Protocol (XMPP)</a>
-    </h3>
-
-    
-    <div class="article-style">
-      XMPP 的學習筆記
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Unity%20Export%20vs%20iOS%20Build%20Configuration&amp;body=https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
     
       
-    
-    2020年4月9日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/network/">network</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/04/firebase-cloud-messaging-implementation/" >Firebase Cloud Messaging - Android</a>
-    </h3>
-
-    
-    <div class="article-style">
-      在 Android 上實作 FCM
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
       
-    
-    2020年4月9日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/cloud/">cloud</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
       
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/03/make-your-github-page-with-costomized-domain-name/" >為你的 Github Page 設定個人網域名稱</a>
-    </h3>
-
-    
-    <div class="article-style">
-      利用 Godaddy 與 Cloudflare 為自己的 Github Page 設定個人域名
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年3月16日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/cloud/">cloud</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/03/install-mosquitto-on-aws-ec2/" >在 AWS EC2 上安裝 Mosquitto(MQTT) Client 套件</a>
-    </h3>
-
-    
-    <div class="article-style">
-      紀錄 MQTT 在 EC2 上的安裝步驟
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年3月12日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/cloud/">cloud</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/03/fix-modal-popup-twice/" >解決Flutter Bottom Modal彈跳兩次的問題</a>
-    </h3>
-
-    
-    <div class="article-style">
-      紀錄我是如何解決 Flutter Bottom Modal的問題
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年3月12日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/flutter/">flutter</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/03/aws-s3-ssl-setup/" >讓你的 AWS S3 擁有自己的網域名稱還具有免費網路憑證</a>
-    </h3>
-
-    
-    <div class="article-style">
-      利用 AWS 服務打造 HTTPS 協定的靜態網站
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年3月11日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/cloud/">cloud</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/leetcode-challenges/" >我的 Leetcode 挑戰</a>
-    </h3>
-
-    
-    <div class="article-style">
-      Leetcode 刷題解答
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年3月10日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    17 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/python/">python</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-
-  
-<nav>
-  <ul class="pagination justify-content-center">
-    
-    
-    <li class="page-item"><a class="page-link" href="/post/page/2/">&raquo;</a></li>
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/&amp;title=Unity%20Export%20vs%20iOS%20Build%20Configuration" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
     
   </ul>
-</nav>
-
-
-
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
 
       
 
