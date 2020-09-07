@@ -1,16 +1,131 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>flutter | Z@NE.NOTE</title>
+    <title>Flutter | Z@NE.NOTE</title>
     <link>https://u2633.github.io/tags/flutter/</link>
       <atom:link href="https://u2633.github.io/tags/flutter/index.xml" rel="self" type="application/rss+xml" />
-    <description>flutter</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 28 Apr 2020 19:40:57 +0800</lastBuildDate>
+    <description>Flutter</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 21 Jul 2020 11:52:30 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
-      <title>flutter</title>
+      <title>Flutter</title>
       <link>https://u2633.github.io/tags/flutter/</link>
     </image>
+    
+    <item>
+      <title>Flutter Plugin Hand by Hand</title>
+      <link>https://u2633.github.io/post/2020/07/flutter-plugin-hand-by-hand/</link>
+      <pubDate>Tue, 21 Jul 2020 11:52:30 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/07/flutter-plugin-hand-by-hand/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近公司為了趕出貨而忙的天慌地老的，連想寫個文章的精力都被榨乾了。所以，這也是慌廢了一個多月的第一篇文章。
+最近，因為需求的關係，需要寫 Plugin 去 Call Native 的 API 來實現一些功能。讓我來紀錄一下我學到了什麼吧!&lt;/p&gt;
+&lt;h2 id=&#34;flutter-package&#34;&gt;Flutter Package&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Flutter Package&lt;/a&gt;
+可以將常用或是想獨立的的程式碼模組化，以供之後的重復利用。只有分兩種型別&lt;code&gt;Dart Package&lt;/code&gt;及&lt;code&gt;Plugin Package&lt;/code&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Dart Package&lt;/code&gt; - 以 
+&lt;a href=&#34;https://dart.dev/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Dart&lt;/a&gt;撰寫，對 &lt;code&gt;Flutter Framework&lt;/code&gt; 有相依性的組件。如: 
+&lt;a href=&#34;https://pub.dev/packages/path&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;path&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Plugin Package&lt;/code&gt; - 利用 &lt;code&gt;Dart&lt;/code&gt; 提供的官方 API(
+&lt;a href=&#34;https://flutter.dev/docs/development/platform-integration/platform-channels&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Platform Channel&lt;/a&gt;)與原生平台(&lt;strong&gt;iOS/ Android&lt;/strong&gt;)的原生碼互動的組件，例如: 
+&lt;a href=&#34;https://pub.dev/packages/url_launcher&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;url_launcher&lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;如何撰寫-dart-package&#34;&gt;如何撰寫 Dart Package&lt;/h2&gt;
+&lt;p&gt;建立 &lt;code&gt;Dart Package&lt;/code&gt; 必需利用&lt;code&gt;Flutter CLI&lt;/code&gt;下&lt;code&gt;flutter create --template=package hello&lt;/code&gt;。
+執行指令後，Flutter CLI 就會幫你把專案的架構產生出來，就像建立 Project 一樣。如下圖:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;dart_package.png&#34; alt=&#34;Dart Package&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;如何撰寫-plugin-package&#34;&gt;如何撰寫 Plugin Package&lt;/h2&gt;
+&lt;p&gt;主要元件有三個: &lt;code&gt;app-facing package&lt;/code&gt;、&lt;code&gt;platform interface package&lt;/code&gt;及&lt;code&gt;platform packages&lt;/code&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;app-facing package&lt;/code&gt; - Flutter 使用的 API。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;platform interface package&lt;/code&gt; - &lt;strong&gt;app-facing package&lt;/strong&gt;與&lt;strong&gt;platform packages&lt;/strong&gt;溝通的橋樑。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;platform packages&lt;/code&gt; - 原生平台裡面實作的程式碼。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一樣利用&lt;code&gt;Flutter CLI&lt;/code&gt;下指令&lt;code&gt;flutter create --template=plugin hello&lt;/code&gt;。
+原生碼使用的預設語言為 &lt;code&gt;iOS - Swift&lt;/code&gt;, &lt;code&gt;Android - Kotlin&lt;/code&gt;。
+如果想更換平台的話，可以多下 options。如下:&lt;/p&gt;
+&lt;p&gt;更換 Android 的開發語言為 JAVA&lt;br&gt;
+&lt;code&gt;flutter create --org com.example --template=plugin -a java hello&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;更換 iOS 的開發語言為 Objective-C&lt;br&gt;
+&lt;code&gt;flutter create --org com.example --template=plugin -i objc hello&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;專案結構如下圖:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;plugin_package.png&#34; alt=&#34;Plugin Package&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;技術上，&lt;code&gt;Plugin Package&lt;/code&gt; 的撰寫明顯比 &lt;code&gt;Dart Package&lt;/code&gt; 來的困難許多。尤其是像我這種本身沒接觸過原生開發的人。
+增加了雙平台的程式碼，學習的曲線會變很高。如果，背後的邏輯複雜度又高的話，原生的語法勢必得玩的更深入些了。
+相對的，如果吃的了原生雙平台的話，身價必然水漲船高的，嘿嘿…。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Unity Export vs iOS Build Configuration</title>
+      <link>https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/</link>
+      <pubDate>Thu, 30 Apr 2020 10:02:21 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;目前因為需求的關係，需要將專案分成五個不同的執行環境。而且，因為專案有導入&lt;code&gt;Firebase&lt;/code&gt;的關係，
+我們利用 &lt;code&gt;Flavor&lt;/code&gt; 來區分各別環境。專案中又有使用到 Unity 模組。在&lt;code&gt;Android&lt;/code&gt;的環境上執行都很順利
+，但是，在執行 iOS 的時候卻會出現錯誤。來紀錄一下我的問題發生經過及解決方式吧。&lt;/p&gt;
+&lt;h2 id=&#34;project-level-configs-vs-trage-level-congis&#34;&gt;Project Level Configs vs Trage Level Congis&lt;/h2&gt;
+&lt;p&gt;在此之前，我們先來了解一下 iOS 中 &lt;code&gt;Project Level Target&lt;/code&gt; 與 &lt;code&gt;Native Level Targes&lt;/code&gt; 之間的關係及差別吧。&lt;/p&gt;
+&lt;p&gt;在這就先道破吧 -  &lt;code&gt;Target Level&lt;/code&gt; 比 &lt;code&gt;Project Level&lt;/code&gt; 的層級高。所以，有衝突的設定會以 Target Level 為先。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;configs_level.png&#34; alt=&#34;Config Level&#34;&gt;&lt;/p&gt;
+&lt;p&gt;簡單說，Project 就是像是 &lt;code&gt;Common 設定&lt;/code&gt;，而 Target 會再根據需求加入或是修改設定。
+在 &lt;code&gt;Target Level&lt;/code&gt; 中，與 &lt;code&gt;Project Level&lt;/code&gt; 同名的稱 &lt;code&gt;Main Target&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;如何手動解決外部模組-build-flavor-錯誤&#34;&gt;如何手動解決外部模組 Build Flavor 錯誤&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://medium.com/@salvatoregiordanoo/flavoring-flutter-392aaa875f36&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Flavor 的設定&lt;/a&gt;由於 Google 上的教學很詳細了，
+在此就不多做敘述。&lt;/p&gt;
+&lt;p&gt;在下&lt;code&gt;flutter build ios --no-codesign -t lib/main_prod.dart --flavor production&lt;/code&gt;時，馬上就會出現編譯錯誤。
+原因就是來自外部匯入的模組 - &lt;code&gt;Unity-iPhone&lt;/code&gt;上。在花了不少時間找答案卻沒什麼結果的時候，我忽然靈光一閃，
+想說為什麼我不試試看也在這外部模組中多加入跟我主要專案上一樣的設定檔就好。結果，還真的被我編譯成功且能正常執行。
+雖然高興了一下，但接著遇到的問題是，這個外部模組是個異動性極高，也就是說，即使我這次已經改成功了，
+但下次也會因為重新匯出而造成我目前的設定檔被重置。我不可能每次重新匯入後就去改一次那個設定檔，
+太不 Make Sence 了!!!&lt;/p&gt;
+&lt;p&gt;好吧，即然無法在專案內動手腳，那我就在匯出的時候動手腳了!&lt;/p&gt;
+&lt;h2 id=&#34;修改-unity-匯出腳本&#34;&gt;修改 Unity 匯出腳本&lt;/h2&gt;
+&lt;p&gt;我相信，這種問題我絕對不是第一個。果然，
+Unity 官方已經有提供現有的
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API&lt;/a&gt;，
+幫我們解決這方面的需求了，讓我們可以完整存取 &lt;code&gt;Project Level&lt;/code&gt; 及 &lt;code&gt;Target Level&lt;/code&gt;的設定。
+但因為小弟不熟悉的關係，所以，花了兩天 Try and Error 才把這問題解決。而整個過程中我只有使用到少數幾支 API&lt;/p&gt;
+&lt;p&gt;取得 Project GUID 的 
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.ProjectGuid.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;public string ProjectGuid();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;取得 Unity Framework 的 
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.GetUnityFrameworkTargetGuid.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;PBXProject.GetUnityFrameworkTargetGuid();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;取得 Unity Test 的 API。這裡我是利用另一種方式取得的，不是官方文件所提到的&lt;code&gt;GetUnityTestTargetName&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;PBXProject.TargetGuidByName(&amp;quot;Unity-iPhone Tests&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;取得 Build Configs 的 
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.BuildConfigByName.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;public string BuildConfigByName(string targetGuid, string name);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;targetGuid&lt;/code&gt;就是上述中的&lt;code&gt;ProjectGuid&lt;/code&gt;、&lt;code&gt;GetUnityFrameworkTargetGuid&lt;/code&gt;及&lt;code&gt;TargetGuidByName(&amp;quot;Unity-iPhone Tests&amp;quot;)&lt;/code&gt;所得到的24碼GUID，
+&lt;code&gt;name&lt;/code&gt;就是 Build Type 與各別 Flavor 形成的的設定檔名稱，如: &lt;code&gt;Debug-development&lt;/code&gt;或是&lt;code&gt;Release Production&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;加入 Build Property 的 
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.AddBuildPropertyForConfig.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;它有兩種建構型態&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;public void AddBuildPropertyForConfig(string configGuid, string name, string value);
+public void AddBuildPropertyForConfig(IEnumerable&amp;lt;string&amp;gt; configGuids, string name, string value);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接下來，就是把設定加入到對應的設定檔即可。&lt;/p&gt;
+&lt;h2 id=&#34;後記&#34;&gt;後記&lt;/h2&gt;
+&lt;p&gt;這問題讓我花較多時間的部份就只有在設定的收集及編排成可用格式上，這個部份比較瑣碎且費工。
+另外，也因為之前不了解 Xcode 中 &lt;code&gt;.xbproject&lt;/code&gt; 的架構，所以，花了點時間在 Try and Error 上。&lt;/p&gt;
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://medium.com/@animeshjain/build-flavors-in-flutter-android-and-ios-with-different-firebase-projects-per-flavor-27c5c5dac10b&#34;&gt;https://medium.com/@animeshjain/build-flavors-in-flutter-android-and-ios-with-different-firebase-projects-per-flavor-27c5c5dac10b&lt;/a&gt;
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.html&#34;&gt;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.html&lt;/a&gt;
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.AddBuildConfig.html&#34;&gt;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.AddBuildConfig.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://unity3d.com/get-unity/download?_ga=2.81909398.1631348832.1588208861-1076366319.1588208861&#34;&gt;https://unity3d.com/get-unity/download?_ga=2.81909398.1631348832.1588208861-1076366319.1588208861&lt;/a&gt;
+&lt;a href=&#34;https://unity3d.com/get-unity/download/archive&#34;&gt;https://unity3d.com/get-unity/download/archive&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Flutter SDK 1.12.13 Proguard 功能預設已變更為開啟狀態</title>
@@ -43,6 +158,505 @@
 &lt;a href=&#34;https://medium.com/@JamesQI/proguard-d8cc2e67211&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Proguard 教學&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;結論&#34;&gt;結論&lt;/h2&gt;
 &lt;p&gt;雖然這個問題並沒有花費太多時間解進，但這個經驗又讓我學到，要更新工具之前，最好先詳閱它的 Release Note&amp;hellip;。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>狀態管理工具 - MobX</title>
+      <link>https://u2633.github.io/post/2020/04/mobx-learning-note/</link>
+      <pubDate>Tue, 14 Apr 2020 13:56:46 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/04/mobx-learning-note/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;之前有介紹什麼是 
+&lt;a href=&#34;https://blog.zcychen.com/post/2020/03/bloc-design-pattern/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC&lt;/a&gt;。
+今天來學習另一個狀態管理工具 - 
+&lt;a href=&#34;https://mobx.netlify.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MobX&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;類似 BLoC，但可以讓開發者更專注在資料面上且不用寫太多的程式碼。同樣是狀態管理工具，
+MobX 似乎看起來更有優勢，因為我們只需要專注在哪些畫面需要哪些資料，
+而不用像 BLoC 一樣，需要實作&lt;code&gt;事件(Event)&lt;/code&gt;與&lt;code&gt;狀態(State)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;MobX 的主要三大核心元件: &lt;code&gt;Observables&lt;/code&gt;, &lt;code&gt;Actions&lt;/code&gt; 與 &lt;code&gt;Reactions&lt;/code&gt;，
+圖是人的朋友，我們可利用下圖來了解彼此的關係。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;mobx-core-concepts.png&#34; alt=&#34;Mobx Core Concepts&#34;&gt;&lt;/p&gt;
+&lt;p&gt;首先，我們會先定義哪此資料是必需被&lt;code&gt;觀察(Observable)&lt;/code&gt;的，並且能在任何&lt;code&gt;行為(Action)&lt;/code&gt;造成的&lt;code&gt;改變(Mutate)&lt;/code&gt;時&lt;code&gt;通知(Notify)&lt;/code&gt;頁面並做出&lt;code&gt;反應(Reaction)&lt;/code&gt;。
+而且，在頁面做完&lt;code&gt;反應(Reaction)&lt;/code&gt;後又可能會&lt;code&gt;觸發(Fire)&lt;/code&gt;另一個&lt;code&gt;行為(Action)&lt;/code&gt;。如此就型成了上述的三角狀態。&lt;/p&gt;
+&lt;h2 id=&#34;observables&#34;&gt;Observables&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Observables&lt;/code&gt;代表&lt;code&gt;嚮應的狀態(Reactive-State)&lt;/code&gt;。它可以是一個簡單的值，可以是個復雜的物件(&lt;code&gt;reactive-state-tree&lt;/code&gt;)。
+我們可以在 Widget Tree 中的任何一個地方利用&lt;code&gt;觀察者(Observer)&lt;/code&gt;取得這些&lt;code&gt;Observables&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;基於這些概念，我們可以定義出如下的程式碼&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;class Counter {
+  Counter() {
+    increment = Action(_increment);
+  }
+
+  final _value = Observable(0);
+  int get value =&amp;gt; _value.value;
+
+  set value(int newValue) =&amp;gt; _value.value = newValue;
+  Action increment;
+
+  void _increment() {
+    _value.value++;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;程式碼有點不易越讀性，如果在大型一點專案中會更容易有這種問題。
+但是，在透過 MobX 的幫助下，我們只需要使用&lt;code&gt;Annotation&lt;/code&gt;的方式就能簡化其程式碼。
+實作中，我們會建立一個&lt;code&gt;Store(Entity的概念)&lt;/code&gt;來存放&lt;code&gt;Observable&lt;/code&gt;、&lt;code&gt;Action&lt;/code&gt;、&lt;code&gt;Computed Observable&lt;/code&gt;的資料，
+並利用第三方插件 - 
+&lt;a href=&#34;https://pub.dev/packages/mobx_codegen&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;mobx_codegen&lt;/a&gt; 來幫我們產出&lt;code&gt;Annotation&lt;/code&gt;裡的樣版程式碼&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+part &#39;counter.g.dart&#39;;
+
+class Counter = CounterBase with _$Counter;
+
+abstract class CounterBase with Store {
+  @observable
+  int value = 0;
+
+  @action
+  void increment() {
+    value++;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;computed-observables&#34;&gt;Computed Observables&lt;/h3&gt;
+&lt;p&gt;MobX 中的狀態組成為&lt;code&gt;核心狀態(Core-State)&lt;/code&gt; + &lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;。
+假設我們有個叫&lt;code&gt;Contact&lt;/code&gt;的 Store，如下:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+part &#39;contact.g.dart&#39;;
+
+class Contact = ContactBase with _$Contact;
+
+abstract class ContactBase with Store {
+  @observable
+  String firstName;
+
+  @observable
+  String lastName;
+
+  @computed
+  String get fullName =&amp;gt; &#39;$firstName, $lastName&#39;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Computed Observables&lt;/code&gt;也就是所謂的&lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;，
+是個以&lt;code&gt;核心狀態(Core-State)&lt;/code&gt;或是其他&lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;為基礎的&lt;code&gt;Observable&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;範例中&lt;code&gt;firstName&lt;/code&gt;與&lt;code&gt;lastName&lt;/code&gt;就是&lt;code&gt;核心狀態(Core-State)&lt;/code&gt;，而&lt;code&gt;fullName&lt;/code&gt;就是&lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;。
+&lt;code&gt;fullName&lt;/code&gt;的值也會與&lt;code&gt;firstName&lt;/code&gt;及&lt;code&gt;lastName&lt;/code&gt;保持同步的狀態。&lt;/p&gt;
+&lt;h2 id=&#34;actions&#34;&gt;Actions&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Action&lt;/code&gt;就是在 Store 中對&lt;code&gt;Observable&lt;/code&gt;操作的&lt;code&gt;函數&lt;/code&gt;。不同於直接對&lt;code&gt;Observable&lt;/code&gt;操作，
+藉由&lt;code&gt;Annotation&lt;/code&gt;可以讓程式碼更具可讀性。此外，&lt;code&gt;Action&lt;/code&gt;還會保證所有的改變都會在完成後被確實通知。&lt;/p&gt;
+&lt;h2 id=&#34;reactions&#34;&gt;Reactions&lt;/h2&gt;
+&lt;p&gt;在 MobX 中，它代表&lt;code&gt;Observer&lt;/code&gt;，監聽追蹤的&lt;code&gt;Observable&lt;/code&gt;並在有改變的時候通知&lt;code&gt;Observer Widget&lt;/code&gt;。
+&lt;code&gt;Reaction&lt;/code&gt;有四個不一樣的形態:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ReactionDisposer autorun(Function(Reaction) fn)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;autorun&lt;/code&gt;會在被建立後立刻做出反應並且在任何改變的時候做出反應&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+String greeting = Observable(&#39;Hello World&#39;);
+
+final dispose = autorun((_){
+  print(greeting.value);
+});
+
+greeting.value = &#39;Hello MobX&#39;;
+
+// Done with the autorun()
+dispose();
+
+// Prints:
+// Hello World
+// Hello MobX
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ReactionDisposer reaction&amp;lt;T&amp;gt;(T Function(Reaction) fn, void Function(T) effect)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;reaction&lt;/code&gt;僅會在有改變的時候才會做出反應&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+String greeting = Observable(&#39;Hello World&#39;);
+
+final dispose = reaction((_) =&amp;gt; greeting.value, (msg) =&amp;gt; print(msg));
+
+greeting.value = &#39;Hello MobX&#39;; // Cause a change
+
+// Done with the reaction()
+dispose();
+
+// Prints:
+// Hello MobX
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ReactionDisposer when(bool Function(Reaction) predicate, void Function() effect)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;when&lt;/code&gt;僅會在條件成立的時候做出反應，而且&lt;code&gt;僅會觸發一次&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+String greeting = Observable(&#39;Hello World&#39;);
+
+final dispose = when((_) =&amp;gt; greeting.value == &#39;Hello MobX&#39;, () =&amp;gt; print(&#39;Someone greeted MobX&#39;));
+
+greeting.value = &#39;Hello MobX&#39;; // Causes a change, runs effect and disposes
+
+// Prints:
+// Someone greeted MobX
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Future&amp;lt;void&amp;gt; asyncWhen(bool Function(Reaction) predicate)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;asyncWhen&lt;/code&gt;與&lt;code&gt;when&lt;/code&gt;雷同，只是它回傳的是一個&lt;code&gt;Future&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;final completed = Observable(false);
+
+void waitForCompletion() async {
+  await asyncWhen(() =&amp;gt; completed.value == true);
+
+  print(&#39;Completed&#39;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;除了&lt;code&gt;asyncWhen&lt;/code&gt;是傳回一個&lt;code&gt;Future&lt;/code&gt;之外，其他三個都會傳回一個&lt;code&gt;ReactionDisposer&lt;/code&gt;。
+&lt;code&gt;ReactionDisposer&lt;/code&gt;一個可以被調用以處理&lt;code&gt;Reaction&lt;/code&gt;的函數。&lt;/p&gt;
+&lt;h2 id=&#34;observer-widget&#34;&gt;Observer Widget&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Observer Widget&lt;/code&gt;的功用是監聽其 Widget 內&lt;code&gt;Observable&lt;/code&gt;的改變，
+並且在接收&lt;code&gt;Reaction&lt;/code&gt;發出的通知後進行畫面更新。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:flutter/material.dart&#39;;
+import &#39;package:flutter_mobx/flutter_mobx.dart&#39;;
+import &#39;package:mobx/mobx.dart&#39;;
+
+part &#39;counter.g.dart&#39;;
+
+class Counter = CounterBase with _$Counter;
+
+abstract class CounterBase with Store {
+  @observable
+  int value = 0;
+
+  @action
+  void increment() {
+    value++;
+  }
+}
+
+class CounterExample extends StatefulWidget {
+  const CounterExample({Key key}) : super(key: key);
+
+  @override
+  _CounterExampleState createState() =&amp;gt; _CounterExampleState();
+}
+
+class _CounterExampleState extends State&amp;lt;CounterExample&amp;gt; {
+  final _counter = Counter();
+
+  @override
+  Widget build(BuildContext context) =&amp;gt; Scaffold(
+        appBar: AppBar(
+          title: const Text(&#39;Counter&#39;),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: &amp;lt;Widget&amp;gt;[
+              const Text(
+                &#39;You have pushed the button this many times:&#39;,
+              ),
+              Observer(
+                builder: (_) =&amp;gt; Text(
+                    &#39;${_counter.value}&#39;,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _counter.increment,
+          tooltip: &#39;Increment&#39;,
+          child: const Icon(Icons.add),
+        ),
+      );
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;雖然 MobX 還是得借助額外的函式庫來幫我們產生底層的程式碼，但與 BLoC 比起來,確實可以少寫點 Code。
+文件說明也蠻詳儘的，也有把使用者可能會有的疑問也在文件中加以說明。另外，也有不少範例可以參考。
+但在學習的曲線上，BLoC 還是讓我覺得比較易懂跟直覺。該學哪種呢?當然是兩種都學!!!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Firebase Cloud Messaging - Android</title>
+      <link>https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/</link>
+      <pubDate>Thu, 09 Apr 2020 09:41:26 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/04/firebase-cloud-messaging-implementation/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近 Flutter 的專案上剛好需要導入 
+&lt;a href=&#34;https://firebase.google.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Firebase&lt;/a&gt; 的
+
+&lt;a href=&#34;https://firebase.google.com/docs/cloud-messaging&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cloud Messaging&lt;/a&gt; 功能，
+也紀錄一下實作的步驟以及遇到問題。&lt;/p&gt;
+&lt;h2 id=&#34;firebase-cloud-messaging&#34;&gt;Firebase Cloud Messaging&lt;/h2&gt;
+&lt;p&gt;Firebase Cloud Messaging(FCM), 是 
+&lt;a href=&#34;https://firebase.google.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Firebase&lt;/a&gt; 提供的服務之一，
+讓使用者進行&lt;code&gt;訊息(message)&lt;/code&gt;發送與接收。主要負責:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;傳送推播(&lt;code&gt;Notification&lt;/code&gt;)與資料(&lt;code&gt;data&lt;/code&gt;)訊息&lt;/li&gt;
+&lt;li&gt;提供三種發送方式
+&lt;ul&gt;
+&lt;li&gt;單一裝置(&lt;code&gt;Single&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;群組發送(&lt;code&gt;Groups&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;訂閱群發送(&lt;code&gt;Subscribed&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;從客戶端(&lt;code&gt;Client&lt;/code&gt;)發送訊息(&lt;code&gt;雙向&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其基礎結構為&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;fcm_architecture.png&#34; alt=&#34;fcm_arch&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;message-type&#34;&gt;Message Type&lt;/h3&gt;
+&lt;p&gt;FCM 目前提供兩種訊息的傳輸模式&lt;code&gt;Notification&lt;/code&gt;及&lt;code&gt;Data&lt;/code&gt;。&lt;code&gt;Notification&lt;/code&gt;是 SDK 在處理的，
+而&lt;code&gt;Data&lt;/code&gt;是 Client 處理。簡單說，在接收到&lt;code&gt;Notification&lt;/code&gt;時，SDK 會將收到的訊息顯示在
+手機上的訊息列並根據 
+&lt;a href=&#34;https://developer.android.com/training/notify-user/channels&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Notification Channel ID&lt;/a&gt;
+決定是否顯示訊息提示窗，而&lt;code&gt;Data&lt;/code&gt;可以讓 Client 經過處理後再決定是否要顯示或是執行其他的功能。
+就我看來這兩者基本上的差別就是&lt;code&gt;Notification&lt;/code&gt;預設有訊息提示窗而&lt;code&gt;Data&lt;/code&gt;沒有。&lt;/p&gt;
+&lt;p&gt;FCM Notification Composer 沒有提供傳送&lt;code&gt;Data&lt;/code&gt;的方法，需要使用 Call API 的方式。&lt;/p&gt;
+&lt;p&gt;主要的步驟只有兩個 - 
+&lt;a href=&#34;https://firebase.google.com/docs/flutter/setup?platform=android&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Firebase 的基本設定&lt;/a&gt;及
+安裝官方提供的 flutter 的 cloud messaging 函式庫 - 
+&lt;a href=&#34;https://pub.dev/packages/firebase_messaging#-readme-tab-&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;firebase_messaging&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;基本設定的部份，官方文件已經詳解了，在此就不加以說明了。&lt;/p&gt;
+&lt;h2 id=&#34;fcm_impl&#34;&gt;設定 Flutter FCM Library - 
+&lt;a href=&#34;https://pub.dev/packages/firebase_messaging#-readme-tab-&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;firebase_messaging&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;flutter pub 上的文件也已經詳解如何整合至 Android 或 iOS 了，基本上照做都能順利整合。
+需要注意的是，如果希望 Client 在點擊訊息時能觸發&lt;code&gt;onResume&lt;/code&gt;、&lt;code&gt;oLaunch&lt;/code&gt;的 Handler ，
+就必需在&lt;code&gt;android/app/src/main/AndroidManifest.xml&lt;/code&gt;裡加上 filter&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;intent-filter&amp;gt;
+    &amp;lt;action android:name=&amp;quot;FLUTTER_NOTIFICATION_CLICK&amp;quot; /&amp;gt;
+    &amp;lt;category android:name=&amp;quot;android.intent.category.DEFAULT&amp;quot; /&amp;gt;
+&amp;lt;/intent-filter&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;先來看一下各個 Handler 在&lt;code&gt;Notification&lt;/code&gt;及&lt;code&gt;Data&lt;/code&gt; 的 Spec&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./fcm_handler_spec.png&#34; alt=&#34;fcm_handler&#34;&gt;&lt;/p&gt;
+&lt;p&gt;讓我們使用 
+&lt;a href=&#34;https://www.postman.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Postman&lt;/a&gt; 來測試&lt;code&gt;Notification&lt;/code&gt;與&lt;code&gt;Data&lt;/code&gt;這兩種傳送方式。&lt;/p&gt;
+&lt;p&gt;Payload 如下&lt;/p&gt;
+&lt;p&gt;Notification:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;notification&amp;quot;: {
+    &amp;quot;body&amp;quot;: &amp;quot;this is a body&amp;quot;,
+    &amp;quot;title&amp;quot;: &amp;quot;this is a title&amp;quot;
+  },
+  &amp;quot;priority&amp;quot;: &amp;quot;high&amp;quot;,
+  &amp;quot;data&amp;quot;: {
+    &amp;quot;click_action&amp;quot;: &amp;quot;FLUTTER_NOTIFICATION_CLICK&amp;quot;,
+    &amp;quot;id&amp;quot;: &amp;quot;high&amp;quot;,
+    &amp;quot;status&amp;quot;: &amp;quot;done&amp;quot;
+  },
+  &amp;quot;to&amp;quot;: &amp;quot;YOUR CLIENT TOKEN&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Data:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;priority&amp;quot;: &amp;quot;high&amp;quot;,
+  &amp;quot;data&amp;quot;: {
+    &amp;quot;click_action&amp;quot;: &amp;quot;FLUTTER_NOTIFICATION_CLICK&amp;quot;,
+    &amp;quot;id&amp;quot;: &amp;quot;high&amp;quot;,
+    &amp;quot;status&amp;quot;: &amp;quot;done&amp;quot;
+  },
+  &amp;quot;to&amp;quot;: &amp;quot;YOUR CLIENT TOKEN&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;觀察 &lt;code&gt;Foreground&lt;/code&gt;, &lt;code&gt;Background&lt;/code&gt; 及 &lt;code&gt;Terminated&lt;/code&gt; 的行為&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Foreground:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Notification&lt;/p&gt;
+&lt;p&gt;觸發 Handler - onMessage&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (28543): on Message: {notification: {title: this is a title, body: this is a body}, data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Data&lt;/p&gt;
+&lt;p&gt;觸發 Handler - onMessage&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (28543): on Message: {notification: {title: null, body: null}, data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;與文件相符。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Background:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Notification&lt;/p&gt;
+&lt;p&gt;出現訊息提示窗&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;notification_background.png&#34; alt=&#34;fcm_notification_background&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在點擊後回復 APP 至前景並觸發 Handler - onResume&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (28543): on Resume: {notification: {}, data: {collapse_key: &amp;quot;秘密&amp;quot;, google.original_priority: high, google.sent_time: 1586406396631, google.delivered_priority: high, google.ttl: 2419200, from: 217808926832, id: high, click_action: FLUTTER_NOTIFICATION_CLICK, google.message_id: 0:1586406396651621%4e2e62744e2e6274, status: done}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Data&lt;/p&gt;
+&lt;p&gt;發生錯誤了!找不到相對應的 Callback function&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;data_background_fatal_error.png&#34; alt=&#34;data_background_error&#34;&gt;&lt;/p&gt;
+&lt;p&gt;參考
+&lt;a href=&#34;https://pub.dev/documentation/firebase_messaging/latest/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pub 文件&lt;/a&gt; 並實作&lt;code&gt;onBackgroundMessage&lt;/code&gt;這個 Handler 後就可以接到資料&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;I/flutter (31277): on Background data: {status: done, id: high, click_action: FLUTTER_NOTIFICATION_CLICK}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;Data&lt;/code&gt;的反應跟文件上有落差…，文件上表示應該觸發&lt;code&gt;onMessage&lt;/code&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Terminated:&lt;/p&gt;
+&lt;p&gt;因為 Terminated 的狀態會看不到 Debug 的訊息，所以我用 Toast Message 來觀察行為，
+&lt;code&gt;Data&lt;/code&gt;的部份文件已經表明會遺失，&lt;code&gt;Notification&lt;/code&gt;試了之後也發現會出現提示窗，
+但自帶的 Data 也是遺失。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;troubleshooting&#34;&gt;Troubleshooting&lt;/h2&gt;
+&lt;h3 id=&#34;pluginregistry-cannot-be-converted-to-flutterengine-錯誤&#34;&gt;&amp;ldquo;PluginRegistry cannot be converted to FlutterEngine&amp;rdquo; 錯誤&lt;/h3&gt;
+&lt;p&gt;在實作&lt;code&gt;onBackgroundMessage&lt;/code&gt;的時候，&lt;code&gt;Application.java&lt;/code&gt;如果是參考 pub 裡的實作會發生錯誤&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;error_on_registerWith_function.png&#34; alt=&#34;registerWith error&#34;&gt;&lt;/p&gt;
+&lt;p&gt;參考
+&lt;a href=&#34;https://stackoverflow.com/questions/59446933/pluginregistry-cannot-be-converted-to-flutterengine&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;此文&lt;/a&gt;並實作新的 Class 取代舊的即可解決此問題&lt;/p&gt;
+&lt;h3 id=&#34;接收的到訊息但沒有顯示提示視窗&#34;&gt;接收的到訊息但沒有顯示提示視窗&lt;/h3&gt;
+&lt;p&gt;這問題在下列兩種使用方式都有出現&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;從 Firebase Cloud Message 的 Composer&lt;/li&gt;
+&lt;li&gt;利用 Call API 的方式觸發(如: cURL, postman&amp;hellip;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;發生原因主要是因為沒有設定 Default Channel ID，其定義如下
+&lt;img src=&#34;importance_level.png&#34; alt=&#34;Importance Level&#34;&gt;&lt;/p&gt;
+&lt;p&gt;解法:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;code&gt;AndroidManifest.xml&lt;/code&gt;加入下面的 meta&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;&amp;lt;meta-data
+ android:name=&amp;quot;com.google.firebase.messaging.default_notification_channel_id&amp;quot;
+ android:value=&amp;quot;high&amp;quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;&lt;code&gt;***測試後發現，如果希望在 Call API 的方式下能正常顯示提示窗，這個 meta 必需存在***&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;code&gt;Application.java&lt;/code&gt;裡面實作&lt;code&gt;Notification Channel&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./notification_implementation.png&#34; alt=&#34;notification_implementation&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;結論&#34;&gt;結論&lt;/h2&gt;
+&lt;p&gt;FCM 提供了我目前所有的需求了，重點是它是&lt;strong&gt;免費的&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;fcm_free.png&#34; alt=&#34;fcm_free&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;補充&#34;&gt;補充&lt;/h2&gt;
+&lt;h3 id=&#34;20200410&#34;&gt;20200410&lt;/h3&gt;
+&lt;p&gt;在前面利用 Postman 
+&lt;a href=&#34;#fcm_impl&#34;&gt;測試的章節&lt;/a&gt; 中，我們只對單一裝置進行測試，
+但如果我們希望所有的裝置都能收到呢?
+這裡就會必需 Client 端先做&lt;code&gt;訂閱(Subscribe)&lt;/code&gt;的動作。
+在 Flutter 裡僅需加一行程式碼即可，詳見
+&lt;a href=&#34;https://stackoverflow.com/questions/38237559/how-do-you-send-a-firebase-notification-to-all-devices-via-curl&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;此文&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-flutter&#34;&gt;firebaseMessaging.subscribeToTopic(&amp;quot;all&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 Request 的時候&lt;code&gt;to&lt;/code&gt;的值取代成&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;notification&amp;quot;: {
+    &amp;quot;body&amp;quot;: &amp;quot;this is a body&amp;quot;,
+    &amp;quot;title&amp;quot;: &amp;quot;this is a title&amp;quot;
+  },
+  &amp;quot;priority&amp;quot;: &amp;quot;high&amp;quot;,
+  &amp;quot;data&amp;quot;: {
+    &amp;quot;click_action&amp;quot;: &amp;quot;FLUTTER_NOTIFICATION_CLICK&amp;quot;,
+    &amp;quot;id&amp;quot;: &amp;quot;high&amp;quot;,
+    &amp;quot;status&amp;quot;: &amp;quot;done&amp;quot;
+  },
+  &amp;quot;to&amp;quot;: &amp;quot;/topics/all&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;!-- external links --&gt;
+&lt;!-- some decent posts --&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>解決Flutter Bottom Modal彈跳兩次的問題</title>
+      <link>https://u2633.github.io/post/2020/03/fix-modal-popup-twice/</link>
+      <pubDate>Thu, 12 Mar 2020 19:58:18 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/03/fix-modal-popup-twice/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;在開發 Flutter 的時候，不知為何觸發 Bottom Modal 的選單時，總是會觸發兩次，問題如下影片&lt;/p&gt;
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://www.youtube.com/embed/RqUUDLlzAkE&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;預期的行為&#34;&gt;預期的行為&lt;/h2&gt;
+&lt;p&gt;預期只會出現一次&lt;/p&gt;
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://www.youtube.com/embed/ntuETYdeMjc&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;解決方法&#34;&gt;解決方法&lt;/h2&gt;
+&lt;p&gt;增加 listener 檢查目前的 Widget 是否已經被 Focus，避免觸發兩次&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;_institutionOnFocus.addListener(() {
+  if (_institutionOnFocus.hasFocus) {
+    BottomModalBuilder.items(
+      context,
+      _institutionController,
+      _institutionList.map((i) =&amp;gt; i.name).toList(),
+    );
+  }
+});
+
+/// Institution text field
+Widget _showInstitutionField(CheckupDownloadState state) {
+  return TextFormFieldBuilder(
+    labelText: &#39;健檢機構&#39;,
+    hintText: &#39;請選擇&#39;,
+    controller: _institutionController,
+    focusNode: _institutionOnFocus,
+    isReadOnly: true,
+    validateFailureMessage: !state.isInsitutionValid ? &#39;請選擇機構&#39; : null,
+  );
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>什麼是BLoC Design Pattern</title>
+      <link>https://u2633.github.io/post/2020/03/bloc-design-pattern/</link>
+      <pubDate>Tue, 10 Mar 2020 14:50:24 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/03/bloc-design-pattern/</guid>
+      <description>&lt;p&gt;Business Logic Component Pattern 簡稱 
+&lt;a href=&#34;https://bloclibrary.dev/#/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC&lt;/a&gt;。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://bloclibrary.dev/#/coreconcepts?id=blocs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC 主件&lt;/a&gt;，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&amp;hellip;else 或是 switch&amp;hellip;case，如下:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:bloc/bloc.dart&#39;;
+
+enum CounterEvent { increment, decrement }
+
+class CounterBloc extends Bloc&amp;lt;CounterEvent, int&amp;gt; {
+  @override
+  int get initialState =&amp;gt; 0;
+
+  @override
+  Stream&amp;lt;int&amp;gt; mapEventToState(CounterEvent event) async* {
+    switch (event) {
+      case CounterEvent.decrement:
+        yield currentState - 1;
+        break;
+      case CounterEvent.increment:
+        yield currentState + 1;
+        break;
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     

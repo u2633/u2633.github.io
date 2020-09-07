@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MobX | Z@NE.NOTE</title>
+    <link>https://u2633.github.io/tags/mobx/</link>
+      <atom:link href="https://u2633.github.io/tags/mobx/index.xml" rel="self" type="application/rss+xml" />
+    <description>MobX</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 14 Apr 2020 13:56:46 +0800</lastBuildDate>
+    <image>
+      <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
+      <title>MobX</title>
+      <link>https://u2633.github.io/tags/mobx/</link>
+    </image>
+    
+    <item>
+      <title>狀態管理工具 - MobX</title>
+      <link>https://u2633.github.io/post/2020/04/mobx-learning-note/</link>
+      <pubDate>Tue, 14 Apr 2020 13:56:46 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/04/mobx-learning-note/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;之前有介紹什麼是 
+&lt;a href=&#34;https://blog.zcychen.com/post/2020/03/bloc-design-pattern/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC&lt;/a&gt;。
+今天來學習另一個狀態管理工具 - 
+&lt;a href=&#34;https://mobx.netlify.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MobX&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;類似 BLoC，但可以讓開發者更專注在資料面上且不用寫太多的程式碼。同樣是狀態管理工具，
+MobX 似乎看起來更有優勢，因為我們只需要專注在哪些畫面需要哪些資料，
+而不用像 BLoC 一樣，需要實作&lt;code&gt;事件(Event)&lt;/code&gt;與&lt;code&gt;狀態(State)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;MobX 的主要三大核心元件: &lt;code&gt;Observables&lt;/code&gt;, &lt;code&gt;Actions&lt;/code&gt; 與 &lt;code&gt;Reactions&lt;/code&gt;，
+圖是人的朋友，我們可利用下圖來了解彼此的關係。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;mobx-core-concepts.png&#34; alt=&#34;Mobx Core Concepts&#34;&gt;&lt;/p&gt;
+&lt;p&gt;首先，我們會先定義哪此資料是必需被&lt;code&gt;觀察(Observable)&lt;/code&gt;的，並且能在任何&lt;code&gt;行為(Action)&lt;/code&gt;造成的&lt;code&gt;改變(Mutate)&lt;/code&gt;時&lt;code&gt;通知(Notify)&lt;/code&gt;頁面並做出&lt;code&gt;反應(Reaction)&lt;/code&gt;。
+而且，在頁面做完&lt;code&gt;反應(Reaction)&lt;/code&gt;後又可能會&lt;code&gt;觸發(Fire)&lt;/code&gt;另一個&lt;code&gt;行為(Action)&lt;/code&gt;。如此就型成了上述的三角狀態。&lt;/p&gt;
+&lt;h2 id=&#34;observables&#34;&gt;Observables&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Observables&lt;/code&gt;代表&lt;code&gt;嚮應的狀態(Reactive-State)&lt;/code&gt;。它可以是一個簡單的值，可以是個復雜的物件(&lt;code&gt;reactive-state-tree&lt;/code&gt;)。
+我們可以在 Widget Tree 中的任何一個地方利用&lt;code&gt;觀察者(Observer)&lt;/code&gt;取得這些&lt;code&gt;Observables&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;基於這些概念，我們可以定義出如下的程式碼&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;class Counter {
+  Counter() {
+    increment = Action(_increment);
+  }
+
+  final _value = Observable(0);
+  int get value =&amp;gt; _value.value;
+
+  set value(int newValue) =&amp;gt; _value.value = newValue;
+  Action increment;
+
+  void _increment() {
+    _value.value++;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;程式碼有點不易越讀性，如果在大型一點專案中會更容易有這種問題。
+但是，在透過 MobX 的幫助下，我們只需要使用&lt;code&gt;Annotation&lt;/code&gt;的方式就能簡化其程式碼。
+實作中，我們會建立一個&lt;code&gt;Store(Entity的概念)&lt;/code&gt;來存放&lt;code&gt;Observable&lt;/code&gt;、&lt;code&gt;Action&lt;/code&gt;、&lt;code&gt;Computed Observable&lt;/code&gt;的資料，
+並利用第三方插件 - 
+&lt;a href=&#34;https://pub.dev/packages/mobx_codegen&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;mobx_codegen&lt;/a&gt; 來幫我們產出&lt;code&gt;Annotation&lt;/code&gt;裡的樣版程式碼&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+part &#39;counter.g.dart&#39;;
+
+class Counter = CounterBase with _$Counter;
+
+abstract class CounterBase with Store {
+  @observable
+  int value = 0;
+
+  @action
+  void increment() {
+    value++;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;computed-observables&#34;&gt;Computed Observables&lt;/h3&gt;
+&lt;p&gt;MobX 中的狀態組成為&lt;code&gt;核心狀態(Core-State)&lt;/code&gt; + &lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;。
+假設我們有個叫&lt;code&gt;Contact&lt;/code&gt;的 Store，如下:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+part &#39;contact.g.dart&#39;;
+
+class Contact = ContactBase with _$Contact;
+
+abstract class ContactBase with Store {
+  @observable
+  String firstName;
+
+  @observable
+  String lastName;
+
+  @computed
+  String get fullName =&amp;gt; &#39;$firstName, $lastName&#39;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Computed Observables&lt;/code&gt;也就是所謂的&lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;，
+是個以&lt;code&gt;核心狀態(Core-State)&lt;/code&gt;或是其他&lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;為基礎的&lt;code&gt;Observable&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;範例中&lt;code&gt;firstName&lt;/code&gt;與&lt;code&gt;lastName&lt;/code&gt;就是&lt;code&gt;核心狀態(Core-State)&lt;/code&gt;，而&lt;code&gt;fullName&lt;/code&gt;就是&lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;。
+&lt;code&gt;fullName&lt;/code&gt;的值也會與&lt;code&gt;firstName&lt;/code&gt;及&lt;code&gt;lastName&lt;/code&gt;保持同步的狀態。&lt;/p&gt;
+&lt;h2 id=&#34;actions&#34;&gt;Actions&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Action&lt;/code&gt;就是在 Store 中對&lt;code&gt;Observable&lt;/code&gt;操作的&lt;code&gt;函數&lt;/code&gt;。不同於直接對&lt;code&gt;Observable&lt;/code&gt;操作，
+藉由&lt;code&gt;Annotation&lt;/code&gt;可以讓程式碼更具可讀性。此外，&lt;code&gt;Action&lt;/code&gt;還會保證所有的改變都會在完成後被確實通知。&lt;/p&gt;
+&lt;h2 id=&#34;reactions&#34;&gt;Reactions&lt;/h2&gt;
+&lt;p&gt;在 MobX 中，它代表&lt;code&gt;Observer&lt;/code&gt;，監聽追蹤的&lt;code&gt;Observable&lt;/code&gt;並在有改變的時候通知&lt;code&gt;Observer Widget&lt;/code&gt;。
+&lt;code&gt;Reaction&lt;/code&gt;有四個不一樣的形態:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ReactionDisposer autorun(Function(Reaction) fn)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;autorun&lt;/code&gt;會在被建立後立刻做出反應並且在任何改變的時候做出反應&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+String greeting = Observable(&#39;Hello World&#39;);
+
+final dispose = autorun((_){
+  print(greeting.value);
+});
+
+greeting.value = &#39;Hello MobX&#39;;
+
+// Done with the autorun()
+dispose();
+
+// Prints:
+// Hello World
+// Hello MobX
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ReactionDisposer reaction&amp;lt;T&amp;gt;(T Function(Reaction) fn, void Function(T) effect)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;reaction&lt;/code&gt;僅會在有改變的時候才會做出反應&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+String greeting = Observable(&#39;Hello World&#39;);
+
+final dispose = reaction((_) =&amp;gt; greeting.value, (msg) =&amp;gt; print(msg));
+
+greeting.value = &#39;Hello MobX&#39;; // Cause a change
+
+// Done with the reaction()
+dispose();
+
+// Prints:
+// Hello MobX
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ReactionDisposer when(bool Function(Reaction) predicate, void Function() effect)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;when&lt;/code&gt;僅會在條件成立的時候做出反應，而且&lt;code&gt;僅會觸發一次&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+String greeting = Observable(&#39;Hello World&#39;);
+
+final dispose = when((_) =&amp;gt; greeting.value == &#39;Hello MobX&#39;, () =&amp;gt; print(&#39;Someone greeted MobX&#39;));
+
+greeting.value = &#39;Hello MobX&#39;; // Causes a change, runs effect and disposes
+
+// Prints:
+// Someone greeted MobX
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Future&amp;lt;void&amp;gt; asyncWhen(bool Function(Reaction) predicate)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;asyncWhen&lt;/code&gt;與&lt;code&gt;when&lt;/code&gt;雷同，只是它回傳的是一個&lt;code&gt;Future&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;final completed = Observable(false);
+
+void waitForCompletion() async {
+  await asyncWhen(() =&amp;gt; completed.value == true);
+
+  print(&#39;Completed&#39;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;除了&lt;code&gt;asyncWhen&lt;/code&gt;是傳回一個&lt;code&gt;Future&lt;/code&gt;之外，其他三個都會傳回一個&lt;code&gt;ReactionDisposer&lt;/code&gt;。
+&lt;code&gt;ReactionDisposer&lt;/code&gt;一個可以被調用以處理&lt;code&gt;Reaction&lt;/code&gt;的函數。&lt;/p&gt;
+&lt;h2 id=&#34;observer-widget&#34;&gt;Observer Widget&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Observer Widget&lt;/code&gt;的功用是監聽其 Widget 內&lt;code&gt;Observable&lt;/code&gt;的改變，
+並且在接收&lt;code&gt;Reaction&lt;/code&gt;發出的通知後進行畫面更新。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:flutter/material.dart&#39;;
+import &#39;package:flutter_mobx/flutter_mobx.dart&#39;;
+import &#39;package:mobx/mobx.dart&#39;;
+
+part &#39;counter.g.dart&#39;;
+
+class Counter = CounterBase with _$Counter;
+
+abstract class CounterBase with Store {
+  @observable
+  int value = 0;
+
+  @action
+  void increment() {
+    value++;
+  }
+}
+
+class CounterExample extends StatefulWidget {
+  const CounterExample({Key key}) : super(key: key);
+
+  @override
+  _CounterExampleState createState() =&amp;gt; _CounterExampleState();
+}
+
+class _CounterExampleState extends State&amp;lt;CounterExample&amp;gt; {
+  final _counter = Counter();
+
+  @override
+  Widget build(BuildContext context) =&amp;gt; Scaffold(
+        appBar: AppBar(
+          title: const Text(&#39;Counter&#39;),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: &amp;lt;Widget&amp;gt;[
+              const Text(
+                &#39;You have pushed the button this many times:&#39;,
+              ),
+              Observer(
+                builder: (_) =&amp;gt; Text(
+                    &#39;${_counter.value}&#39;,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _counter.increment,
+          tooltip: &#39;Increment&#39;,
+          child: const Icon(Icons.add),
+        ),
+      );
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;雖然 MobX 還是得借助額外的函式庫來幫我們產生底層的程式碼，但與 BLoC 比起來,確實可以少寫點 Code。
+文件說明也蠻詳儘的，也有把使用者可能會有的疑問也在文件中加以說明。另外，也有不少範例可以參考。
+但在學習的曲線上，BLoC 還是讓我覺得比較易懂跟直覺。該學哪種呢?當然是兩種都學!!!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

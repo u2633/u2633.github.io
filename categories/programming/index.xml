@@ -1,0 +1,1284 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Programming | Z@NE.NOTE</title>
+    <link>https://u2633.github.io/categories/programming/</link>
+      <atom:link href="https://u2633.github.io/categories/programming/index.xml" rel="self" type="application/rss+xml" />
+    <description>Programming</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 21 Jul 2020 11:52:30 +0800</lastBuildDate>
+    <image>
+      <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
+      <title>Programming</title>
+      <link>https://u2633.github.io/categories/programming/</link>
+    </image>
+    
+    <item>
+      <title>Flutter Plugin Hand by Hand</title>
+      <link>https://u2633.github.io/post/2020/07/flutter-plugin-hand-by-hand/</link>
+      <pubDate>Tue, 21 Jul 2020 11:52:30 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/07/flutter-plugin-hand-by-hand/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近公司為了趕出貨而忙的天慌地老的，連想寫個文章的精力都被榨乾了。所以，這也是慌廢了一個多月的第一篇文章。
+最近，因為需求的關係，需要寫 Plugin 去 Call Native 的 API 來實現一些功能。讓我來紀錄一下我學到了什麼吧!&lt;/p&gt;
+&lt;h2 id=&#34;flutter-package&#34;&gt;Flutter Package&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Flutter Package&lt;/a&gt;
+可以將常用或是想獨立的的程式碼模組化，以供之後的重復利用。只有分兩種型別&lt;code&gt;Dart Package&lt;/code&gt;及&lt;code&gt;Plugin Package&lt;/code&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Dart Package&lt;/code&gt; - 以 
+&lt;a href=&#34;https://dart.dev/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Dart&lt;/a&gt;撰寫，對 &lt;code&gt;Flutter Framework&lt;/code&gt; 有相依性的組件。如: 
+&lt;a href=&#34;https://pub.dev/packages/path&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;path&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Plugin Package&lt;/code&gt; - 利用 &lt;code&gt;Dart&lt;/code&gt; 提供的官方 API(
+&lt;a href=&#34;https://flutter.dev/docs/development/platform-integration/platform-channels&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Platform Channel&lt;/a&gt;)與原生平台(&lt;strong&gt;iOS/ Android&lt;/strong&gt;)的原生碼互動的組件，例如: 
+&lt;a href=&#34;https://pub.dev/packages/url_launcher&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;url_launcher&lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;如何撰寫-dart-package&#34;&gt;如何撰寫 Dart Package&lt;/h2&gt;
+&lt;p&gt;建立 &lt;code&gt;Dart Package&lt;/code&gt; 必需利用&lt;code&gt;Flutter CLI&lt;/code&gt;下&lt;code&gt;flutter create --template=package hello&lt;/code&gt;。
+執行指令後，Flutter CLI 就會幫你把專案的架構產生出來，就像建立 Project 一樣。如下圖:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;dart_package.png&#34; alt=&#34;Dart Package&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;如何撰寫-plugin-package&#34;&gt;如何撰寫 Plugin Package&lt;/h2&gt;
+&lt;p&gt;主要元件有三個: &lt;code&gt;app-facing package&lt;/code&gt;、&lt;code&gt;platform interface package&lt;/code&gt;及&lt;code&gt;platform packages&lt;/code&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;app-facing package&lt;/code&gt; - Flutter 使用的 API。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;platform interface package&lt;/code&gt; - &lt;strong&gt;app-facing package&lt;/strong&gt;與&lt;strong&gt;platform packages&lt;/strong&gt;溝通的橋樑。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;platform packages&lt;/code&gt; - 原生平台裡面實作的程式碼。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一樣利用&lt;code&gt;Flutter CLI&lt;/code&gt;下指令&lt;code&gt;flutter create --template=plugin hello&lt;/code&gt;。
+原生碼使用的預設語言為 &lt;code&gt;iOS - Swift&lt;/code&gt;, &lt;code&gt;Android - Kotlin&lt;/code&gt;。
+如果想更換平台的話，可以多下 options。如下:&lt;/p&gt;
+&lt;p&gt;更換 Android 的開發語言為 JAVA&lt;br&gt;
+&lt;code&gt;flutter create --org com.example --template=plugin -a java hello&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;更換 iOS 的開發語言為 Objective-C&lt;br&gt;
+&lt;code&gt;flutter create --org com.example --template=plugin -i objc hello&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;專案結構如下圖:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;plugin_package.png&#34; alt=&#34;Plugin Package&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;技術上，&lt;code&gt;Plugin Package&lt;/code&gt; 的撰寫明顯比 &lt;code&gt;Dart Package&lt;/code&gt; 來的困難許多。尤其是像我這種本身沒接觸過原生開發的人。
+增加了雙平台的程式碼，學習的曲線會變很高。如果，背後的邏輯複雜度又高的話，原生的語法勢必得玩的更深入些了。
+相對的，如果吃的了原生雙平台的話，身價必然水漲船高的，嘿嘿…。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Unity Export vs iOS Build Configuration</title>
+      <link>https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/</link>
+      <pubDate>Thu, 30 Apr 2020 10:02:21 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/04/add-flavors-on-ios-from-unity-export/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;目前因為需求的關係，需要將專案分成五個不同的執行環境。而且，因為專案有導入&lt;code&gt;Firebase&lt;/code&gt;的關係，
+我們利用 &lt;code&gt;Flavor&lt;/code&gt; 來區分各別環境。專案中又有使用到 Unity 模組。在&lt;code&gt;Android&lt;/code&gt;的環境上執行都很順利
+，但是，在執行 iOS 的時候卻會出現錯誤。來紀錄一下我的問題發生經過及解決方式吧。&lt;/p&gt;
+&lt;h2 id=&#34;project-level-configs-vs-trage-level-congis&#34;&gt;Project Level Configs vs Trage Level Congis&lt;/h2&gt;
+&lt;p&gt;在此之前，我們先來了解一下 iOS 中 &lt;code&gt;Project Level Target&lt;/code&gt; 與 &lt;code&gt;Native Level Targes&lt;/code&gt; 之間的關係及差別吧。&lt;/p&gt;
+&lt;p&gt;在這就先道破吧 -  &lt;code&gt;Target Level&lt;/code&gt; 比 &lt;code&gt;Project Level&lt;/code&gt; 的層級高。所以，有衝突的設定會以 Target Level 為先。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;configs_level.png&#34; alt=&#34;Config Level&#34;&gt;&lt;/p&gt;
+&lt;p&gt;簡單說，Project 就是像是 &lt;code&gt;Common 設定&lt;/code&gt;，而 Target 會再根據需求加入或是修改設定。
+在 &lt;code&gt;Target Level&lt;/code&gt; 中，與 &lt;code&gt;Project Level&lt;/code&gt; 同名的稱 &lt;code&gt;Main Target&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;如何手動解決外部模組-build-flavor-錯誤&#34;&gt;如何手動解決外部模組 Build Flavor 錯誤&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://medium.com/@salvatoregiordanoo/flavoring-flutter-392aaa875f36&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Flavor 的設定&lt;/a&gt;由於 Google 上的教學很詳細了，
+在此就不多做敘述。&lt;/p&gt;
+&lt;p&gt;在下&lt;code&gt;flutter build ios --no-codesign -t lib/main_prod.dart --flavor production&lt;/code&gt;時，馬上就會出現編譯錯誤。
+原因就是來自外部匯入的模組 - &lt;code&gt;Unity-iPhone&lt;/code&gt;上。在花了不少時間找答案卻沒什麼結果的時候，我忽然靈光一閃，
+想說為什麼我不試試看也在這外部模組中多加入跟我主要專案上一樣的設定檔就好。結果，還真的被我編譯成功且能正常執行。
+雖然高興了一下，但接著遇到的問題是，這個外部模組是個異動性極高，也就是說，即使我這次已經改成功了，
+但下次也會因為重新匯出而造成我目前的設定檔被重置。我不可能每次重新匯入後就去改一次那個設定檔，
+太不 Make Sence 了!!!&lt;/p&gt;
+&lt;p&gt;好吧，即然無法在專案內動手腳，那我就在匯出的時候動手腳了!&lt;/p&gt;
+&lt;h2 id=&#34;修改-unity-匯出腳本&#34;&gt;修改 Unity 匯出腳本&lt;/h2&gt;
+&lt;p&gt;我相信，這種問題我絕對不是第一個。果然，
+Unity 官方已經有提供現有的
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API&lt;/a&gt;，
+幫我們解決這方面的需求了，讓我們可以完整存取 &lt;code&gt;Project Level&lt;/code&gt; 及 &lt;code&gt;Target Level&lt;/code&gt;的設定。
+但因為小弟不熟悉的關係，所以，花了兩天 Try and Error 才把這問題解決。而整個過程中我只有使用到少數幾支 API&lt;/p&gt;
+&lt;p&gt;取得 Project GUID 的 
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.ProjectGuid.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;public string ProjectGuid();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;取得 Unity Framework 的 
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.GetUnityFrameworkTargetGuid.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;PBXProject.GetUnityFrameworkTargetGuid();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;取得 Unity Test 的 API。這裡我是利用另一種方式取得的，不是官方文件所提到的&lt;code&gt;GetUnityTestTargetName&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;PBXProject.TargetGuidByName(&amp;quot;Unity-iPhone Tests&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;取得 Build Configs 的 
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.BuildConfigByName.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;public string BuildConfigByName(string targetGuid, string name);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;targetGuid&lt;/code&gt;就是上述中的&lt;code&gt;ProjectGuid&lt;/code&gt;、&lt;code&gt;GetUnityFrameworkTargetGuid&lt;/code&gt;及&lt;code&gt;TargetGuidByName(&amp;quot;Unity-iPhone Tests&amp;quot;)&lt;/code&gt;所得到的24碼GUID，
+&lt;code&gt;name&lt;/code&gt;就是 Build Type 與各別 Flavor 形成的的設定檔名稱，如: &lt;code&gt;Debug-development&lt;/code&gt;或是&lt;code&gt;Release Production&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;加入 Build Property 的 
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.AddBuildPropertyForConfig.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;它有兩種建構型態&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-c#&#34;&gt;public void AddBuildPropertyForConfig(string configGuid, string name, string value);
+public void AddBuildPropertyForConfig(IEnumerable&amp;lt;string&amp;gt; configGuids, string name, string value);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接下來，就是把設定加入到對應的設定檔即可。&lt;/p&gt;
+&lt;h2 id=&#34;後記&#34;&gt;後記&lt;/h2&gt;
+&lt;p&gt;這問題讓我花較多時間的部份就只有在設定的收集及編排成可用格式上，這個部份比較瑣碎且費工。
+另外，也因為之前不了解 Xcode 中 &lt;code&gt;.xbproject&lt;/code&gt; 的架構，所以，花了點時間在 Try and Error 上。&lt;/p&gt;
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://medium.com/@animeshjain/build-flavors-in-flutter-android-and-ios-with-different-firebase-projects-per-flavor-27c5c5dac10b&#34;&gt;https://medium.com/@animeshjain/build-flavors-in-flutter-android-and-ios-with-different-firebase-projects-per-flavor-27c5c5dac10b&lt;/a&gt;
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.html&#34;&gt;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.html&lt;/a&gt;
+&lt;a href=&#34;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.AddBuildConfig.html&#34;&gt;https://docs.unity3d.com/ScriptReference/iOS.Xcode.PBXProject.AddBuildConfig.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://unity3d.com/get-unity/download?_ga=2.81909398.1631348832.1588208861-1076366319.1588208861&#34;&gt;https://unity3d.com/get-unity/download?_ga=2.81909398.1631348832.1588208861-1076366319.1588208861&lt;/a&gt;
+&lt;a href=&#34;https://unity3d.com/get-unity/download/archive&#34;&gt;https://unity3d.com/get-unity/download/archive&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Flutter SDK 1.12.13 Proguard 功能預設已變更為開啟狀態</title>
+      <link>https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/</link>
+      <pubDate>Tue, 28 Apr 2020 19:40:57 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/04/how-to-fix-proguard-issue/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近在更新 Flutter SDK 到 1.12.13 之後，Release 的版本在執行時會報錯，Google 後發現原來是 Proguard 的問題，
+來紀錄一下解決的方法吧。&lt;/p&gt;
+&lt;h2 id=&#34;問題描述&#34;&gt;問題描述&lt;/h2&gt;
+&lt;p&gt;在 Flutter 升到 Stable 的最新版 - &lt;code&gt;1.12.13&lt;/code&gt; 之後，build 的過程都很順利，原本想說可以無痛的。
+結果，該來的還是躲不過，執行 APP 後居然一直在登入頁面轉圈圈。在交叉比對後發現，
+執行 Debug 版本居然是正常的。再來看一下 logcat，找找看錯誤發生的原因。
+果然…，就是有錯，而真正造成錯誤居然是被混淆的程式碼，如下:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;logcat_info.png&#34; alt=&#34;Logcat Info&#34;&gt;&lt;/p&gt;
+&lt;p&gt;就之前的經驗，Proguard 應該是手動加入的，這時候第一個直覺先想到的就是，先看一下 1.12.13 的 Release Note，
+果不其然，在這個版本的 Relase Note 發現了程式被混淆的原因。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;proguard_enable.png&#34; alt=&#34;Proguard is default&#34;&gt;&lt;/p&gt;
+&lt;p&gt;沒錯，由於這個版本的 
+&lt;a href=&#34;https://flutter.dev/docs/deployment/android#shrinking-your-code-with-r8&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;R8&lt;/a&gt; 預設為開啟狀態，所以，Proguard 在 Release Mode 被設成 &lt;code&gt;Default&lt;/code&gt; 了。即然知道原因那就好解決…，再次請教大神…。&lt;/p&gt;
+&lt;h2 id=&#34;解決方法&#34;&gt;解決方法&lt;/h2&gt;
+&lt;p&gt;解決辨法有兩種，第一種就是在 Build Command 後面多下個 flag - &lt;code&gt;--no-shrink&lt;/code&gt;，另一種就是在所有的 JNI 函數上下 Annotatin - &lt;code&gt;@keep&lt;/code&gt;，
+去避免程式碼進行混淆的動作。而我是選擇第二種比較合理的作法。&lt;/p&gt;
+&lt;h2 id=&#34;參考文件&#34;&gt;參考文件&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://flutter.dev/docs/development/tools/sdk/release-notes/release-notes-1.12.13&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Flutter 1.12.13 Release Note&lt;/a&gt;
+
+&lt;a href=&#34;https://github.com/flutter/flutter/issues/48015#issuecomment-571043492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;How to fix proguard issue&lt;/a&gt;
+
+&lt;a href=&#34;https://medium.com/@JamesQI/proguard-d8cc2e67211&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Proguard 教學&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;結論&#34;&gt;結論&lt;/h2&gt;
+&lt;p&gt;雖然這個問題並沒有花費太多時間解進，但這個經驗又讓我學到，要更新工具之前，最好先詳閱它的 Release Note&amp;hellip;。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>狀態管理工具 - MobX</title>
+      <link>https://u2633.github.io/post/2020/04/mobx-learning-note/</link>
+      <pubDate>Tue, 14 Apr 2020 13:56:46 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/04/mobx-learning-note/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;之前有介紹什麼是 
+&lt;a href=&#34;https://blog.zcychen.com/post/2020/03/bloc-design-pattern/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC&lt;/a&gt;。
+今天來學習另一個狀態管理工具 - 
+&lt;a href=&#34;https://mobx.netlify.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MobX&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;類似 BLoC，但可以讓開發者更專注在資料面上且不用寫太多的程式碼。同樣是狀態管理工具，
+MobX 似乎看起來更有優勢，因為我們只需要專注在哪些畫面需要哪些資料，
+而不用像 BLoC 一樣，需要實作&lt;code&gt;事件(Event)&lt;/code&gt;與&lt;code&gt;狀態(State)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;MobX 的主要三大核心元件: &lt;code&gt;Observables&lt;/code&gt;, &lt;code&gt;Actions&lt;/code&gt; 與 &lt;code&gt;Reactions&lt;/code&gt;，
+圖是人的朋友，我們可利用下圖來了解彼此的關係。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;mobx-core-concepts.png&#34; alt=&#34;Mobx Core Concepts&#34;&gt;&lt;/p&gt;
+&lt;p&gt;首先，我們會先定義哪此資料是必需被&lt;code&gt;觀察(Observable)&lt;/code&gt;的，並且能在任何&lt;code&gt;行為(Action)&lt;/code&gt;造成的&lt;code&gt;改變(Mutate)&lt;/code&gt;時&lt;code&gt;通知(Notify)&lt;/code&gt;頁面並做出&lt;code&gt;反應(Reaction)&lt;/code&gt;。
+而且，在頁面做完&lt;code&gt;反應(Reaction)&lt;/code&gt;後又可能會&lt;code&gt;觸發(Fire)&lt;/code&gt;另一個&lt;code&gt;行為(Action)&lt;/code&gt;。如此就型成了上述的三角狀態。&lt;/p&gt;
+&lt;h2 id=&#34;observables&#34;&gt;Observables&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Observables&lt;/code&gt;代表&lt;code&gt;嚮應的狀態(Reactive-State)&lt;/code&gt;。它可以是一個簡單的值，可以是個復雜的物件(&lt;code&gt;reactive-state-tree&lt;/code&gt;)。
+我們可以在 Widget Tree 中的任何一個地方利用&lt;code&gt;觀察者(Observer)&lt;/code&gt;取得這些&lt;code&gt;Observables&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;基於這些概念，我們可以定義出如下的程式碼&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;class Counter {
+  Counter() {
+    increment = Action(_increment);
+  }
+
+  final _value = Observable(0);
+  int get value =&amp;gt; _value.value;
+
+  set value(int newValue) =&amp;gt; _value.value = newValue;
+  Action increment;
+
+  void _increment() {
+    _value.value++;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;程式碼有點不易越讀性，如果在大型一點專案中會更容易有這種問題。
+但是，在透過 MobX 的幫助下，我們只需要使用&lt;code&gt;Annotation&lt;/code&gt;的方式就能簡化其程式碼。
+實作中，我們會建立一個&lt;code&gt;Store(Entity的概念)&lt;/code&gt;來存放&lt;code&gt;Observable&lt;/code&gt;、&lt;code&gt;Action&lt;/code&gt;、&lt;code&gt;Computed Observable&lt;/code&gt;的資料，
+並利用第三方插件 - 
+&lt;a href=&#34;https://pub.dev/packages/mobx_codegen&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;mobx_codegen&lt;/a&gt; 來幫我們產出&lt;code&gt;Annotation&lt;/code&gt;裡的樣版程式碼&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+part &#39;counter.g.dart&#39;;
+
+class Counter = CounterBase with _$Counter;
+
+abstract class CounterBase with Store {
+  @observable
+  int value = 0;
+
+  @action
+  void increment() {
+    value++;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;computed-observables&#34;&gt;Computed Observables&lt;/h3&gt;
+&lt;p&gt;MobX 中的狀態組成為&lt;code&gt;核心狀態(Core-State)&lt;/code&gt; + &lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;。
+假設我們有個叫&lt;code&gt;Contact&lt;/code&gt;的 Store，如下:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+part &#39;contact.g.dart&#39;;
+
+class Contact = ContactBase with _$Contact;
+
+abstract class ContactBase with Store {
+  @observable
+  String firstName;
+
+  @observable
+  String lastName;
+
+  @computed
+  String get fullName =&amp;gt; &#39;$firstName, $lastName&#39;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Computed Observables&lt;/code&gt;也就是所謂的&lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;，
+是個以&lt;code&gt;核心狀態(Core-State)&lt;/code&gt;或是其他&lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;為基礎的&lt;code&gt;Observable&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;範例中&lt;code&gt;firstName&lt;/code&gt;與&lt;code&gt;lastName&lt;/code&gt;就是&lt;code&gt;核心狀態(Core-State)&lt;/code&gt;，而&lt;code&gt;fullName&lt;/code&gt;就是&lt;code&gt;衍生狀態(Derived-State)&lt;/code&gt;。
+&lt;code&gt;fullName&lt;/code&gt;的值也會與&lt;code&gt;firstName&lt;/code&gt;及&lt;code&gt;lastName&lt;/code&gt;保持同步的狀態。&lt;/p&gt;
+&lt;h2 id=&#34;actions&#34;&gt;Actions&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Action&lt;/code&gt;就是在 Store 中對&lt;code&gt;Observable&lt;/code&gt;操作的&lt;code&gt;函數&lt;/code&gt;。不同於直接對&lt;code&gt;Observable&lt;/code&gt;操作，
+藉由&lt;code&gt;Annotation&lt;/code&gt;可以讓程式碼更具可讀性。此外，&lt;code&gt;Action&lt;/code&gt;還會保證所有的改變都會在完成後被確實通知。&lt;/p&gt;
+&lt;h2 id=&#34;reactions&#34;&gt;Reactions&lt;/h2&gt;
+&lt;p&gt;在 MobX 中，它代表&lt;code&gt;Observer&lt;/code&gt;，監聽追蹤的&lt;code&gt;Observable&lt;/code&gt;並在有改變的時候通知&lt;code&gt;Observer Widget&lt;/code&gt;。
+&lt;code&gt;Reaction&lt;/code&gt;有四個不一樣的形態:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ReactionDisposer autorun(Function(Reaction) fn)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;autorun&lt;/code&gt;會在被建立後立刻做出反應並且在任何改變的時候做出反應&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+String greeting = Observable(&#39;Hello World&#39;);
+
+final dispose = autorun((_){
+  print(greeting.value);
+});
+
+greeting.value = &#39;Hello MobX&#39;;
+
+// Done with the autorun()
+dispose();
+
+// Prints:
+// Hello World
+// Hello MobX
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ReactionDisposer reaction&amp;lt;T&amp;gt;(T Function(Reaction) fn, void Function(T) effect)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;reaction&lt;/code&gt;僅會在有改變的時候才會做出反應&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+String greeting = Observable(&#39;Hello World&#39;);
+
+final dispose = reaction((_) =&amp;gt; greeting.value, (msg) =&amp;gt; print(msg));
+
+greeting.value = &#39;Hello MobX&#39;; // Cause a change
+
+// Done with the reaction()
+dispose();
+
+// Prints:
+// Hello MobX
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ReactionDisposer when(bool Function(Reaction) predicate, void Function() effect)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;when&lt;/code&gt;僅會在條件成立的時候做出反應，而且&lt;code&gt;僅會觸發一次&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:mobx/mobx.dart&#39;;
+
+String greeting = Observable(&#39;Hello World&#39;);
+
+final dispose = when((_) =&amp;gt; greeting.value == &#39;Hello MobX&#39;, () =&amp;gt; print(&#39;Someone greeted MobX&#39;));
+
+greeting.value = &#39;Hello MobX&#39;; // Causes a change, runs effect and disposes
+
+// Prints:
+// Someone greeted MobX
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Future&amp;lt;void&amp;gt; asyncWhen(bool Function(Reaction) predicate)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;asyncWhen&lt;/code&gt;與&lt;code&gt;when&lt;/code&gt;雷同，只是它回傳的是一個&lt;code&gt;Future&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;final completed = Observable(false);
+
+void waitForCompletion() async {
+  await asyncWhen(() =&amp;gt; completed.value == true);
+
+  print(&#39;Completed&#39;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;除了&lt;code&gt;asyncWhen&lt;/code&gt;是傳回一個&lt;code&gt;Future&lt;/code&gt;之外，其他三個都會傳回一個&lt;code&gt;ReactionDisposer&lt;/code&gt;。
+&lt;code&gt;ReactionDisposer&lt;/code&gt;一個可以被調用以處理&lt;code&gt;Reaction&lt;/code&gt;的函數。&lt;/p&gt;
+&lt;h2 id=&#34;observer-widget&#34;&gt;Observer Widget&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Observer Widget&lt;/code&gt;的功用是監聽其 Widget 內&lt;code&gt;Observable&lt;/code&gt;的改變，
+並且在接收&lt;code&gt;Reaction&lt;/code&gt;發出的通知後進行畫面更新。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:flutter/material.dart&#39;;
+import &#39;package:flutter_mobx/flutter_mobx.dart&#39;;
+import &#39;package:mobx/mobx.dart&#39;;
+
+part &#39;counter.g.dart&#39;;
+
+class Counter = CounterBase with _$Counter;
+
+abstract class CounterBase with Store {
+  @observable
+  int value = 0;
+
+  @action
+  void increment() {
+    value++;
+  }
+}
+
+class CounterExample extends StatefulWidget {
+  const CounterExample({Key key}) : super(key: key);
+
+  @override
+  _CounterExampleState createState() =&amp;gt; _CounterExampleState();
+}
+
+class _CounterExampleState extends State&amp;lt;CounterExample&amp;gt; {
+  final _counter = Counter();
+
+  @override
+  Widget build(BuildContext context) =&amp;gt; Scaffold(
+        appBar: AppBar(
+          title: const Text(&#39;Counter&#39;),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: &amp;lt;Widget&amp;gt;[
+              const Text(
+                &#39;You have pushed the button this many times:&#39;,
+              ),
+              Observer(
+                builder: (_) =&amp;gt; Text(
+                    &#39;${_counter.value}&#39;,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _counter.increment,
+          tooltip: &#39;Increment&#39;,
+          child: const Icon(Icons.add),
+        ),
+      );
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;雖然 MobX 還是得借助額外的函式庫來幫我們產生底層的程式碼，但與 BLoC 比起來,確實可以少寫點 Code。
+文件說明也蠻詳儘的，也有把使用者可能會有的疑問也在文件中加以說明。另外，也有不少範例可以參考。
+但在學習的曲線上，BLoC 還是讓我覺得比較易懂跟直覺。該學哪種呢?當然是兩種都學!!!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Extensible Messaging and Presence Protocol (XMPP)</title>
+      <link>https://u2633.github.io/post/2020/04/xmpp-learning-note/</link>
+      <pubDate>Thu, 09 Apr 2020 14:34:42 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/04/xmpp-learning-note/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近在串 Firebase Cloud Messaging 的時候在官方文件看到了 XMPP 這個通訊協定，
+雖然這並不是新的技術，但過去也沒看過，就來學點新知識吧。&lt;/p&gt;
+&lt;h2 id=&#34;what&#34;&gt;What&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://xmpp.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;XMPP, eXtensible Messaging and Presence Protocol&lt;/a&gt;
+是一種基於
+&lt;a href=&#34;https://zh.wikipedia.org/wiki/XML&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;XML&lt;/a&gt;，用於傳遞&lt;code&gt;訊息及狀態&lt;/code&gt;的&lt;code&gt;開放式標準&lt;/code&gt;通訊協定。可應用於如: WebRTC, IoT, Gaming
+, Instant Message(IM)等許多領域中。&lt;/p&gt;
+&lt;p&gt;目前一些科技大廠如: Google, Apple 的&lt;code&gt;Push Notification&lt;/code&gt;也是使用此通訊協定。
+IM 中較國內知名的就屬
+&lt;a href=&#34;http://whatsapp.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;WhatsApp&lt;/a&gt;。
+Gaming 中
+&lt;a href=&#34;https://www.nintendo.com/switch/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Nintendo Switch&lt;/a&gt; 也利用它當作&lt;code&gt;Push Notification Server&lt;/code&gt;，
+另一個 Gaming Use Case 就是
+&lt;a href=&#34;https://leagueoflegends.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;League of Legends&lt;/a&gt; - 將其利用作為&lt;code&gt;聊天室&lt;/code&gt;與&lt;code&gt;遊戲邀請&lt;/code&gt;的通訊協定。
+有興趣多了解可參考
+&lt;a href=&#34;https://xmpp.org/uses/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官方 Uses&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;why&#34;&gt;Why&lt;/h2&gt;
+&lt;p&gt;優點:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;開放&lt;/p&gt;
+&lt;p&gt;XMPP協議是自由、開放、公開的，並且易於瞭解。而且在客戶端、伺服器、元件、原始碼庫等方面，都已經各自有多種實作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;標準&lt;/p&gt;
+&lt;p&gt;網際網路工程工作小組（IETF）已經將Jabber的核心XML串流協定以XMPP之名，正式列為認可的即時通訊及Presence技術。而XMPP的技術規格已被定義在RFC 3920及RFC 3921。任何IM供應商在遵循XMPP協定下，都可與Google Talk實現連接。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;證實可用&lt;/p&gt;
+&lt;p&gt;第一個Jabber（現在XMPP）技術是Jeremie Miller在1998年開發的，現在已經相當穩定；數以百計的開發者為XMPP技術而努力。今日的網際網路上有數以萬計的XMPP伺服器運作著，並有數以百萬計的人們使用XMPP即時傳訊軟體。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;分散式&lt;/p&gt;
+&lt;p&gt;XMPP網路的架構和電子郵件十分相像；XMPP核心協定通信方式是先建立一個stream，XMPP以TCP傳遞XML資料流，沒有中央主伺服器。任何人都可以運行自己的XMPP伺服器，使個人及組織能夠掌控他們的即時傳訊體驗。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安全&lt;/p&gt;
+&lt;p&gt;任何XMPP協定的伺服器可以獨立於公眾XMPP網路（例如在企業內部網路中），而使用SASL及TLS等技術的可靠安全性，已內建於核心XMPP技術規格中。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;可擴展&lt;/p&gt;
+&lt;p&gt;XML命名空間的威力可使任何人在核心協定的基礎上建造客製化的功能；為了維持通透性，常見的擴充套件由XMPP標準基金會。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;彈性佳&lt;/p&gt;
+&lt;p&gt;XMPP除了可用在即時通訊的應用程式，還能用在網路管理、內容供稿、協同工具、檔案共享、遊戲、遠端系統監控等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;多樣性&lt;/p&gt;
+&lt;p&gt;用XMPP協定來建造及布署即時應用程式及服務的公司及開放原始碼計劃分布在各種領域；用XMPP技術開發軟體，資源及支援的來源是多樣的，使得使你不會陷於被「綁架」的困境。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;缺點&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;資料負載太重&lt;/p&gt;
+&lt;p&gt;隨著通常超過70％的XMPP協定的伺服器的資料流量的存在和近60％的被重複轉發，XMPP協定目前擁有一個大型架空中存在的資料提供給多個收件人。新的議定書正在研究，以減輕這一問題。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;二進制資料傳輸受限&lt;/p&gt;
+&lt;p&gt;XMPP傳輸單一的XML檔案，因此要透過XMPP傳輸二進制資料，需先將二進制資料以Base64編碼。但是大量的二進制資料傳輸，較佳的作法是用外部的其他協定傳輸，而以XMPP進行溝通。至於其他二進制資料加密會話（encrypted conversations）或圖形圖標（graphic icons）以嵌入式使用相同的方法。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;how&#34;&gt;How&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;XMPP Client&lt;/code&gt; 的傳輸都&lt;strong&gt;必需&lt;/strong&gt;經過 &lt;code&gt;XMPP Server&lt;/code&gt;，但這 Server 不是官方控制的(&lt;strong&gt;Jabber.org的公眾伺服器上有大量的用戶，但它並不是官方的&lt;/strong&gt;)。
+任何人都可以在自己或是公司的網域架設 XMPP Server，例如:&lt;/p&gt;
+&lt;p&gt;朱麗葉（juliet@capulet.com）想和羅密歐（romeo@montague.net）通話，他們兩人的帳號分別在Capulet.com及Montague.net的伺服器上。
+其流程為&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;朱麗葉的 XMPP客戶端 將她的訊息傳送到 Capulet.com XMPP 伺服器。&lt;/li&gt;
+&lt;li&gt;Capulet.com XMPP 伺服器開啟與 Montague.net XMPP 伺服器的連接。&lt;/li&gt;
+&lt;li&gt;Montague.net XMPP 伺服器將訊息寄送給羅密歐。如果他目前不在線上，那麼儲存訊息以待稍後寄送。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在上述的過程中，訊息會在傳送時被 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/OMEMO&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;OMEMO&lt;/a&gt; 的加密方式處理過後再送出。&lt;/p&gt;
+&lt;p&gt;XMPP 亦支援跨協定傳輸，稱為 &lt;code&gt;Transport 或是 Gateway&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://xmpp.org/software/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官方這裡&lt;/a&gt; 也整理不少實作 XMPP 協定的 Client 與 Server 軟體。&lt;/p&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;在網路上也不少 XMPP 與 
+&lt;a href=&#34;http://mqtt.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MQTT&lt;/a&gt; 比較的文章，尤其是在 IoT 的領域中，這兩種𠦢定都是可以被利用的。
+但是，MQTT 由於其&lt;code&gt;低功耗&lt;/code&gt;且&lt;code&gt;低頻寬消耗&lt;/code&gt;的特性，所以更適合在 IoT 領域，開發者認為它就是個&lt;code&gt;機器對機器的通訊協定&lt;/code&gt;。
+相對的，XMPP 也因&lt;code&gt;高安全性&lt;/code&gt;及&lt;code&gt;易擴展&lt;/code&gt;等特性讓它能夠在不同的領域中被廣泛使用。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>解決Flutter Bottom Modal彈跳兩次的問題</title>
+      <link>https://u2633.github.io/post/2020/03/fix-modal-popup-twice/</link>
+      <pubDate>Thu, 12 Mar 2020 19:58:18 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/03/fix-modal-popup-twice/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;在開發 Flutter 的時候，不知為何觸發 Bottom Modal 的選單時，總是會觸發兩次，問題如下影片&lt;/p&gt;
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://www.youtube.com/embed/RqUUDLlzAkE&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;預期的行為&#34;&gt;預期的行為&lt;/h2&gt;
+&lt;p&gt;預期只會出現一次&lt;/p&gt;
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://www.youtube.com/embed/ntuETYdeMjc&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;解決方法&#34;&gt;解決方法&lt;/h2&gt;
+&lt;p&gt;增加 listener 檢查目前的 Widget 是否已經被 Focus，避免觸發兩次&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;_institutionOnFocus.addListener(() {
+  if (_institutionOnFocus.hasFocus) {
+    BottomModalBuilder.items(
+      context,
+      _institutionController,
+      _institutionList.map((i) =&amp;gt; i.name).toList(),
+    );
+  }
+});
+
+/// Institution text field
+Widget _showInstitutionField(CheckupDownloadState state) {
+  return TextFormFieldBuilder(
+    labelText: &#39;健檢機構&#39;,
+    hintText: &#39;請選擇&#39;,
+    controller: _institutionController,
+    focusNode: _institutionOnFocus,
+    isReadOnly: true,
+    validateFailureMessage: !state.isInsitutionValid ? &#39;請選擇機構&#39; : null,
+  );
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>我的 Leetcode 挑戰</title>
+      <link>https://u2633.github.io/post/leetcode-challenges/</link>
+      <pubDate>Tue, 10 Mar 2020 17:20:29 +0800</pubDate>
+      <guid>https://u2633.github.io/post/leetcode-challenges/</guid>
+      <description>&lt;h2 id=&#34;1-two-sums&#34;&gt;1. Two Sums&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def twoSum(self, nums, target):
+    &amp;quot;&amp;quot;&amp;quot;
+    :type nums: List[int]
+    :type target: int
+    :rtype: List[int]
+    &amp;quot;&amp;quot;&amp;quot;
+    for i, v in enumerate(nums):
+        # get the remainder
+        rem = target - v
+        # mark the chosen number
+        nums[i] = &#39;x&#39;
+        # get the index of the remainder
+        if rem in nums:
+            return [i, nums.index(rem)]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;940 ms&lt;/strong&gt;, faster than &lt;strong&gt;31.55%&lt;/strong&gt; of Python3 online submissions for Two Sum.
+Memory Usage: &lt;strong&gt;13.8 MB&lt;/strong&gt;, less than &lt;strong&gt;66.13%&lt;/strong&gt; of Python3 online submissions for Two Sum.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;771-jewels-and-stones&#34;&gt;771. Jewels and Stones&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def numJewelsInStones(self, J: str, S: str):
+    count = 0
+    # count jewels
+    for i in J:
+        count += S.count(i)
+    return count
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;36 ms&lt;/strong&gt;, faster than &lt;strong&gt;96.62%&lt;/strong&gt; of Python3 online submissions for Jewels and Stones.
+Memory Usage: &lt;strong&gt;13 MB&lt;/strong&gt;, less than &lt;strong&gt;81.19%&lt;/strong&gt; of Python3 online submissions for Jewels and Stones.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;938-range-sum-of-binary-search-tree&#34;&gt;938. Range Sum of Binary Search Tree&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+def rangeSumBST(self, root: TreeNode, L: int, R: int):
+    if not root:
+        return 0
+    elif root.val &amp;gt;= L and root.val &amp;lt;= R:
+        return root.val + self.rangeSumBST(root.left, L, R) + self.rangeSumBST(root.right, L, R)
+    elif root.val &amp;lt; L:
+        return self.rangeSumBST(root.right, L, R)
+    else:
+        return self.rangeSumBST(root.left, L, R)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;224 ms&lt;/strong&gt;, faster than &lt;strong&gt;92.03%&lt;/strong&gt; of Python3 online submissions for Range Sum of BST.
+Memory Usage: &lt;strong&gt;21.7 MB&lt;/strong&gt;, less than &lt;strong&gt;58.38%&lt;/strong&gt; of Python3 online submissions for Range Sum of BST.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;1021-remove-outermost-parentheses&#34;&gt;1021. Remove Outermost Parentheses&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def removeOuterParentheses(self, S: str):
+    count = shift = 0
+    res = &#39;&#39;
+
+    # calculate the range which will be saved
+    for i, p in enumerate(S):
+        if p == &#39;(&#39;:
+            count += 1
+        else:
+            count -= 1
+        if count == 0:
+            res += S[shift + 1: i]
+            shift = i + 1
+    return res
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;44 ms&lt;/strong&gt;, faster than &lt;strong&gt;87.14%&lt;/strong&gt; of Python3 online submissions for Remove Outermost Parentheses.
+Memory Usage: &lt;strong&gt;13.3 MB&lt;/strong&gt;, less than &lt;strong&gt;34.04%&lt;/strong&gt; of Python3 online submissions for Remove Outermost Parentheses.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;709-to-lower-case&#34;&gt;709. To Lower Case&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def toLowerCase(self, str: str):
+    return str.lower()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;20 ms&lt;/strong&gt;, faster than &lt;strong&gt;99.99%&lt;/strong&gt; of Python3 online submissions for To Lower Case.
+Memory Usage: &lt;strong&gt;13.1 MB&lt;/strong&gt;, less than &lt;strong&gt;50.92%&lt;/strong&gt; of Python3 online submissions for To Lower Case.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;804-unique-morse-code-words&#34;&gt;804. Unique Morse Code Words&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def uniqueMorseRepresentations(self, words: List[str]):
+    morse_code = [&amp;quot;.-&amp;quot;, &amp;quot;-...&amp;quot;, &amp;quot;-.-.&amp;quot;, &amp;quot;-..&amp;quot;, &amp;quot;.&amp;quot;, &amp;quot;..-.&amp;quot;, &amp;quot;--.&amp;quot;,
+                  &amp;quot;....&amp;quot;, &amp;quot;..&amp;quot;, &amp;quot;.---&amp;quot;, &amp;quot;-.-&amp;quot;, &amp;quot;.-..&amp;quot;, &amp;quot;--&amp;quot;, &amp;quot;-.&amp;quot;,
+                  &amp;quot;---&amp;quot;, &amp;quot;.--.&amp;quot;, &amp;quot;--.-&amp;quot;, &amp;quot;.-.&amp;quot;, &amp;quot;...&amp;quot;, &amp;quot;-&amp;quot;, &amp;quot;..-&amp;quot;,
+                  &amp;quot;...-&amp;quot;, &amp;quot;.--&amp;quot;, &amp;quot;-..-&amp;quot;, &amp;quot;-.--&amp;quot;, &amp;quot;--..&amp;quot;]
+
+    # make it unique
+    res = {&#39;&#39;.join([morse_code[ord(c) - ord(&#39;a&#39;)] for c in word]) for word in words}
+    # print(res)
+    return len(res)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;36 ms&lt;/strong&gt;, faster than &lt;strong&gt;95.38%&lt;/strong&gt; of Python3 online submissions for Unique Morse Code Words.
+Memory Usage: &lt;strong&gt;13.1 MB&lt;/strong&gt;, less than &lt;strong&gt;60.02%&lt;/strong&gt; of Python3 online submissions for Unique Morse Code Words.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;905-sort-array-by-parity&#34;&gt;905. Sort Array By Parity&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def sortArrayByParity(self, A: List[int]):
+    return sorted(A, key=lambda i: i % 2 == 0, reverse=True)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;60 ms&lt;/strong&gt;, faster than &lt;strong&gt;99.35%&lt;/strong&gt; of Python3 online submissions for Sort Array By Parity.
+Memory Usage: &lt;strong&gt;13.8 MB&lt;/strong&gt;, less than &lt;strong&gt;26.77%&lt;/strong&gt; of Python3 online submissions for Sort Array By Parity.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;961-n-repeated-element-in-size-2n-array&#34;&gt;961. N-Repeated Element in Size 2N Array&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def repeatedNTimes(self, A: List[int]):
+    d = {i: 0 for i in set(A)}
+    for i in A:
+        d[i] += 1
+
+    d = sorted(d.items(), key=lambda kv: kv[1], reverse=True)
+
+    reutur d[0][0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;84 ms&lt;/strong&gt;, faster than &lt;strong&gt;13.09%&lt;/strong&gt; of Python3 online submissions for N-Repeated Element in Size 2N Array.
+Memory Usage: &lt;strong&gt;14.3 MB&lt;/strong&gt;, less than &lt;strong&gt;20.81%&lt;/strong&gt; of Python3 online submissions for N-Repeated Element in Size 2N Array.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def repeatedNTimes(self, A: List[int]) -&amp;amp;gt; int:
+    return collections.Counter(A).most_common(1)[0][0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;52 ms&lt;/strong&gt;, faster than &lt;strong&gt;63.96%&lt;/strong&gt; of Python3 online submissions for N-Repeated Element in Size 2N Array.
+Memory Usage: &lt;strong&gt;14.2 MB&lt;/strong&gt;, less than &lt;strong&gt;42.24%&lt;/strong&gt; of Python3 online submissions for N-Repeated Element in Size 2N Array.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def repeatedNTimes(self, A: List[int]):
+    for i in range(1, len(A)):
+        for j in range(len(A) - i):
+            if A[j] == A[j+i]:
+                return A[j]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;44 ms&lt;/strong&gt;, faster than &lt;strong&gt;97.71%&lt;/strong&gt; of Python3 online submissions for N-Repeated Element in Size 2N Array.
+Memory Usage: &lt;strong&gt;14.3 MB&lt;/strong&gt;, less than &lt;strong&gt;25.22%&lt;/strong&gt; of Python3 online submissions for N-Repeated Element in Size 2N Array.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;832-flipping-an-image&#34;&gt;832. Flipping an Image&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def flipAndInvertImage(self, A: List[List[int]]):
+    # reverse list
+    for byte in A:
+        for bit in range(len(byte) // 2):
+            byte[bit], byte[-1 - bit] = byte[-1 - bit], byte[bit]
+
+    # invert list
+    for byte in A:
+        for bit in range(len(byte)):
+            if byte[bit] == 0:
+                byte[bit] = 1
+            else:
+                byte[bit] = 0
+    return A
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;48 ms&lt;/strong&gt;, faster than &lt;strong&gt;84.59%&lt;/strong&gt; of Python3 online submissions for Flipping an Image.
+Memory Usage: &lt;strong&gt;13.1 MB&lt;/strong&gt;, less than &lt;strong&gt;73.11%&lt;/strong&gt; of Python3 online submissions for Flipping an Image.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def flipAndInvertImage(self, A):
+    for row in A:
+        for i in range((len(row) + 1) // 2):
+            &amp;quot;&amp;quot;&amp;quot;
+            In Python, the shortcut row[~i] = row[-i-1] = row[len(row) - 1 - i]
+            helps us find the i-th value of the row, counting from the right.
+            &amp;quot;&amp;quot;&amp;quot;
+            row[i], row[~i] = row[~i] ^ 1, row[i] ^ 1
+    return A
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;44 ms&lt;/strong&gt;, faster than &lt;strong&gt;97.98%&lt;/strong&gt; of Python3 online submissions for Flipping an Image.
+Memory Usage: &lt;strong&gt;13.3 MB&lt;/strong&gt;, less than &lt;strong&gt;12.00%&lt;/strong&gt; of Python3 online submissions for Flipping an Image.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;977-squares-of-a-sorted-array&#34;&gt;977. Squares of a Sorted Array&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def sortedSquares(self, A: List[int]):
+    for i, v in enumerate(A):
+        A[i] = v * v
+
+    return sorted(A)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;148 ms&lt;/strong&gt;, faster than &lt;strong&gt;96.46%&lt;/strong&gt; of Python3 online submissions for Squares of a Sorted Array.
+Memory Usage: &lt;strong&gt;14.5 MB&lt;/strong&gt;, less than &lt;strong&gt;81.96%&lt;/strong&gt; of Python3 online submissions for Squares of a Sorted Array.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;929-unique-email-addresses&#34;&gt;929. Unique Email Addresses&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def numUniqueEmails(self, emails: List[str]):
+    for i, v in enumerate(emails):
+        # split email to local and domain name
+        email = v.split(&#39;@&#39;)
+        # remove &#39;.&#39; char
+        local_name = email[0].replace(&#39;.&#39;, &#39;&#39;)
+        # ignore string  after &#39;+&#39; char
+        if &#39;+&#39; in local_name:
+        local_name = local_name[:local_name.index(&#39;+&#39;)]
+        # reconstruct the email
+        emails[i] = local_name + &#39;@&#39; + email[1]
+
+    # make email list be unique
+    return len(set(emails))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;40 ms&lt;/strong&gt;, faster than &lt;strong&gt;99.44%&lt;/strong&gt; of Python3 online submissions for Unique Email Addresses.
+Memory Usage: &lt;strong&gt;13.2 MB&lt;/strong&gt;, less than &lt;strong&gt;41.53%&lt;/strong&gt; of Python3 online submissions for Unique Email Addresses.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;657-robot-return-to-origin&#34;&gt;657. Robot Return to Origin&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def judgeCircle(self, moves: str):
+    return moves.count(&#39;U&#39;) == moves.count(&#39;D&#39;) and moves.count(&#39;R&#39;) == moves.count(&#39;L&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;32 ms&lt;/strong&gt;, faster than &lt;strong&gt;99.78%&lt;/strong&gt; of Python3 online submissions for Robot Return to Origin.
+Memory Usage: &lt;strong&gt;13.4 MB&lt;/strong&gt;, less than &lt;strong&gt;10.24%&lt;/strong&gt; of Python3 online submissions for Robot Return to Origin.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;461-hamming-distance&#34;&gt;461. Hamming Distance&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def hammingDistance(self, x: int, y: int):
+    x = &#39;{0:032b}&#39;.format(x)
+    y = &#39;{0:032b}&#39;.format(y)
+
+    counter = 0
+    for i in range(len(x)):
+        if x[i] != y[i]:
+            counter += 1
+    return counter
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;28 ms&lt;/strong&gt;, faster than &lt;strong&gt;99.50%&lt;/strong&gt; of Python3 online submissions for Hamming Distance.
+Memory Usage: &lt;strong&gt;13.4 MB&lt;/strong&gt;, less than &lt;strong&gt;5.25%&lt;/strong&gt; of Python3 online submissions for Hamming Distance.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def hammingDistance(self, x: int, y: int) -&amp;amp;gt; int:
+    # convert to bin format
+    x = format(x, &#39;b&#39;)
+    y = format(y, &#39;b&#39;)
+
+    # unify length
+    if len(x) &amp;amp;gt; len(y):
+        y = (str(0) * (len(x) - len(y))) + y
+    else:
+        x = (str(0) * (len(y) - len(x))) + x
+
+    counter = 0
+    for i in range(len(x)):
+        if x[i] != y[i]:
+            counter += 1
+
+    return counter
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;32 ms&lt;/strong&gt;, faster than &lt;strong&gt;97.37%&lt;/strong&gt; of Python3 online submissions for Hamming Distance.
+Memory Usage: &lt;strong&gt;13.1 MB&lt;/strong&gt;, less than &lt;strong&gt;64.64%&lt;/strong&gt; of Python3 online submissions for Hamming Distance.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;617-merge-two-binary-trees&#34;&gt;617. Merge Two Binary Trees&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def mergeTrees(self, t1: TreeNode, t2: TreeNode):
+    if not (t1 and t2):
+        return t1 or t2
+    t1.val = t1.val + t2.val
+    t1.left = self.mergeTrees(t1.left, t2.left)
+    t1.right = self.mergeTrees(t1.right, t2.right)
+    return t1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;80 ms&lt;/strong&gt;, faster than &lt;strong&gt;98.72%&lt;/strong&gt; of Python3 online submissions for Merge Two Binary Trees.
+Memory Usage: &lt;strong&gt;13.8 MB&lt;/strong&gt;, less than &lt;strong&gt;65.04%&lt;/strong&gt; of Python3 online submissions for Merge Two Binary Trees.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;728-self-dividing-numbers&#34;&gt;728. Self Dividing Numbers&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def selfDividingNumbers(self, left: int, right: int):
+    res = []
+    for i in range(left, right + 1):
+        i_to_str = str(i)
+        for c in i_to_str:
+            if c == &#39;0&#39; or i % int(c) &amp;amp;gt; 0:
+            break
+        else:
+            res.append(i)
+    return res
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;48 ms&lt;/strong&gt;, faster than &lt;strong&gt;95.37%&lt;/strong&gt; of Python3 online submissions for Self Dividing Numbers.
+Memory Usage: &lt;strong&gt;13.3 MB&lt;/strong&gt;, less than &lt;strong&gt;19.87%&lt;/strong&gt; of Python3 online submissions for Self Dividing Numbers.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def selfDividingNumbers(self, left: int, right: int):
+    res = []
+    for i in range(left, right + 1):
+        curr = i
+        while curr:
+            mod = curr % 10
+            if mod == 0 or i % mod &amp;amp;gt; 0:
+                break
+            if curr == mod:
+                res.append(i)
+            curr = curr // 10
+    return res
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;40 ms&lt;/strong&gt;, faster than &lt;strong&gt;99.68%&lt;/strong&gt; of Python3 online submissions for Self Dividing Numbers.
+Memory Usage: &lt;strong&gt;13 MB&lt;/strong&gt;, less than &lt;strong&gt;75.83%&lt;/strong&gt; of Python3 online submissions for Self Dividing Numbers.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;942-di-string-match&#34;&gt;942. DI String Match&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def diStringMatch(self, S: str) -&amp;amp;gt; List[int]:
+    left = len(S)
+    right = 0
+    res = []
+    for s in S:
+        if s == &#39;I&#39;:
+            res.append(right)
+            right += 1
+        else:
+            res.append(left)
+            left -= 1
+    return res + [left]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;76 ms&lt;/strong&gt;, faster than &lt;strong&gt;100.00%&lt;/strong&gt; of Python3 online submissions for DI String Match.
+Memory Usage: &lt;strong&gt;14.2 MB&lt;/strong&gt;, less than &lt;strong&gt;64.84%&lt;/strong&gt; of Python3 online submissions for DI String Match.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;944-delete-columns-to-make-sorted&#34;&gt;944. Delete Columns to Make Sorted&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def minDeletionSize(self, A: List[str]):
+    count = 0
+    for col in zip(*A):
+        if list(col) != sorted(col):
+        count += 1
+    return count
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;92 ms&lt;/strong&gt;, faster than &lt;strong&gt;99.06%&lt;/strong&gt; of Python3 online submissions for Delete Columns to Make Sorted.
+Memory Usage: &lt;strong&gt;13.5 MB&lt;/strong&gt;, less than &lt;strong&gt;83.51%&lt;/strong&gt; of Python3 online submissions for Delete Columns to Make Sorted.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;1051-height-checker&#34;&gt;1051. Height Checker&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def heightChecker(self, heights: List[int]):
+    count = 0
+    sorted_heights = sorted(heights)
+
+    for i in range(len(heights)):
+        if sorted_heights[i] != heights[i]:
+            count += 1
+    return count
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;28 ms&lt;/strong&gt;, faster than &lt;strong&gt;97.52%&lt;/strong&gt; of Python3 online submissions for Height Checker.
+Memory Usage: &lt;strong&gt;13.2 MB&lt;/strong&gt;, less than &lt;strong&gt;100.00%&lt;/strong&gt; of Python3 online submissions for Height Checker.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;933-number-of-recent-calls&#34;&gt;933. Number of Recent Calls&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class RecentCounter:
+    def __init__(self):
+        self.q = collections.deque()
+
+    def ping(self, t):
+        self.q.append(t)
+        while and self.q[0] &amp;lt; t-3000:
+            self.q.popleft()
+        return len(self.q)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;192 ms&lt;/strong&gt;, faster than &lt;strong&gt;96.49%&lt;/strong&gt; of Python3 online submissions for Number of Recent Calls.
+Memory Usage: &lt;strong&gt;17.8 MB&lt;/strong&gt;, less than &lt;strong&gt;36.42%&lt;/strong&gt; of Python3 online submissions for Number of Recent Calls.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;561-array-partition-i&#34;&gt;561. Array Partition I&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def arrayPairSum(self, nums: List[int]):
+    sorted_nums = sorted(nums)
+
+    sum = 0
+    for i in range(1, len(sorted_nums), 2):
+        sum += min(sorted_nums[i - 1], sorted_nums[i])
+
+    return sum
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;96 ms&lt;/strong&gt;, faster than &lt;strong&gt;78.18%&lt;/strong&gt; of Python3 online submissions for Array Partition I.
+Memory Usage: &lt;strong&gt;14.9 MB&lt;/strong&gt;, less than &lt;strong&gt;81.43%&lt;/strong&gt; of Python3 online submissions for Array Partition I.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def arrayPairSum(self, nums: List[int]):
+    return sum(sorted(nums)[::2])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;88 ms&lt;/strong&gt;, faster than &lt;strong&gt;98.12%&lt;/strong&gt; of Python3 online submissions for Array Partition I.
+Memory Usage: &lt;strong&gt;15 MB&lt;/strong&gt;, less than &lt;strong&gt;47.54%&lt;/strong&gt; of Python3 online submissions for Array Partition I.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;700-search-in-a-binary-search-tree&#34;&gt;700. Search in a Binary Search Tree&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    res = None
+    def searchBST(self, root: TreeNode, val: int):
+        if root == None:
+            return
+
+        if root.val == val:
+            return root
+        elif val &amp;lt; root.val:
+            return self.searchBST(root.left, val)
+        else:
+            return self.searchBST(root.right, val)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;76 ms&lt;/strong&gt;, faster than &lt;strong&gt;98.37%&lt;/strong&gt; of Python3 online submissions for Search in a Binary Search Tree.
+Memory Usage: &lt;strong&gt;15.2 MB&lt;/strong&gt;, less than &lt;strong&gt;70.35%&lt;/strong&gt; of Python3 online submissions for Search in a Binary Search Tree.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;344-reverse-string&#34;&gt;344. Reverse String&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def reverseString(self, s: List[str]):
+    &amp;quot;&amp;quot;&amp;quot;
+    Do not return anything, modify s in-place instead.
+    &amp;quot;&amp;quot;&amp;quot;
+    s = s.reverse()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;156 ms&lt;/strong&gt;, faster than &lt;strong&gt;98.99%&lt;/strong&gt; of Python3 online submissions for Reverse String.
+Memory Usage: &lt;strong&gt;17.8 MB&lt;/strong&gt;, less than &lt;strong&gt;28.10%&lt;/strong&gt; of Python3 online submissions for Reverse String.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def reverseString(self, s: List[str]):
+    &amp;quot;&amp;quot;&amp;quot;
+    Do not return anything, modify s in-place instead.
+    &amp;quot;&amp;quot;&amp;quot;
+    for i in range(len(s) // 2):
+        s[i], s[~i] = s[~i], s[i]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;160 ms&lt;/strong&gt;, faster than &lt;strong&gt;96.82%&lt;/strong&gt; of Python3 online submissions for Reverse String.
+Memory Usage: &lt;strong&gt;17.6 MB&lt;/strong&gt;, less than &lt;strong&gt;74.60%&lt;/strong&gt; of Python3 online submissions for Reverse String.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;104-maximum-depth-of-binary-tree&#34;&gt;104. Maximum Depth of Binary Tree&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def maxDepth(self, root: TreeNode):
+    if not root:
+        return 0
+    else:
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;40 ms&lt;/strong&gt;, faster than &lt;strong&gt;98.38%&lt;/strong&gt; of Python3 online submissions for Maximum Depth of Binary Tree.
+Memory Usage: &lt;strong&gt;15.3 MB&lt;/strong&gt;, less than &lt;strong&gt;71.96%&lt;/strong&gt; of Python3 online submissions for Maximum Depth of Binary Tree.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;136-single-number&#34;&gt;136. Single Number&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def singleNumber(self, nums: List[int]):
+    res = nums[0]
+
+    for i in range(1, len(nums)):
+        res = res ^ nums[i]
+
+    return res
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;40 ms&lt;/strong&gt;, faster than &lt;strong&gt;88.77%&lt;/strong&gt; of Python3 online submissions for Single Number.
+Memory Usage: &lt;strong&gt;14.7 MB&lt;/strong&gt;, less than &lt;strong&gt;78.28%&lt;/strong&gt; of Python3 online submissions for Single Number.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;412-fizz-buzz&#34;&gt;412. Fizz Buzz&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def fizzBuzz(self, n: int):
+    res = []
+    for i in range(1, n + 1):
+        if i % 3 == 0 and i % 5 == 0:
+            res.append(&#39;FizzBuzz&#39;)
+        elif i % 3 == 0:
+            res.append(&#39;Fizz&#39;)
+        elif i % 5 == 0:
+            res.append(&#39;Buzz&#39;)
+        else:
+            res.append(str(i))
+    return res
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;56 ms&lt;/strong&gt;, faster than &lt;strong&gt;78.08%&lt;/strong&gt; of Python3 online submissions for Fizz Buzz.
+Memory Usage: &lt;strong&gt;14.2 MB&lt;/strong&gt;, less than &lt;strong&gt;45.92%&lt;/strong&gt; of Python3 online submissions for Fizz Buzz.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;206-reverse-linked-list&#34;&gt;206. Reverse Linked List&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def reverseList(self, head: ListNode):
+    if not head or not head.next:
+        return head
+    p = self.reverseList(head.next)
+    head.next.next = head
+    head.next = None
+    return p
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;36 ms&lt;/strong&gt;, faster than &lt;strong&gt;95.40%&lt;/strong&gt; of Python3 online submissions for Reverse Linked List.
+Memory Usage: &lt;strong&gt;19 MB&lt;/strong&gt;, less than &lt;strong&gt;13.04%&lt;/strong&gt; of Python3 online submissions for Reverse Linked List.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def reverseList(self, head: ListNode):
+    prev, curr = None, head
+    while curr:
+        curr.next, prev, curr = prev, curr, curr.next
+    return prev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;36 ms&lt;/strong&gt;, faster than &lt;strong&gt;95.40%&lt;/strong&gt; of Python3 online submissions for Reverse Linked List.
+Memory Usage: &lt;strong&gt;14.4 MB&lt;/strong&gt;, less than &lt;strong&gt;72.19%&lt;/strong&gt; of Python3 online submissions for Reverse Linked List.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;283-move-zeroes&#34;&gt;283. Move Zeroes&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def moveZeroes(self, nums: List[int]):
+    &amp;quot;&amp;quot;&amp;quot;
+    Do not return anything, modify nums in-place instead.
+    &amp;quot;&amp;quot;&amp;quot;
+    for i in range(len(nums)):
+        for j in range(i, len(nums)):
+            if nums[i] == 0:
+                nums[i], nums[j] = nums[j], nums[i]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;2604 ms&lt;/strong&gt;, faster than &lt;strong&gt;5.03%&lt;/strong&gt; of Python3 online submissions for Move Zeroes.
+Memory Usage: &lt;strong&gt;14.3 MB&lt;/strong&gt;, less than &lt;strong&gt;95.18%&lt;/strong&gt; of Python3 online submissions for Move Zeroes.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def moveZeroes(self, nums: List[int]):
+    &amp;quot;&amp;quot;&amp;quot;
+    Do not return anything, modify nums in-place instead.
+    &amp;quot;&amp;quot;&amp;quot;
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] == 0:
+            nums.append(nums.pop(i))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;48 ms&lt;/strong&gt;, faster than &lt;strong&gt;85.34%&lt;/strong&gt; of Python3 online submissions for Move Zeroes.
+Memory Usage: &lt;strong&gt;14.4 MB&lt;/strong&gt;, less than &lt;strong&gt;70.20%&lt;/strong&gt; of Python3 online submissions for Move Zeroes.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def moveZeroes(self, nums: List[int]):
+    &amp;quot;&amp;quot;&amp;quot;
+    Do not return anything, modify nums in-place instead.
+    &amp;quot;&amp;quot;&amp;quot;
+    j = -1
+    for i in range(len(nums)):
+        if nums[i] != 0:
+            j += 1
+            nums[i], nums[j] = nums[j], nums[i]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;48 ms&lt;/strong&gt;, faster than &lt;strong&gt;85.34%&lt;/strong&gt; of Python3 online submissions for Move Zeroes.
+Memory Usage: &lt;strong&gt;14.4 MB&lt;/strong&gt;, less than &lt;strong&gt;74.97%&lt;/strong&gt; of Python3 online submissions for Move Zeroes.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;237-delete-node-in-a-linked-list&#34;&gt;237. Delete Node in a Linked List&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def deleteNode(self, node):
+    &amp;quot;&amp;quot;&amp;quot;
+    :type node: ListNode
+    :rtype: void Do not return anything, modify node in-place instead.
+    &amp;quot;&amp;quot;&amp;quot;
+    if node:
+        node.val = node.next.val
+        node.next = node.next.next
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;40 ms&lt;/strong&gt;, faster than &lt;strong&gt;93.24%&lt;/strong&gt; of Python3 online submissions for Delete Node in a Linked List.
+Memory Usage: &lt;strong&gt;13.5 MB&lt;/strong&gt;, less than &lt;strong&gt;78.23%&lt;/strong&gt; of Python3 online submissions for Delete Node in a Linked List.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;13-roman-to-integer&#34;&gt;13. Roman to Integer&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def romanToInt(self, s: str) -&amp;gt; int:
+    roman = {
+        &#39;I&#39;:  1,
+        &#39;V&#39;:  5,
+        &#39;X&#39;:  10,
+        &#39;L&#39;:  50,
+        &#39;C&#39;:  100,
+        &#39;D&#39;:  500,
+        &#39;M&#39;:  1000
+    }
+
+    sum = prev_num = 0
+    for c in s:
+        if roman[c] &amp;gt; prev_num:
+            sum -= 2 * prev_num
+        sum += roman[c]
+        prev_num = roman[c]
+    return sum
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;52 ms&lt;/strong&gt;, faster than &lt;strong&gt;96.69%&lt;/strong&gt; of Python3 online submissions for Roman to Integer.
+Memory Usage: &lt;strong&gt;13.2 MB&lt;/strong&gt;, less than &lt;strong&gt;71.14%&lt;/strong&gt; of Python3 online submissions for Roman to Integer.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;242-valid-anagram&#34;&gt;242. Valid Anagram&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def isAnagram(self, s: str, t: str):
+    return &#39;&#39;.join(sorted(s)) == &#39;&#39;.join(sorted(t))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;60 ms&lt;/strong&gt;, faster than &lt;strong&gt;61.86%&lt;/strong&gt; of Python3 online submissions for Valid Anagram.
+Memory Usage: &lt;strong&gt;14 MB&lt;/strong&gt;, less than &lt;strong&gt;26.12%&lt;/strong&gt; of Python3 online submissions for Valid Anagram.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Solution:
+    def isAnagram(self, s: str, t: str):
+        return collections.Counter(s) == collections.Counter(t)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;44 ms&lt;/strong&gt;, faster than &lt;strong&gt;92.83%&lt;/strong&gt; of Python3 online submissions for Valid Anagram.
+Memory Usage: &lt;strong&gt;13.2 MB&lt;/strong&gt;, less than &lt;strong&gt;89.68%&lt;/strong&gt; of Python3 online submissions for Valid Anagram.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;217-contains--duplicate&#34;&gt;217. Contains- Duplicate&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def containsDuplicate(self, nums: List[int]):
+    return len(nums) &amp;amp;gt; len(set(nums))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;36 ms&lt;/strong&gt;, faster than &lt;strong&gt;97.37%&lt;/strong&gt; of Python3 online submissions for Contains Duplicate.
+Memory Usage: &lt;strong&gt;18.8 MB&lt;/strong&gt;, less than &lt;strong&gt;69.92%&lt;/strong&gt; of Python3 online submissions for Contains Duplicate.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;7-reverse-integer&#34;&gt;7. Reverse-Integer&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Solution:
+    MAX_POSITIVE =  (2 ** 31 ) - 1
+    MAX_NEGATIVE = - (2 ** 31)
+
+    def reverse(self, x):
+        if x == 0:
+            return x
+        # reversed string of the number
+        s = (str(abs(x))[::-1]).lstrip(&#39;0&#39;)
+        # integerize
+        i = int(s) if x &amp;gt; 0 else -(int(s))
+        # check overflow
+        if self.MAX_NEGATIVE &amp;lt;= i &amp;lt;= self.MAX_POSITIVE:
+            return i
+        return 0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;32 ms&lt;/strong&gt;, faster than &lt;strong&gt;96.26%&lt;/strong&gt; of Python3 online submissions for Reverse Integer.
+Memory Usage: &lt;strong&gt;14 MB&lt;/strong&gt;, less than &lt;strong&gt;5.26%&lt;/strong&gt; of Python3 online submissions for Reverse Integer.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;9-palindrome-number&#34;&gt;9. Palindrome Number&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Solution:
+    def isPalindrome(self, x: int) -&amp;amp;gt; bool:
+        s = str(x)
+        for i in range(len(s) // 2):
+            if s[i] != s[~i]:
+                return False
+        return True
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime:** 64 ms**, faster than **82.89%** of Python3 online submissions for Palindrome Number.
+Memory Usage: **12.7 MB**, less than **100.00%** of Python3 online submissions for Palindrome Number.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;122-best-time-to-buy-and-sell-stock-ii&#34;&gt;122. Best Time to Buy and Sell Stock II&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Solution:
+    def maxProfit(self, prices: List[int]) -&amp;amp;gt; int:
+        profit = 0
+        for i in range(len(prices) - 1):
+            if prices[i + 1] &amp;amp;gt; prices[i]:
+                profit += prices[i + 1] - prices[i]
+        return profit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;64 ms&lt;/strong&gt;, faster than &lt;strong&gt;91.94%&lt;/strong&gt; of Python3 online submissions for Best Time to Buy and Sell Stock II.
+Memory Usage: &lt;strong&gt;13.8 MB&lt;/strong&gt;, less than &lt;strong&gt;90.24%&lt;/strong&gt; of Python3 online submissions for Best Time to Buy and Sell Stock II.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;14-longest-common-prefix&#34;&gt;14. Longest Common Prefix&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -&amp;amp;gt; str:
+        if not strs:
+            return &#39;&#39;
+        result = &#39;&#39;
+        for i, v in enumerate(strs[0]):
+            result += v
+            for s in strs[1:]:
+                if not s.startswith(result):
+                    return result[:i]
+        return result
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;32 ms&lt;/strong&gt;, faster than &lt;strong&gt;93.72%&lt;/strong&gt; of Python3 online submissions for Longest Common Prefix.
+Memory Usage: &lt;strong&gt;12.8 MB&lt;/strong&gt;, less than &lt;strong&gt;100.00%&lt;/strong&gt; of Python3 online submissions for Longest Common Prefix.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;108-convert-sorted-array-to-binary-search-tree&#34;&gt;108. Convert Sorted Array to Binary Search Tree&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -&amp;amp;gt; TreeNode:
+        if not nums:
+            return
+        index = len(nums) // 2
+        node = TreeNode(nums[index])
+
+        left = nums[:index]
+        right = nums[index+1:]
+
+        node.left = self.sortedArrayToBST(left)
+        node.right = self.sortedArrayToBST(right)
+
+        return node
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;68 ms&lt;/strong&gt;, faster than &lt;strong&gt;92.38%&lt;/strong&gt; of Python3 online submissions for Convert Sorted Array to Binary Search Tree.
+Memory Usage: &lt;strong&gt;15 MB&lt;/strong&gt;, less than &lt;strong&gt;100.00%&lt;/strong&gt; of Python3 online submissions for Convert Sorted Array to Binary Search Tree.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;171-excel-sheet-column-number&#34;&gt;171. Excel Sheet Column Number&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Solution:
+    def titleToNumber(self, s: str) -&amp;amp;gt; int:
+        result = 0
+        x = {chr(65 + i): i + 1 for i in range(26)}
+        for i, v in enumerate(list(s)):
+            result += (26 ** (len(s) - i - 1)) * x[v.upper()]
+        return result
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;28 ms&lt;/strong&gt;, faster than &lt;strong&gt;95.62%&lt;/strong&gt; of Python3 online submissions for Excel Sheet Column Number.
+Memory Usage: &lt;strong&gt;12.8 MB&lt;/strong&gt;, less than &lt;strong&gt;100.00%&lt;/strong&gt; of Python3 online submissions for Excel Sheet Column Number.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;387-first-unique-character-in-a-string&#34;&gt;387. First Unique Character in a String&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from collections import OrderedDict
+
+class Solution:
+    def firstUniqChar(self, s: str) -&amp;amp;gt; int:
+        result = -1
+        words = OrderedDict()
+        for c in (list(s)):
+            if c not in words:
+                words[c] = 1
+            else:
+                words[c] += 1
+
+        for i, v in enumerate(words.items()):
+            print(i, v)
+            if v[1] == 1:
+                result = s.index(v[0])
+                break
+        return result
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;124 ms&lt;/strong&gt;, faster than &lt;strong&gt;64%&lt;/strong&gt; of Python3 online submissions for First Unique Character in a String.
+Memory Usage: &lt;strong&gt;13 MB&lt;/strong&gt;, less than &lt;strong&gt;100.00%&lt;/strong&gt; of Python3 online submissions for First Unique Character in a String.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Solution:
+    def firstUniqChar(self, s: str) -&amp;amp;gt; int:
+        # build hash map : character and how often it appears
+        count = collections.Counter(s)
+
+        # find the index
+        for idx, ch in enumerate(s):
+            if count[ch] == 1:
+                return idx
+        return -1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;80 ms&lt;/strong&gt;, faster than &lt;strong&gt;90.43%&lt;/strong&gt; of Python3 online submissions for First Unique Character in a String.
+Memory Usage: &lt;strong&gt;12.8 MB&lt;/strong&gt;, less than &lt;strong&gt;100.00%&lt;/strong&gt; of Python3 online submissions for First Unique Character in a String.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;371-sum-of-two-integers&#34;&gt;371. Sum of Two Integers&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Solution:
+    def getSum(self, a: int, b: int) -&amp;amp;gt; int:
+        return sum([a,b])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;24 ms&lt;/strong&gt;, faster than &lt;strong&gt;96.24%&lt;/strong&gt; of Python3 online submissions for Sum of Two Integers.
+Memory Usage: &lt;strong&gt;12.6 MB&lt;/strong&gt;, less than &lt;strong&gt;100.00%&lt;/strong&gt; of Python3 online submissions for Sum of Two Integers.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;21-merge-two-sorted-lists&#34;&gt;21. Merge Two Sorted Lists&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -&amp;gt; ListNode:
+        pre_head = ListNode(-1)
+        curr = pre_head
+
+        while l1 and l2:
+            if l1.val&amp;lt;l2.val:
+                curr.next = l1
+                l1 = l1.next
+            else:
+                curr.next = l2
+                l2 = l2.next
+            curr = curr.next
+
+        if l1: curr.next = l1
+        if l2: curr.next = l2
+
+        return pre_head.next
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;28 ms&lt;/strong&gt;, faster than &lt;strong&gt;98.99%&lt;/strong&gt; of Python3 online submissions for Merge Two Sorted Lists.
+Memory Usage: &lt;strong&gt;12.8 MB&lt;/strong&gt;, less than &lt;strong&gt;100.00%&lt;/strong&gt; of Python3 online submissions for Merge Two Sorted Lists.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;1295-find-numbers-with-even-number-of-digits&#34;&gt;1295. Find Numbers with Even Number of Digits&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Solution:
+    def findNumbers(self, nums: List[int]) -&amp;gt; int:
+        count = 0
+        limitValue = 10 ** 5
+
+        if 1 &amp;lt;= len(nums) &amp;lt;= 500:
+            for i in nums:
+                if i &amp;lt;= limitValue and len(str(i)) % 2 == 0:
+                    count = count + 1
+            return count
+        else:
+            raise
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Runtime: &lt;strong&gt;44 ms&lt;/strong&gt;, faster than &lt;strong&gt;97.79%&lt;/strong&gt; of Python3 online submissions for Find Numbers with Even Number of Digits.
+Memory Usage: &lt;strong&gt;12.6 MB&lt;/strong&gt;, less than &lt;strong&gt;100.00%&lt;/strong&gt; of Python3 online submissions for Find Numbers with Even Number of Digits.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>什麼是BLoC Design Pattern</title>
+      <link>https://u2633.github.io/post/2020/03/bloc-design-pattern/</link>
+      <pubDate>Tue, 10 Mar 2020 14:50:24 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/03/bloc-design-pattern/</guid>
+      <description>&lt;p&gt;Business Logic Component Pattern 簡稱 
+&lt;a href=&#34;https://bloclibrary.dev/#/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC&lt;/a&gt;。這是一種設計模式，特色在於把商業邏輯(Business Login)與畫面(Presentation)拆分開，類似 MVVM 中 ViewModel(BloC)與 View(Presentation)之間的關係，並且透過事件(Event)來改變狀態(State)，再由狀態(State)來改變畫面(Presentation), 又或者與其他的 BLoC 進行溝通。好處有 1)讓測試變的更簡單 2)更容讓程式碼 Reusable。所以元件主要會有三個部份: BloC 主件、事件(Event)及狀態(State)。&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://bloclibrary.dev/#/coreconcepts?id=blocs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BLoC 主件&lt;/a&gt;，主要是將 Event 與 State 做 Mapping，透過 Event 去改變狀態。所以，如果 Event 很多的話，就會看到冗長的 if&amp;hellip;else 或是 switch&amp;hellip;case，如下:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;package:bloc/bloc.dart&#39;;
+
+enum CounterEvent { increment, decrement }
+
+class CounterBloc extends Bloc&amp;lt;CounterEvent, int&amp;gt; {
+  @override
+  int get initialState =&amp;gt; 0;
+
+  @override
+  Stream&amp;lt;int&amp;gt; mapEventToState(CounterEvent event) async* {
+    switch (event) {
+      case CounterEvent.decrement:
+        yield currentState - 1;
+        break;
+      case CounterEvent.increment:
+        yield currentState + 1;
+        break;
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

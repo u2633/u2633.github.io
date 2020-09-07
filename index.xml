@@ -5,12 +5,59 @@
     <link>https://u2633.github.io/</link>
       <atom:link href="https://u2633.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Z@NE.NOTE</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Thu, 30 Apr 2020 10:02:21 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 21 Jul 2020 11:52:30 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>Z@NE.NOTE</title>
       <link>https://u2633.github.io/</link>
     </image>
+    
+    <item>
+      <title>Flutter Plugin Hand by Hand</title>
+      <link>https://u2633.github.io/post/2020/07/flutter-plugin-hand-by-hand/</link>
+      <pubDate>Tue, 21 Jul 2020 11:52:30 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/07/flutter-plugin-hand-by-hand/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近公司為了趕出貨而忙的天慌地老的，連想寫個文章的精力都被榨乾了。所以，這也是慌廢了一個多月的第一篇文章。
+最近，因為需求的關係，需要寫 Plugin 去 Call Native 的 API 來實現一些功能。讓我來紀錄一下我學到了什麼吧!&lt;/p&gt;
+&lt;h2 id=&#34;flutter-package&#34;&gt;Flutter Package&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Flutter Package&lt;/a&gt;
+可以將常用或是想獨立的的程式碼模組化，以供之後的重復利用。只有分兩種型別&lt;code&gt;Dart Package&lt;/code&gt;及&lt;code&gt;Plugin Package&lt;/code&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Dart Package&lt;/code&gt; - 以 
+&lt;a href=&#34;https://dart.dev/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Dart&lt;/a&gt;撰寫，對 &lt;code&gt;Flutter Framework&lt;/code&gt; 有相依性的組件。如: 
+&lt;a href=&#34;https://pub.dev/packages/path&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;path&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Plugin Package&lt;/code&gt; - 利用 &lt;code&gt;Dart&lt;/code&gt; 提供的官方 API(
+&lt;a href=&#34;https://flutter.dev/docs/development/platform-integration/platform-channels&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Platform Channel&lt;/a&gt;)與原生平台(&lt;strong&gt;iOS/ Android&lt;/strong&gt;)的原生碼互動的組件，例如: 
+&lt;a href=&#34;https://pub.dev/packages/url_launcher&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;url_launcher&lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;如何撰寫-dart-package&#34;&gt;如何撰寫 Dart Package&lt;/h2&gt;
+&lt;p&gt;建立 &lt;code&gt;Dart Package&lt;/code&gt; 必需利用&lt;code&gt;Flutter CLI&lt;/code&gt;下&lt;code&gt;flutter create --template=package hello&lt;/code&gt;。
+執行指令後，Flutter CLI 就會幫你把專案的架構產生出來，就像建立 Project 一樣。如下圖:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;dart_package.png&#34; alt=&#34;Dart Package&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;如何撰寫-plugin-package&#34;&gt;如何撰寫 Plugin Package&lt;/h2&gt;
+&lt;p&gt;主要元件有三個: &lt;code&gt;app-facing package&lt;/code&gt;、&lt;code&gt;platform interface package&lt;/code&gt;及&lt;code&gt;platform packages&lt;/code&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;app-facing package&lt;/code&gt; - Flutter 使用的 API。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;platform interface package&lt;/code&gt; - &lt;strong&gt;app-facing package&lt;/strong&gt;與&lt;strong&gt;platform packages&lt;/strong&gt;溝通的橋樑。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;platform packages&lt;/code&gt; - 原生平台裡面實作的程式碼。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一樣利用&lt;code&gt;Flutter CLI&lt;/code&gt;下指令&lt;code&gt;flutter create --template=plugin hello&lt;/code&gt;。
+原生碼使用的預設語言為 &lt;code&gt;iOS - Swift&lt;/code&gt;, &lt;code&gt;Android - Kotlin&lt;/code&gt;。
+如果想更換平台的話，可以多下 options。如下:&lt;/p&gt;
+&lt;p&gt;更換 Android 的開發語言為 JAVA&lt;br&gt;
+&lt;code&gt;flutter create --org com.example --template=plugin -a java hello&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;更換 iOS 的開發語言為 Objective-C&lt;br&gt;
+&lt;code&gt;flutter create --org com.example --template=plugin -i objc hello&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;專案結構如下圖:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;plugin_package.png&#34; alt=&#34;Plugin Package&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;技術上，&lt;code&gt;Plugin Package&lt;/code&gt; 的撰寫明顯比 &lt;code&gt;Dart Package&lt;/code&gt; 來的困難許多。尤其是像我這種本身沒接觸過原生開發的人。
+增加了雙平台的程式碼，學習的曲線會變很高。如果，背後的邏輯複雜度又高的話，原生的語法勢必得玩的更深入些了。
+相對的，如果吃的了原生雙平台的話，身價必然水漲船高的，嘿嘿…。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Unity Export vs iOS Build Configuration</title>
