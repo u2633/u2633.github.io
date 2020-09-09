@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Docker | Z@NE.NOTE</title>
-    <link>https://u2633.github.io/tags/docker/</link>
-      <atom:link href="https://u2633.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
-    <description>Docker</description>
+    <title>Jenkins | Z@NE.NOTE</title>
+    <link>https://u2633.github.io/tags/jenkins/</link>
+      <atom:link href="https://u2633.github.io/tags/jenkins/index.xml" rel="self" type="application/rss+xml" />
+    <description>Jenkins</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Wed, 09 Sep 2020 09:57:18 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
-      <title>Docker</title>
-      <link>https://u2633.github.io/tags/docker/</link>
+      <title>Jenkins</title>
+      <link>https://u2633.github.io/tags/jenkins/</link>
     </image>
     
     <item>

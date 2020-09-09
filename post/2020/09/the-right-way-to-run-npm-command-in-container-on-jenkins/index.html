@@ -28,12 +28,10 @@
   
     
   
-  <meta name="description" content="前端/Flutter 工程師">
+  <meta name="description" content="解決在 Jenkins Pipeline 裡無法在 Docker Container 裡正常運行 npm 指令">
 
   
-  <link rel="alternate" hreflang="en" href="https://u2633.github.io/en/authors/">
-  
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/authors/">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/">
 
   
 
@@ -215,14 +213,12 @@
 
 
   
-  <link rel="alternate" href="/authors/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/authors/">
+  <link rel="canonical" href="https://u2633.github.io/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/">
 
   
   
@@ -236,18 +232,63 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/authors/">
-  <meta property="og:title" content="Authors | Z@NE.NOTE">
-  <meta property="og:description" content="前端/Flutter 工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://u2633.github.io/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/">
+  <meta property="og:title" content="The Right Way to Run Npm Commands in Container on Jenkins | Z@NE.NOTE">
+  <meta property="og:description" content="解決在 Jenkins Pipeline 裡無法在 Docker Container 裡正常運行 npm 指令"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    <meta property="og:updated_time" content="2020-09-09T09:57:18&#43;08:00">
+    
+      <meta property="article:published_time" content="2020-09-09T09:57:18&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-09-09T09:57:18&#43;08:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://u2633.github.io/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/"
+  },
+  "headline": "The Right Way to Run Npm Commands in Container on Jenkins",
+  
+  "datePublished": "2020-09-09T09:57:18+08:00",
+  "dateModified": "2020-09-09T09:57:18+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Zane"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Z@NE.NOTE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "解決在 Jenkins Pipeline 裡無法在 Docker Container 裡正常運行 npm 指令"
+}
+</script>
+
+  
 
   
 
@@ -255,10 +296,13 @@
   
 
 
+  
 
 
 
-  <title>Authors | Z@NE.NOTE</title>
+
+
+  <title>The Right Way to Run Npm Commands in Container on Jenkins | Z@NE.NOTE</title>
 
 </head>
 
@@ -470,22 +514,6 @@
       
 
       
-      <li class="nav-item dropdown i18n-dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
-          <i class="fas fa-globe mr-1" aria-hidden="true"></i><span class="d-none d-lg-inline">中文 (繁體)</span>
-        </a>
-        <div class="dropdown-menu">
-          <div class="dropdown-item i18n-active font-weight-bold">
-            <span>中文 (繁體)</span>
-          </div>
-          
-          <a class="dropdown-item" href="https://u2633.github.io/en/authors/">
-            <span>English</span>
-          </a>
-          
-        </div>
-      </li>
-      
 
     </ul>
 
@@ -493,55 +521,278 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>The Right Way to Run Npm Commands in Container on Jenkins</h1>
+
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>Authors</h1>
+
+
+<div class="article-metadata">
 
   
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/authors/zane/">Zane</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020年9月9日
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a>, <a href="/categories/issue/">Issue</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  <ul>
+    <div class="article-style">
+      <h2 id="前言">前言</h2>
+<p>我的第一個 DevOps 工作出現了。這邊也是要搭配 Jenkins 建立一個自動化部屬的 Job，可以讓使用者直接一鍵發佈應用程式。</p>
+<p>有別於過去使用的方式，這次使用 Docker 來做為建置的環境。
+<a href="https://www.jenkins.io/doc/book/pipeline/docker/" target="_blank" rel="noopener">官方</a>也有詳細的說明，教導使用者們如何搭配 Docker 來建立一個或多個特定環境來運行建置的過程。</p>
+<p>但…，事情永遠不會那麼的順利。</p>
+<h2 id="問題描述">問題描述</h2>
+<p>在讀完官方教學後，一運行我的 Job 就出現下面的問題了</p>
+<p><img src="npm_failed_in_docker_on_jenkins.png" alt="NPM run failed"></p>
+<h2 id="解決方法">解決方法</h2>
+<pre><code class="language-Jenkinsfile">pipeline {
+    agent {
+        docker {
+            image 'node:12-alpine'
+        }
+    }
+
+    // 加這個環境變數就是關鍵!
+    environment {
+        HOME = '.'
+    }
+
+    options {
+        timeout(time: 1, unit: 'HOURS')
+    }
+    ...
+}
+</code></pre>
+<h2 id="總結">總結</h2>
+<p>Jenkins 整合 Docker 讓使用者更容易創造出乾淨的多重建置環境，使用完後就會把容器給刪除掉，真的還蠻方便的。
+對容器化也越來越有興趣了!</p>
+<h2 id="參考資料">參考資料</h2>
+<p><a href="https://www.thetopsites.net/article/52790764.shtml">https://www.thetopsites.net/article/52790764.shtml</a></p>
+
+    </div>
+
     
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/jenkins/">Jenkins</a>
+  
+  <a class="badge badge-light" href="/tags/docker/">Docker</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
     
       
-      <li><a href="https://u2633.github.io/authors/zane/">Zane</a></li>
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/&amp;text=The%20Right%20Way%20to%20Run%20Npm%20Commands%20in%20Container%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
     
       
-      <li><a href="https://u2633.github.io/authors/admin/">Zane Chen</a></li>
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/&amp;t=The%20Right%20Way%20to%20Run%20Npm%20Commands%20in%20Container%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=The%20Right%20Way%20to%20Run%20Npm%20Commands%20in%20Container%20on%20Jenkins&amp;body=https://u2633.github.io/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/&amp;title=The%20Right%20Way%20to%20Run%20Npm%20Commands%20in%20Container%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
     
   </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
 
   
 
-</div>
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>相關</h3>
+    <ul>
+      
+      <li><a href="/post/2020/09/how-to-run-jenkins-service-on-docker/">How to Run Jenkins Service on Docker</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
 
       
 

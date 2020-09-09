@@ -5,12 +5,52 @@
     <link>https://u2633.github.io/</link>
       <atom:link href="https://u2633.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Z@NE.NOTE</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 08 Sep 2020 13:56:55 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Wed, 09 Sep 2020 09:57:18 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>Z@NE.NOTE</title>
       <link>https://u2633.github.io/</link>
     </image>
+    
+    <item>
+      <title>The Right Way to Run Npm Commands in Container on Jenkins</title>
+      <link>https://u2633.github.io/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/</link>
+      <pubDate>Wed, 09 Sep 2020 09:57:18 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;我的第一個 DevOps 工作出現了。這邊也是要搭配 Jenkins 建立一個自動化部屬的 Job，可以讓使用者直接一鍵發佈應用程式。&lt;/p&gt;
+&lt;p&gt;有別於過去使用的方式，這次使用 Docker 來做為建置的環境。
+&lt;a href=&#34;https://www.jenkins.io/doc/book/pipeline/docker/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官方&lt;/a&gt;也有詳細的說明，教導使用者們如何搭配 Docker 來建立一個或多個特定環境來運行建置的過程。&lt;/p&gt;
+&lt;p&gt;但…，事情永遠不會那麼的順利。&lt;/p&gt;
+&lt;h2 id=&#34;問題描述&#34;&gt;問題描述&lt;/h2&gt;
+&lt;p&gt;在讀完官方教學後，一運行我的 Job 就出現下面的問題了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;npm_failed_in_docker_on_jenkins.png&#34; alt=&#34;NPM run failed&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;解決方法&#34;&gt;解決方法&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-Jenkinsfile&#34;&gt;pipeline {
+    agent {
+        docker {
+            image &#39;node:12-alpine&#39;
+        }
+    }
+
+    // 加這個環境變數就是關鍵!
+    environment {
+        HOME = &#39;.&#39;
+    }
+
+    options {
+        timeout(time: 1, unit: &#39;HOURS&#39;)
+    }
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;Jenkins 整合 Docker 讓使用者更容易創造出乾淨的多重建置環境，使用完後就會把容器給刪除掉，真的還蠻方便的。
+對容器化也越來越有興趣了!&lt;/p&gt;
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.thetopsites.net/article/52790764.shtml&#34;&gt;https://www.thetopsites.net/article/52790764.shtml&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>How to Run Jenkins Service on Docker</title>
