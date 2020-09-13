@@ -5,12 +5,96 @@
     <link>https://u2633.github.io/tags/angular/</link>
       <atom:link href="https://u2633.github.io/tags/angular/index.xml" rel="self" type="application/rss+xml" />
     <description>Angular</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Mon, 07 Sep 2020 21:29:59 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Fri, 11 Sep 2020 10:06:19 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>Angular</title>
       <link>https://u2633.github.io/tags/angular/</link>
     </image>
+    
+    <item>
+      <title>Dynamically Add Angular Base Href</title>
+      <link>https://u2633.github.io/post/2020/09/dynamically-add-angular-base-href/</link>
+      <pubDate>Fri, 11 Sep 2020 10:06:19 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/09/dynamically-add-angular-base-href/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;這篇雖然跟 DevOps 沒有直接關係，但是這也關係到了系統的可用性。所以，也將此問題收錄在我的筆記中。&lt;/p&gt;
+&lt;h2 id=&#34;發生的問題&#34;&gt;發生的問題&lt;/h2&gt;
+&lt;p&gt;昨天，開發人員在本機開發完 Angular 的專案之後並且利用 Jenkins 完成佈署後，噹啷~~
+進入頁面後只看見一片空白…。&lt;/p&gt;
+&lt;p&gt;在看了一下 &lt;code&gt;Chrome DevTools&lt;/code&gt; 後發現，Client 端在讀頁面的時候並沒有正確網頁資源的位置。
+因為過去有開發過 Angular 的經驗，當下便知道一定是 
+&lt;a href=&#34;https://angular.io/guide/deployment#the-base-tag&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Angular Base Href&lt;/a&gt; 造成的問題。&lt;/p&gt;
+&lt;h2 id=&#34;解決方式&#34;&gt;解決方式&lt;/h2&gt;
+&lt;p&gt;我找了三種解法。三種方法的複雜度依序排列為下。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;直接 Hard Code 在 &lt;code&gt;index.html&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;利用 
+&lt;a href=&#34;https://cli.angular.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Angular CLI&lt;/a&gt; 的指令來完成設&lt;/li&gt;
+&lt;li&gt;利用程式碼進行動態配置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;直接-hard-code-在-indexhtml&#34;&gt;直接 Hard Code 在 index.html&lt;/h3&gt;
+&lt;p&gt;最簡單的方式，但同時也造成了開發人員的困擾。一開始我就是用這個方式先解決無法正常讀取網頁的問題。
+我先在 Web Server 裡面直接對 &lt;code&gt;index.html&lt;/code&gt; 下手，並且把修改的地方也上到了專案程式碼裡。但是，
+開發人員馬上跟我反應他在本機端發生無法正常執行的問題。
+原因是 Angular 在本機開發上不需要 &lt;code&gt;Base Href&lt;/code&gt;，所以在換頁的時候是直接導路徑的。例如:
+在正式環境上的位置是 &lt;code&gt;https:/your_domain/my_base_href/my_path&lt;/code&gt;，而開發環境上會變成 &lt;code&gt;localhost:4200/my_path&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;如果直接在 &lt;code&gt;index.html&lt;/code&gt; 上做 Hard Code，就會造成他們在開發上的問題。所以，這個方法只能對伺服器端進行。&lt;/p&gt;
+&lt;h3 id=&#34;利用-angular-clihttpscliangulario-的指令來完成設&#34;&gt;利用 
+&lt;a href=&#34;https://cli.angular.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Angular CLI&lt;/a&gt; 的指令來完成設&lt;/h3&gt;
+&lt;p&gt;Angular 專案裡面都有個 &lt;code&gt;package.json&lt;/code&gt;。通常工程師們都會把 Build Command 寫在 scripts 欄位裡面。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;&amp;quot;scripts&amp;quot;: {
+  &amp;quot;ng&amp;quot;: &amp;quot;ng&amp;quot;,
+  &amp;quot;start&amp;quot;: &amp;quot;ng serve --open --aot&amp;quot;,
+  &amp;quot;build&amp;quot;: &amp;quot;ng build&amp;quot;,
+  &amp;quot;build:prod&amp;quot;: &amp;quot;node node_modules/@angular/cli/bin/ng build --prod&amp;quot;,
+  &amp;quot;build:sit&amp;quot;: &amp;quot;node node_modules/@angular/cli/bin/ng build -c sit --base-href=https://u2633.github.io/your/base/href/&amp;quot;,
+  &amp;quot;test&amp;quot;: &amp;quot;ng test&amp;quot;,
+  &amp;quot;lint&amp;quot;: &amp;quot;ng lint&amp;quot;,
+  &amp;quot;e2e&amp;quot;: &amp;quot;ng e2e&amp;quot;
+},
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;上面 &lt;code&gt;build:sit&lt;/code&gt; 最後面的 &lt;code&gt;--base-href&lt;/code&gt; 就是第二個解法。直接在後面打上你的 Base Href，
+在每次 Build 的時候會主動在生成的 &lt;code&gt;index.html&lt;/code&gt; 裡寫入 Base Href。如下:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;base href=&amp;quot;/your/base/href/&amp;quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;利用程式碼進行動態配置&#34;&gt;利用程式碼進行動態配置&lt;/h3&gt;
+&lt;p&gt;這個方式只能讓專案在 Routing 的時候不用再加上 Base Href，可參考
+&lt;a href=&#34;https://angular.io/api/common/PathLocationStrategy#description&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官方文&lt;/a&gt;，但其實是無法解決讀取網路資源找不到的問題。&lt;/p&gt;
+&lt;p&gt;這邊利用了 
+&lt;a href=&#34;https://angular.io/guide/dependency-injection-providers&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Angular Provider&lt;/a&gt; 來對 
+&lt;a href=&#34;https://angular.io/api/common/APP_BASE_HREF#app_base_href&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;APP_BASE_HREF&lt;/a&gt;屬性進行設定。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;import { Component, NgModule } from &amp;quot;@angular/core&amp;quot;;
+import { APP_BASE_HREF } from &amp;quot;@angular/common&amp;quot;;
+
+@NgModule({
+  providers: [{ provide: APP_BASE_HREF, useValue: &amp;quot;/my/app&amp;quot; }],
+})
+class AppModule {}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;useValue&lt;/code&gt;中值的部份，我們可以將它寫入到 &lt;code&gt;environment&lt;/code&gt; 裡面，讓程式看來更具可讀性。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;import { Component, NgModule } from &amp;quot;@angular/core&amp;quot;;
+import { APP_BASE_HREF } from &amp;quot;@angular/common&amp;quot;;
+import { environment } from &amp;quot;src/environments/environment&amp;quot;;
+
+@NgModule({
+  providers: [
+    {
+      provide: APP_BASE_HREF,
+      useValue: environment.baseRef,
+    },
+  ],
+})
+class AppModule {}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;想要解決網路資源無法正常讀取的問題，只能在&lt;code&gt;ng build&lt;/code&gt;的時候利用 Build Tools 來幫我們把 Base Href 寫入&lt;code&gt;index.html&lt;/code&gt;裡面。&lt;/p&gt;
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://angular.io/guide/deployment#the-base-tag&#34;&gt;https://angular.io/guide/deployment#the-base-tag&lt;/a&gt;
+&lt;a href=&#34;https://angular.io/guide/deployment#deploy-to-github-pages&#34;&gt;https://angular.io/guide/deployment#deploy-to-github-pages&lt;/a&gt;
+&lt;a href=&#34;https://stackoverflow.com/questions/51182322/whats-the-difference-between-base-href-and-deploy-url-parameters-of-angular&#34;&gt;https://stackoverflow.com/questions/51182322/whats-the-difference-between-base-href-and-deploy-url-parameters-of-angular&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Build Up Angular Ssr With Nginx</title>

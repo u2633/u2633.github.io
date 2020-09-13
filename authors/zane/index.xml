@@ -5,12 +5,151 @@
     <link>https://u2633.github.io/authors/zane/</link>
       <atom:link href="https://u2633.github.io/authors/zane/index.xml" rel="self" type="application/rss+xml" />
     <description>Zane</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Wed, 09 Sep 2020 09:57:18 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Fri, 11 Sep 2020 15:14:27 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>Zane</title>
       <link>https://u2633.github.io/authors/zane/</link>
     </image>
+    
+    <item>
+      <title>Group Permission on Jenkins</title>
+      <link>https://u2633.github.io/post/2020/09/group-permission-on-jenkins/</link>
+      <pubDate>Fri, 11 Sep 2020 15:14:27 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/09/group-permission-on-jenkins/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;相信大家在使用 Jenkins 的時候，大部份的人架設完後並且建立完使用者後，都是直接開始建構自己的 Jobs，
+而 Jenkins 的&lt;code&gt;Authorization&lt;/code&gt;預設值如下圖&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;defautl_authorization.png&#34; alt=&#34;Default Authorization&#34;&gt;&lt;/p&gt;
+&lt;p&gt;從字面可以理解，這代表任何一個使用者都可以進去亂搞。所以，不論你是新人還是&lt;del&gt;老屁股&lt;/del&gt;資深人員，
+只要對 Jenkins 有一定的熟悉程度都可以隨意去接觸到這系統更進一步的設定。這樣等同形成了資安的缺口了。&lt;/p&gt;
+&lt;p&gt;為了避免這種問題，我們最好的方式就是利用群組的設定來賦予使用者能行使的權力。&lt;/p&gt;
+&lt;p&gt;Jenkins 本身雖然沒有群組的概念，但是可以透過&lt;code&gt;Unix user/group database&lt;/code&gt;的方式來達成。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Unix user/group database&lt;/code&gt;是指利用 Unix-Like 系統本身就有的&lt;strong&gt;使用者/群組&lt;/strong&gt;的功能，透過運行 Jenkins 的作業系統中，裡面的使用者及群組來做人員管理。讓我看一下如何將這方式達到人員及專案上的管理吧。&lt;/p&gt;
+&lt;h2 id=&#34;設定-jenkins-security-realm&#34;&gt;設定 Jenkins Security Realm&lt;/h2&gt;
+&lt;p&gt;首先，我們先進入&lt;code&gt;Configure Global Security&lt;/code&gt;把&lt;code&gt;Security Realm&lt;/code&gt;的設定由&lt;code&gt;Jenkins’ own user database&lt;/code&gt;變更為&lt;code&gt;Unix user/group database&lt;/code&gt;並且執行&lt;code&gt;測試&lt;/code&gt;。如果這是一個相當乾淨的系統，使用者馬上就會遇到第一個問題 - &lt;strong&gt;權限&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;unix_user_group_setup_failed.png&#34; alt=&#34;Unix user/group Enables failed&#34;&gt;&lt;/p&gt;
+&lt;p&gt;這意思是 Jenkins 並不屬於&lt;code&gt;shadow&lt;/code&gt;這個群組，所以沒有存取的權限。&lt;/p&gt;
+&lt;p&gt;參考
+&lt;a href=&#34;https://www.jenkins.io/security/advisory/2019-05-21/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官方文件&lt;/a&gt;及這篇
+&lt;a href=&#34;https://github.com/garbagetown/ansible-jenkins/issues/6#issue-33045278&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;文章&lt;/a&gt;可以得知，Jenkins 必需擁有&lt;code&gt;/etc/shadow&lt;/code&gt;的讀取權限。&lt;/p&gt;
+&lt;p&gt;進入 Jenkins 查看一下這個檔案目前的設定吧。因為筆者是使用 Docker，所以我們先以&lt;code&gt;root&lt;/code&gt;的權限登入 Jenkins。
+執行&lt;code&gt;docker exec -it --workdir /root --user root 13d /bin/bash&lt;/code&gt;登入並查詢&lt;code&gt;/etc/shadow&lt;/code&gt;的權限設定。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;etc_shadow_permission.png&#34; alt=&#34;etc/shadow permission&#34;&gt;&lt;/p&gt;
+&lt;p&gt;可以看到目前權限是&lt;code&gt;640&lt;/code&gt;，只有群組跟擁有者有讀取的權限。這邊我們就直接將&lt;code&gt;jenkins&lt;/code&gt;這個使用者加入&lt;code&gt;shadow&lt;/code&gt;的群組吧!
+輸入&lt;code&gt;gpasswd -a jenkins shadow&lt;/code&gt;便完成設定了。登出後再重啟我們的 Container 即可。&lt;/p&gt;
+&lt;p&gt;進入 Jenkins 的設定頁後，再測試一次我們的設定是否成功。正常情況下，應該看到下圖&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;unix_user_group_setup_success.png&#34; alt=&#34;Unix user/group enables pass&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;設定-host-users-and-group&#34;&gt;設定 Host Users and Group&lt;/h2&gt;
+&lt;p&gt;啟用&lt;code&gt;Unix user/group data&lt;/code&gt;之後，接下來就是建立我們的使用者及群組。&lt;/p&gt;
+&lt;p&gt;執行&lt;code&gt;docker exec -it --workdir /root --user root 13d /bin/bash&lt;/code&gt;進入我們的作業系統，
+要建立群組，執行&lt;code&gt;groupadd $GROUP_NAME&lt;/code&gt;，要建立使用者執行&lt;code&gt;useradd $USER_NAME&lt;/code&gt;或是要建立使用者並加入群組執行&lt;code&gt;useradd $USER_NAME -G $GROUP_NAME&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;設定-jenkins-authorization&#34;&gt;設定 Jenkins Authorization&lt;/h2&gt;
+&lt;p&gt;完成使用者及群組的建立後，我們再進入&lt;code&gt;Configure Global Security&lt;/code&gt;的&lt;code&gt;Authorization&lt;/code&gt;，並且選擇&lt;code&gt;Project-based Matrix Authorization Strategy&lt;/code&gt;，如下圖。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;project_base_matrix_authorization_strategy.png&#34; alt=&#34;Project base matrix authorization strategy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;點擊下方的&lt;code&gt;Add user or group...&lt;/code&gt;，並且加入剛剛在作業系統中的加入的群組或是使用者，便可以設定其權限。&lt;/p&gt;
+&lt;p&gt;在這裡的權限是全域的，可以讓我們在 Job Permission 中直接被使用。&lt;/p&gt;
+&lt;p&gt;如果使用者想要獨立設定 Job Permission ，亦可參考下一章節的說明。&lt;/p&gt;
+&lt;h2 id=&#34;設定-jenkins-job-permission&#34;&gt;設定 Jenkins Job Permission&lt;/h2&gt;
+&lt;p&gt;進入 Job 的設定頁面後，點擊&lt;code&gt;Enable project-based security&lt;/code&gt;啟用專案安全性設定。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;project_base_security.png&#34; alt=&#34;Project-Based security&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Inheritance Strategy&lt;/code&gt;有三個選項可供選擇。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;inheritance_strategy.png&#34; alt=&#34;Inheritance strategy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;第一個選項代表要繼承 Parent Job 的 ACL。如果此 Job 沒有 Parent 就會使用 Global 的設定，也就是第二個選項，第三個選項則是代表不使用任何即有的 ACL 設定。&lt;/p&gt;
+&lt;p&gt;在選定策略後，亦可以點擊&lt;code&gt;Add user or group...&lt;/code&gt;如入新的使用者或群且，亦可加入即有的使用者或群組進行 Job 的獨立設定。&lt;/p&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;以&lt;code&gt;Unix user/group data&lt;/code&gt;的方式設定權限管，對於 Unix-Like 系統比較不熟悉的朋友們，在權限的管理會需要花點時間來了解與學習。但是以群組的方式管理確實也會比較有效率。假設，如果你有 100 個使用者呢?我想光設定就能搞死管理者了吧。&lt;/p&gt;
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.edureka.co/community/47822/there-restrict-permissions-user-per-individual-job-jenkins&#34;&gt;https://www.edureka.co/community/47822/there-restrict-permissions-user-per-individual-job-jenkins&lt;/a&gt;
+&lt;a href=&#34;https://www.jenkins.io/security/advisory/2019-05-21/&#34;&gt;https://www.jenkins.io/security/advisory/2019-05-21/&lt;/a&gt;
+&lt;a href=&#34;https://github.com/oracle/docker-images/issues/1336#issuecomment-530789709&#34;&gt;https://github.com/oracle/docker-images/issues/1336#issuecomment-530789709&lt;/a&gt;
+&lt;a href=&#34;https://github.com/garbagetown/ansible-jenkins/issues/6#issue-33045278&#34;&gt;https://github.com/garbagetown/ansible-jenkins/issues/6#issue-33045278&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Dynamically Add Angular Base Href</title>
+      <link>https://u2633.github.io/post/2020/09/dynamically-add-angular-base-href/</link>
+      <pubDate>Fri, 11 Sep 2020 10:06:19 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/09/dynamically-add-angular-base-href/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;這篇雖然跟 DevOps 沒有直接關係，但是這也關係到了系統的可用性。所以，也將此問題收錄在我的筆記中。&lt;/p&gt;
+&lt;h2 id=&#34;發生的問題&#34;&gt;發生的問題&lt;/h2&gt;
+&lt;p&gt;昨天，開發人員在本機開發完 Angular 的專案之後並且利用 Jenkins 完成佈署後，噹啷~~
+進入頁面後只看見一片空白…。&lt;/p&gt;
+&lt;p&gt;在看了一下 &lt;code&gt;Chrome DevTools&lt;/code&gt; 後發現，Client 端在讀頁面的時候並沒有正確網頁資源的位置。
+因為過去有開發過 Angular 的經驗，當下便知道一定是 
+&lt;a href=&#34;https://angular.io/guide/deployment#the-base-tag&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Angular Base Href&lt;/a&gt; 造成的問題。&lt;/p&gt;
+&lt;h2 id=&#34;解決方式&#34;&gt;解決方式&lt;/h2&gt;
+&lt;p&gt;我找了三種解法。三種方法的複雜度依序排列為下。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;直接 Hard Code 在 &lt;code&gt;index.html&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;利用 
+&lt;a href=&#34;https://cli.angular.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Angular CLI&lt;/a&gt; 的指令來完成設&lt;/li&gt;
+&lt;li&gt;利用程式碼進行動態配置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;直接-hard-code-在-indexhtml&#34;&gt;直接 Hard Code 在 index.html&lt;/h3&gt;
+&lt;p&gt;最簡單的方式，但同時也造成了開發人員的困擾。一開始我就是用這個方式先解決無法正常讀取網頁的問題。
+我先在 Web Server 裡面直接對 &lt;code&gt;index.html&lt;/code&gt; 下手，並且把修改的地方也上到了專案程式碼裡。但是，
+開發人員馬上跟我反應他在本機端發生無法正常執行的問題。
+原因是 Angular 在本機開發上不需要 &lt;code&gt;Base Href&lt;/code&gt;，所以在換頁的時候是直接導路徑的。例如:
+在正式環境上的位置是 &lt;code&gt;https:/your_domain/my_base_href/my_path&lt;/code&gt;，而開發環境上會變成 &lt;code&gt;localhost:4200/my_path&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;如果直接在 &lt;code&gt;index.html&lt;/code&gt; 上做 Hard Code，就會造成他們在開發上的問題。所以，這個方法只能對伺服器端進行。&lt;/p&gt;
+&lt;h3 id=&#34;利用-angular-clihttpscliangulario-的指令來完成設&#34;&gt;利用 
+&lt;a href=&#34;https://cli.angular.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Angular CLI&lt;/a&gt; 的指令來完成設&lt;/h3&gt;
+&lt;p&gt;Angular 專案裡面都有個 &lt;code&gt;package.json&lt;/code&gt;。通常工程師們都會把 Build Command 寫在 scripts 欄位裡面。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;&amp;quot;scripts&amp;quot;: {
+  &amp;quot;ng&amp;quot;: &amp;quot;ng&amp;quot;,
+  &amp;quot;start&amp;quot;: &amp;quot;ng serve --open --aot&amp;quot;,
+  &amp;quot;build&amp;quot;: &amp;quot;ng build&amp;quot;,
+  &amp;quot;build:prod&amp;quot;: &amp;quot;node node_modules/@angular/cli/bin/ng build --prod&amp;quot;,
+  &amp;quot;build:sit&amp;quot;: &amp;quot;node node_modules/@angular/cli/bin/ng build -c sit --base-href=https://u2633.github.io/your/base/href/&amp;quot;,
+  &amp;quot;test&amp;quot;: &amp;quot;ng test&amp;quot;,
+  &amp;quot;lint&amp;quot;: &amp;quot;ng lint&amp;quot;,
+  &amp;quot;e2e&amp;quot;: &amp;quot;ng e2e&amp;quot;
+},
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;上面 &lt;code&gt;build:sit&lt;/code&gt; 最後面的 &lt;code&gt;--base-href&lt;/code&gt; 就是第二個解法。直接在後面打上你的 Base Href，
+在每次 Build 的時候會主動在生成的 &lt;code&gt;index.html&lt;/code&gt; 裡寫入 Base Href。如下:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;base href=&amp;quot;/your/base/href/&amp;quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;利用程式碼進行動態配置&#34;&gt;利用程式碼進行動態配置&lt;/h3&gt;
+&lt;p&gt;這個方式只能讓專案在 Routing 的時候不用再加上 Base Href，可參考
+&lt;a href=&#34;https://angular.io/api/common/PathLocationStrategy#description&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官方文&lt;/a&gt;，但其實是無法解決讀取網路資源找不到的問題。&lt;/p&gt;
+&lt;p&gt;這邊利用了 
+&lt;a href=&#34;https://angular.io/guide/dependency-injection-providers&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Angular Provider&lt;/a&gt; 來對 
+&lt;a href=&#34;https://angular.io/api/common/APP_BASE_HREF#app_base_href&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;APP_BASE_HREF&lt;/a&gt;屬性進行設定。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;import { Component, NgModule } from &amp;quot;@angular/core&amp;quot;;
+import { APP_BASE_HREF } from &amp;quot;@angular/common&amp;quot;;
+
+@NgModule({
+  providers: [{ provide: APP_BASE_HREF, useValue: &amp;quot;/my/app&amp;quot; }],
+})
+class AppModule {}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;useValue&lt;/code&gt;中值的部份，我們可以將它寫入到 &lt;code&gt;environment&lt;/code&gt; 裡面，讓程式看來更具可讀性。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;import { Component, NgModule } from &amp;quot;@angular/core&amp;quot;;
+import { APP_BASE_HREF } from &amp;quot;@angular/common&amp;quot;;
+import { environment } from &amp;quot;src/environments/environment&amp;quot;;
+
+@NgModule({
+  providers: [
+    {
+      provide: APP_BASE_HREF,
+      useValue: environment.baseRef,
+    },
+  ],
+})
+class AppModule {}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;想要解決網路資源無法正常讀取的問題，只能在&lt;code&gt;ng build&lt;/code&gt;的時候利用 Build Tools 來幫我們把 Base Href 寫入&lt;code&gt;index.html&lt;/code&gt;裡面。&lt;/p&gt;
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://angular.io/guide/deployment#the-base-tag&#34;&gt;https://angular.io/guide/deployment#the-base-tag&lt;/a&gt;
+&lt;a href=&#34;https://angular.io/guide/deployment#deploy-to-github-pages&#34;&gt;https://angular.io/guide/deployment#deploy-to-github-pages&lt;/a&gt;
+&lt;a href=&#34;https://stackoverflow.com/questions/51182322/whats-the-difference-between-base-href-and-deploy-url-parameters-of-angular&#34;&gt;https://stackoverflow.com/questions/51182322/whats-the-difference-between-base-href-and-deploy-url-parameters-of-angular&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>The Right Way to Run Npm Commands in Container on Jenkins</title>

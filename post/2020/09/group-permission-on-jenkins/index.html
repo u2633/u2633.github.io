@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="前端/Flutter 工程師">
+  <meta name="description" content="利用群組特性設定每個群組的可視性">
 
   
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/tags/angular/">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/09/group-permission-on-jenkins/">
 
   
 
@@ -213,14 +213,12 @@
 
 
   
-  <link rel="alternate" href="/tags/angular/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/tags/angular/">
+  <link rel="canonical" href="https://u2633.github.io/post/2020/09/group-permission-on-jenkins/">
 
   
   
@@ -234,18 +232,63 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/tags/angular/">
-  <meta property="og:title" content="Angular | Z@NE.NOTE">
-  <meta property="og:description" content="前端/Flutter 工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://u2633.github.io/post/2020/09/group-permission-on-jenkins/">
+  <meta property="og:title" content="Group Permission on Jenkins | Z@NE.NOTE">
+  <meta property="og:description" content="利用群組特性設定每個群組的可視性"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    <meta property="og:updated_time" content="2020-09-11T10:06:19&#43;08:00">
+    
+      <meta property="article:published_time" content="2020-09-11T15:14:27&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-09-11T15:14:27&#43;08:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://u2633.github.io/post/2020/09/group-permission-on-jenkins/"
+  },
+  "headline": "Group Permission on Jenkins",
+  
+  "datePublished": "2020-09-11T15:14:27+08:00",
+  "dateModified": "2020-09-11T15:14:27+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Zane"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Z@NE.NOTE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "利用群組特性設定每個群組的可視性"
+}
+</script>
+
+  
 
   
 
@@ -253,10 +296,13 @@
   
 
 
+  
 
 
 
-  <title>Angular | Z@NE.NOTE</title>
+
+
+  <title>Group Permission on Jenkins | Z@NE.NOTE</title>
 
 </head>
 
@@ -475,69 +521,293 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>Group Permission on Jenkins</h1>
+
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>Angular</h1>
+
+
+<div class="article-metadata">
 
   
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/authors/zane/">Zane</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020年9月11日
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  
-  
-    
-    
-    
-    <div>
-      <h2><a href="/post/2020/09/dynamically-add-angular-base-href/" >Dynamically Add Angular Base Href</a></h2>
-      <div class="article-style">
-        
-          如何動態設定 Angular Base Href
-        
-      </div>
+    <div class="article-style">
+      <h2 id="前言">前言</h2>
+<p>相信大家在使用 Jenkins 的時候，大部份的人架設完後並且建立完使用者後，都是直接開始建構自己的 Jobs，
+而 Jenkins 的<code>Authorization</code>預設值如下圖</p>
+<p><img src="defautl_authorization.png" alt="Default Authorization"></p>
+<p>從字面可以理解，這代表任何一個使用者都可以進去亂搞。所以，不論你是新人還是<del>老屁股</del>資深人員，
+只要對 Jenkins 有一定的熟悉程度都可以隨意去接觸到這系統更進一步的設定。這樣等同形成了資安的缺口了。</p>
+<p>為了避免這種問題，我們最好的方式就是利用群組的設定來賦予使用者能行使的權力。</p>
+<p>Jenkins 本身雖然沒有群組的概念，但是可以透過<code>Unix user/group database</code>的方式來達成。</p>
+<p><code>Unix user/group database</code>是指利用 Unix-Like 系統本身就有的<strong>使用者/群組</strong>的功能，透過運行 Jenkins 的作業系統中，裡面的使用者及群組來做人員管理。讓我看一下如何將這方式達到人員及專案上的管理吧。</p>
+<h2 id="設定-jenkins-security-realm">設定 Jenkins Security Realm</h2>
+<p>首先，我們先進入<code>Configure Global Security</code>把<code>Security Realm</code>的設定由<code>Jenkins’ own user database</code>變更為<code>Unix user/group database</code>並且執行<code>測試</code>。如果這是一個相當乾淨的系統，使用者馬上就會遇到第一個問題 - <strong>權限</strong>。</p>
+<p><img src="unix_user_group_setup_failed.png" alt="Unix user/group Enables failed"></p>
+<p>這意思是 Jenkins 並不屬於<code>shadow</code>這個群組，所以沒有存取的權限。</p>
+<p>參考
+<a href="https://www.jenkins.io/security/advisory/2019-05-21/" target="_blank" rel="noopener">官方文件</a>及這篇
+<a href="https://github.com/garbagetown/ansible-jenkins/issues/6#issue-33045278" target="_blank" rel="noopener">文章</a>可以得知，Jenkins 必需擁有<code>/etc/shadow</code>的讀取權限。</p>
+<p>進入 Jenkins 查看一下這個檔案目前的設定吧。因為筆者是使用 Docker，所以我們先以<code>root</code>的權限登入 Jenkins。
+執行<code>docker exec -it --workdir /root --user root 13d /bin/bash</code>登入並查詢<code>/etc/shadow</code>的權限設定。</p>
+<p><img src="etc_shadow_permission.png" alt="etc/shadow permission"></p>
+<p>可以看到目前權限是<code>640</code>，只有群組跟擁有者有讀取的權限。這邊我們就直接將<code>jenkins</code>這個使用者加入<code>shadow</code>的群組吧!
+輸入<code>gpasswd -a jenkins shadow</code>便完成設定了。登出後再重啟我們的 Container 即可。</p>
+<p>進入 Jenkins 的設定頁後，再測試一次我們的設定是否成功。正常情況下，應該看到下圖</p>
+<p><img src="unix_user_group_setup_success.png" alt="Unix user/group enables pass"></p>
+<h2 id="設定-host-users-and-group">設定 Host Users and Group</h2>
+<p>啟用<code>Unix user/group data</code>之後，接下來就是建立我們的使用者及群組。</p>
+<p>執行<code>docker exec -it --workdir /root --user root 13d /bin/bash</code>進入我們的作業系統，
+要建立群組，執行<code>groupadd $GROUP_NAME</code>，要建立使用者執行<code>useradd $USER_NAME</code>或是要建立使用者並加入群組執行<code>useradd $USER_NAME -G $GROUP_NAME</code></p>
+<h2 id="設定-jenkins-authorization">設定 Jenkins Authorization</h2>
+<p>完成使用者及群組的建立後，我們再進入<code>Configure Global Security</code>的<code>Authorization</code>，並且選擇<code>Project-based Matrix Authorization Strategy</code>，如下圖。</p>
+<p><img src="project_base_matrix_authorization_strategy.png" alt="Project base matrix authorization strategy"></p>
+<p>點擊下方的<code>Add user or group...</code>，並且加入剛剛在作業系統中的加入的群組或是使用者，便可以設定其權限。</p>
+<p>在這裡的權限是全域的，可以讓我們在 Job Permission 中直接被使用。</p>
+<p>如果使用者想要獨立設定 Job Permission ，亦可參考下一章節的說明。</p>
+<h2 id="設定-jenkins-job-permission">設定 Jenkins Job Permission</h2>
+<p>進入 Job 的設定頁面後，點擊<code>Enable project-based security</code>啟用專案安全性設定。</p>
+<p><img src="project_base_security.png" alt="Project-Based security"></p>
+<p><code>Inheritance Strategy</code>有三個選項可供選擇。</p>
+<p><img src="inheritance_strategy.png" alt="Inheritance strategy"></p>
+<p>第一個選項代表要繼承 Parent Job 的 ACL。如果此 Job 沒有 Parent 就會使用 Global 的設定，也就是第二個選項，第三個選項則是代表不使用任何即有的 ACL 設定。</p>
+<p>在選定策略後，亦可以點擊<code>Add user or group...</code>如入新的使用者或群且，亦可加入即有的使用者或群組進行 Job 的獨立設定。</p>
+<h2 id="總結">總結</h2>
+<p>以<code>Unix user/group data</code>的方式設定權限管，對於 Unix-Like 系統比較不熟悉的朋友們，在權限的管理會需要花點時間來了解與學習。但是以群組的方式管理確實也會比較有效率。假設，如果你有 100 個使用者呢?我想光設定就能搞死管理者了吧。</p>
+<h2 id="參考資料">參考資料</h2>
+<p><a href="https://www.edureka.co/community/47822/there-restrict-permissions-user-per-individual-job-jenkins">https://www.edureka.co/community/47822/there-restrict-permissions-user-per-individual-job-jenkins</a>
+<a href="https://www.jenkins.io/security/advisory/2019-05-21/">https://www.jenkins.io/security/advisory/2019-05-21/</a>
+<a href="https://github.com/oracle/docker-images/issues/1336#issuecomment-530789709">https://github.com/oracle/docker-images/issues/1336#issuecomment-530789709</a>
+<a href="https://github.com/garbagetown/ansible-jenkins/issues/6#issue-33045278">https://github.com/garbagetown/ansible-jenkins/issues/6#issue-33045278</a></p>
+
     </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/post/2020/09/build-up-angular-ssr-with-nginx/" >Build Up Angular Ssr With Nginx</a></h2>
-      <div class="article-style">
-        
-          在 Nginx 上實作 Angular Serve Side Render
-        
-      </div>
-    </div>
-  
 
-  
+    
 
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/jenkins/">Jenkins</a>
+  
 </div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/09/group-permission-on-jenkins/&amp;text=Group%20Permission%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/09/group-permission-on-jenkins/&amp;t=Group%20Permission%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Group%20Permission%20on%20Jenkins&amp;body=https://u2633.github.io/post/2020/09/group-permission-on-jenkins/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/09/group-permission-on-jenkins/&amp;title=Group%20Permission%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>相關</h3>
+    <ul>
+      
+      <li><a href="/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/">The Right Way to Run Npm Commands in Container on Jenkins</a></li>
+      
+      <li><a href="/post/2020/09/how-to-run-jenkins-service-on-docker/">How to Run Jenkins Service on Docker</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
 
       
 
