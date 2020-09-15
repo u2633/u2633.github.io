@@ -5,12 +5,91 @@
     <link>https://u2633.github.io/post/</link>
       <atom:link href="https://u2633.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Fri, 11 Sep 2020 15:14:27 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 15 Sep 2020 10:48:11 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>https://u2633.github.io/post/</link>
     </image>
+    
+    <item>
+      <title>Group Permission With Role Based on Jenkins</title>
+      <link>https://u2633.github.io/post/2020/09/group-permission-with-role-based-on-jenkins/</link>
+      <pubDate>Tue, 15 Sep 2020 10:48:11 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/09/group-permission-with-role-based-on-jenkins/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;筆者之前寫過一篇類似的
+&lt;a href=&#34;https://u2633.github.io/post/2020/09/group-permission-on-jenkins/&#34; title=&#34;Group Permission on Jenkins&#34;&gt;文章&lt;/a&gt; ，只是使用的是&lt;code&gt;Project-Based&lt;/code&gt;。但筆者發現，這樣的做法反而增加了管理上的難度，因為&lt;strong&gt;使用者/群組&lt;/strong&gt;是在作業系統上的，如果需要增加使用者，便會需要進入作業系統設定，這造成了時間成本，而且筆者使用的是容器化的 Jenkins，這又增加了管理上的難度。&lt;/p&gt;
+&lt;p&gt;最近剛好發現 Jenkins 上其實還有另外還有一種相對簡單的群組管理方式，而且不需要摸到系統層級，只要在 Jenkins 設定即可。&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://plugins.jenkins.io/role-strategy/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Role-based Authorization Strategy&lt;/a&gt; - 這就是今天的主角。&lt;/p&gt;
+&lt;p&gt;接下來就從安裝開始吧!&lt;/p&gt;
+&lt;h2 id=&#34;安裝插件及設定策略&#34;&gt;安裝插件及設定策略&lt;/h2&gt;
+&lt;p&gt;我們只需要安裝&lt;code&gt;Role-based Authorization Strategy&lt;/code&gt;這個插件&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;role_based_plugin.png&#34; alt=&#34;Role-based Authorization Strategy Plugin&#34;&gt;&lt;/p&gt;
+&lt;p&gt;接下來，進入&lt;code&gt;Configure Global Security&lt;/code&gt;並且設定&lt;code&gt;Authentication&lt;/code&gt;及&lt;code&gt;Authorization&lt;/code&gt;的策略。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Authentication&lt;/code&gt;的部份，我們選擇&lt;code&gt;Jenkins&#39;s own user database&lt;/code&gt;，也就是一開始 Jenkins 的預設選項。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;authentication_policy.png&#34; alt=&#34;Jenkins&amp;rsquo;s own user database&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Authorization&lt;/code&gt;的部份，我們選擇&lt;code&gt;Role-Based Strategy&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;authorization_policy.png&#34; alt=&#34;Role-Based Strategy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;儲存後便啟用了&lt;code&gt;Role-Based Strategy&lt;/code&gt;了&lt;/p&gt;
+&lt;h2 id=&#34;設定角色權限&#34;&gt;設定角色權限&lt;/h2&gt;
+&lt;p&gt;進結束上一個步驟後，使用者可以在&lt;code&gt;Manage Jenkins&lt;/code&gt;的頁面最下面方看到&lt;code&gt;Manage and Assign Roles&lt;/code&gt;的設定選項被啟用了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;manage_and_assign_roles_option.png&#34; alt=&#34;Manage and Assign Roles Option&#34;&gt;&lt;/p&gt;
+&lt;p&gt;進入設定清單，這裡面有兩個主要的選項，&lt;code&gt;Manage Roles&lt;/code&gt;及&lt;code&gt;Assign Roles&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;manage_and_assign_roles_functions.png&#34; alt=&#34;Manage and Assign Roles Functions&#34;&gt;&lt;/p&gt;
+&lt;p&gt;我們必需先建立我們需要的角色及權限後才能做賦予的動作。連擊進入&lt;code&gt;Manage Roles&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;manage_roles_settings.png&#34; alt=&#34;Manage Roles Settings&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;Manage Roles&lt;/code&gt;的設定頁面中，我們可以看到有三個選項，分別是&lt;code&gt;Global Roles&lt;/code&gt;、&lt;code&gt;Item Roles&lt;/code&gt;及&lt;code&gt;Node Roles&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;Global Roles&lt;/code&gt;&lt;/strong&gt;。在此建立的角色是跨專案的。所以，這裡的角色權限不應該開太高。
+這裡我們先建一個&lt;code&gt;Overall Read&lt;/code&gt;的權限，目的是為了讓使用者或群組至少可以有存取 Jenkins 的權限。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;manage_roles_overall_read.png&#34; alt=&#34;Overall Read&#34;&gt;&lt;/p&gt;
+&lt;p&gt;不然就會出現拒絕存取的錯誤&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;access_denied.png&#34; alt=&#34;Access Denied&#34;&gt;&lt;/p&gt;
+&lt;p&gt;接下來就是針對不同的專案建立不同的角色及存取權限。(筆者已經事先建立了&lt;code&gt;Test-A-Job&lt;/code&gt;及&lt;code&gt;Test-B-Job&lt;/code&gt;兩個專案)&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;Item roles&lt;/code&gt;裡面，我們可以開始增加新的角色了。這裡使用者只需要輸入&lt;code&gt;Role to add&lt;/code&gt;及&lt;code&gt;Pattern&lt;/code&gt;。
+&lt;code&gt;Role to add&lt;/code&gt;只是對這個角色的描述，這裡我們就叫它&lt;code&gt;Project A&lt;/code&gt;吧。&lt;code&gt;Pattern&lt;/code&gt;的部份才是重點，我們可利用 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Regular_expression&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Regular Expression&lt;/a&gt; 來對我們想要設定的專案進行權限控管。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;add_item_role.png&#34; alt=&#34;Add Item Role&#34;&gt;&lt;/p&gt;
+&lt;p&gt;上面筆者使用的 Pattern 是&lt;code&gt;.*-A-.*&lt;/code&gt;，這代表專案名稱中有包含&lt;code&gt;-A-&lt;/code&gt;的樣式都會使用此權限控管。&lt;/p&gt;
+&lt;p&gt;點擊&lt;code&gt;Pattern&lt;/code&gt;下面的聯結，可以馬上知道哪些專案會被包含進來。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;pattern_jobs.png&#34; alt=&#34;Jobs Pattern&#34;&gt;&lt;/p&gt;
+&lt;p&gt;設定完之後，別忘了儲存喔。設定角色後，接下來就是做賦予的動作。&lt;/p&gt;
+&lt;h2 id=&#34;賦予角色權限&#34;&gt;賦予角色權限&lt;/h2&gt;
+&lt;p&gt;進入&lt;code&gt;Assign Roles&lt;/code&gt;後，可以看到剛剛&lt;code&gt;Manage Roles&lt;/code&gt;設定頁中我們分別對&lt;code&gt;Global roles&lt;/code&gt;及&lt;code&gt;Item roles&lt;/code&gt;建立的角色。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;assign_roles_settings.png&#34; alt=&#34;Assign Roles Settings&#34;&gt;&lt;/p&gt;
+&lt;p&gt;這裡我們可以自行加入&lt;strong&gt;使用者或群組&lt;/strong&gt;，但還記得嗎?一開始我們已經將&lt;code&gt;Authentication&lt;/code&gt;設定成&lt;code&gt;Jenkins&#39;s own user database&lt;/code&gt;了。這代表，我們目前的&lt;code&gt;Authentication&lt;/code&gt;是沒有群組概念的。當然，如果你是使用&lt;code&gt;Unix user/group data&lt;/code&gt;的話也是可以直接加入群組的。但筆者認為，Jenkins 這套系統本來就不該被太多非系統管理者觸碰到，就算有也必需是專案的管理者。所以，Jenkins 裡面設定的使用者應該要越少越好，避免資安上的問題。因為上面論述，筆者認為直接使用&lt;code&gt;Jenkins&#39;s own user database&lt;/code&gt;的設定，再搭配&lt;code&gt;Role-Based Authorization Strategy&lt;/code&gt;來做細部的權限規劃，會是更好的做法。此外，筆者覺得還有另一個好處，但這對有在用 Docker 的使用者會更有感覺，而這好處就是通常在啟用容器的時候，我們會將&lt;code&gt;jenkins_home&lt;/code&gt;外掛一個&lt;code&gt;Volume&lt;/code&gt;，這樣就可以把所有的設定儲存在 Host 上，以後要搬到任何地方，只需要把&lt;code&gt;Volume&lt;/code&gt;做個備份即可。&lt;/p&gt;
+&lt;p&gt;接下來就是測試每個使用者權限了。我們先看一下權限的配置先。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;role_test_settings.png&#34; alt=&#34;Test Roles Setting&#34;&gt;&lt;/p&gt;
+&lt;p&gt;這裡筆者有兩個專案及三個使者並且各別賦予不同的權限。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Global roles&lt;/code&gt;裡面，所有角色都&lt;code&gt;Overall Read&lt;/code&gt;的權限。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;user_1&lt;/code&gt;僅能存取&lt;code&gt;Test-A-Job&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;user_2&lt;/code&gt;僅能存取&lt;code&gt;Test-B-Job&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;user_3&lt;/code&gt;則能存取&lt;code&gt;Test-A-Job&lt;/code&gt;及&lt;code&gt;Test-B-Job&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我們來看一下&lt;code&gt;user_1&lt;/code&gt;吧&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;user_1_permission.png&#34; alt=&#34;user_1 Permission&#34;&gt;&lt;/p&gt;
+&lt;p&gt;可以登入，而且僅能看到&lt;code&gt;Test-A-Job&lt;/code&gt;，並且可以正常執行專案的建置&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;user_1_run_test_a_job.png&#34; alt=&#34;user_1 Run Job&#34;&gt;&lt;/p&gt;
+&lt;p&gt;同樣的，登入&lt;code&gt;user_2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;user_2_permission.png&#34; alt=&#34;user_2 Permission&#34;&gt;&lt;/p&gt;
+&lt;p&gt;可以登，而且僅能看到&lt;code&gt;Test-B-Job&lt;/code&gt;，並且也可以正常執行專案建置&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;user_2_run_test_b_job.png&#34; alt=&#34;user_2 Run Job&#34;&gt;&lt;/p&gt;
+&lt;p&gt;最後登入&lt;code&gt;user_3&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;user_3_permission.png&#34; alt=&#34;user_3 Permission&#34;&gt;&lt;/p&gt;
+&lt;p&gt;也可正常登入，而且能看到&lt;code&gt;Test-A-Job&lt;/code&gt;及&lt;code&gt;Test-B-Job&lt;/code&gt;及正常運行兩個專案的建置&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;user_3_run_test_a_job.png&#34; alt=&#34;user_3 Run A Job&#34;&gt;
+&lt;img src=&#34;user_3_run_test_b_job.png&#34; alt=&#34;user_3 Run B Job&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;基於&lt;code&gt;Role-Based&lt;/code&gt;的權限控管方式，筆者覺得這對系統層比較陌生的 Jenkins 管理者來說友善多了。
+至少，不用花時間在學習及測試系統的使用者或群組，或是為了能夠吃到新的設定值而無止境的重啟 Jenkins 的服務。
+可攜性又高，很適合我們這些&lt;del&gt;懶人&lt;/del&gt;工程師使用。&lt;/p&gt;
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://medium.com/@vishwanathdeedat/jenkins-role-based-access-358936f07af&#34;&gt;https://medium.com/@vishwanathdeedat/jenkins-role-based-access-358936f07af&lt;/a&gt;
+&lt;a href=&#34;https://www.thegeekstuff.com/2017/03/jenkins-users-groups-roles/&#34;&gt;https://www.thegeekstuff.com/2017/03/jenkins-users-groups-roles/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Group Permission on Jenkins</title>

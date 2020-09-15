@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="zh-hant">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Zane Chen">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="利用 Role-Based 管理 Jenkins 角色權限">
+
+  
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/09/group-permission-with-role-based-on-jenkins/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="rgb(0, 136, 204)">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light" disabled>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark">
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=B612+Mono:400,700%7COrbitron:400,700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://u2633.github.io/post/2020/09/group-permission-with-role-based-on-jenkins/">
+
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Z@NE.NOTE">
+  <meta property="og:url" content="https://u2633.github.io/post/2020/09/group-permission-with-role-based-on-jenkins/">
+  <meta property="og:title" content="Group Permission With Role Based on Jenkins | Z@NE.NOTE">
+  <meta property="og:description" content="利用 Role-Based 管理 Jenkins 角色權限"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
+  
+    
+      <meta property="article:published_time" content="2020-09-15T10:48:11&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-09-15T10:48:11&#43;08:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://u2633.github.io/post/2020/09/group-permission-with-role-based-on-jenkins/"
+  },
+  "headline": "Group Permission With Role Based on Jenkins",
+  
+  "datePublished": "2020-09-15T10:48:11+08:00",
+  "dateModified": "2020-09-15T10:48:11+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Zane"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Z@NE.NOTE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "利用 Role-Based 管理 Jenkins 角色權限"
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Group Permission With Role Based on Jenkins | Z@NE.NOTE</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="dark">
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>搜尋</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="搜尋..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Z@NE.NOTE</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="切換導航">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Z@NE.NOTE</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>關於</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>文章</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>專案</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>聯絡我</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Group Permission With Role Based on Jenkins</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/authors/zane/">Zane</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020年9月15日
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="前言">前言</h2>
+<p>筆者之前寫過一篇類似的
+<a href="https://u2633.github.io/post/2020/09/group-permission-on-jenkins/" title="Group Permission on Jenkins">文章</a> ，只是使用的是<code>Project-Based</code>。但筆者發現，這樣的做法反而增加了管理上的難度，因為<strong>使用者/群組</strong>是在作業系統上的，如果需要增加使用者，便會需要進入作業系統設定，這造成了時間成本，而且筆者使用的是容器化的 Jenkins，這又增加了管理上的難度。</p>
+<p>最近剛好發現 Jenkins 上其實還有另外還有一種相對簡單的群組管理方式，而且不需要摸到系統層級，只要在 Jenkins 設定即可。</p>
+<p>
+<a href="https://plugins.jenkins.io/role-strategy/" target="_blank" rel="noopener">Role-based Authorization Strategy</a> - 這就是今天的主角。</p>
+<p>接下來就從安裝開始吧!</p>
+<h2 id="安裝插件及設定策略">安裝插件及設定策略</h2>
+<p>我們只需要安裝<code>Role-based Authorization Strategy</code>這個插件</p>
+<p><img src="role_based_plugin.png" alt="Role-based Authorization Strategy Plugin"></p>
+<p>接下來，進入<code>Configure Global Security</code>並且設定<code>Authentication</code>及<code>Authorization</code>的策略。</p>
+<p><code>Authentication</code>的部份，我們選擇<code>Jenkins's own user database</code>，也就是一開始 Jenkins 的預設選項。</p>
+<p><img src="authentication_policy.png" alt="Jenkins&rsquo;s own user database"></p>
+<p><code>Authorization</code>的部份，我們選擇<code>Role-Based Strategy</code>。</p>
+<p><img src="authorization_policy.png" alt="Role-Based Strategy"></p>
+<p>儲存後便啟用了<code>Role-Based Strategy</code>了</p>
+<h2 id="設定角色權限">設定角色權限</h2>
+<p>進結束上一個步驟後，使用者可以在<code>Manage Jenkins</code>的頁面最下面方看到<code>Manage and Assign Roles</code>的設定選項被啟用了。</p>
+<p><img src="manage_and_assign_roles_option.png" alt="Manage and Assign Roles Option"></p>
+<p>進入設定清單，這裡面有兩個主要的選項，<code>Manage Roles</code>及<code>Assign Roles</code>。</p>
+<p><img src="manage_and_assign_roles_functions.png" alt="Manage and Assign Roles Functions"></p>
+<p>我們必需先建立我們需要的角色及權限後才能做賦予的動作。連擊進入<code>Manage Roles</code>。</p>
+<p><img src="manage_roles_settings.png" alt="Manage Roles Settings"></p>
+<p>在<code>Manage Roles</code>的設定頁面中，我們可以看到有三個選項，分別是<code>Global Roles</code>、<code>Item Roles</code>及<code>Node Roles</code>。</p>
+<p><strong><code>Global Roles</code></strong>。在此建立的角色是跨專案的。所以，這裡的角色權限不應該開太高。
+這裡我們先建一個<code>Overall Read</code>的權限，目的是為了讓使用者或群組至少可以有存取 Jenkins 的權限。</p>
+<p><img src="manage_roles_overall_read.png" alt="Overall Read"></p>
+<p>不然就會出現拒絕存取的錯誤</p>
+<p><img src="access_denied.png" alt="Access Denied"></p>
+<p>接下來就是針對不同的專案建立不同的角色及存取權限。(筆者已經事先建立了<code>Test-A-Job</code>及<code>Test-B-Job</code>兩個專案)</p>
+<p>在<code>Item roles</code>裡面，我們可以開始增加新的角色了。這裡使用者只需要輸入<code>Role to add</code>及<code>Pattern</code>。
+<code>Role to add</code>只是對這個角色的描述，這裡我們就叫它<code>Project A</code>吧。<code>Pattern</code>的部份才是重點，我們可利用 
+<a href="https://en.wikipedia.org/wiki/Regular_expression" target="_blank" rel="noopener">Regular Expression</a> 來對我們想要設定的專案進行權限控管。</p>
+<p><img src="add_item_role.png" alt="Add Item Role"></p>
+<p>上面筆者使用的 Pattern 是<code>.*-A-.*</code>，這代表專案名稱中有包含<code>-A-</code>的樣式都會使用此權限控管。</p>
+<p>點擊<code>Pattern</code>下面的聯結，可以馬上知道哪些專案會被包含進來。</p>
+<p><img src="pattern_jobs.png" alt="Jobs Pattern"></p>
+<p>設定完之後，別忘了儲存喔。設定角色後，接下來就是做賦予的動作。</p>
+<h2 id="賦予角色權限">賦予角色權限</h2>
+<p>進入<code>Assign Roles</code>後，可以看到剛剛<code>Manage Roles</code>設定頁中我們分別對<code>Global roles</code>及<code>Item roles</code>建立的角色。</p>
+<p><img src="assign_roles_settings.png" alt="Assign Roles Settings"></p>
+<p>這裡我們可以自行加入<strong>使用者或群組</strong>，但還記得嗎?一開始我們已經將<code>Authentication</code>設定成<code>Jenkins's own user database</code>了。這代表，我們目前的<code>Authentication</code>是沒有群組概念的。當然，如果你是使用<code>Unix user/group data</code>的話也是可以直接加入群組的。但筆者認為，Jenkins 這套系統本來就不該被太多非系統管理者觸碰到，就算有也必需是專案的管理者。所以，Jenkins 裡面設定的使用者應該要越少越好，避免資安上的問題。因為上面論述，筆者認為直接使用<code>Jenkins's own user database</code>的設定，再搭配<code>Role-Based Authorization Strategy</code>來做細部的權限規劃，會是更好的做法。此外，筆者覺得還有另一個好處，但這對有在用 Docker 的使用者會更有感覺，而這好處就是通常在啟用容器的時候，我們會將<code>jenkins_home</code>外掛一個<code>Volume</code>，這樣就可以把所有的設定儲存在 Host 上，以後要搬到任何地方，只需要把<code>Volume</code>做個備份即可。</p>
+<p>接下來就是測試每個使用者權限了。我們先看一下權限的配置先。</p>
+<p><img src="role_test_settings.png" alt="Test Roles Setting"></p>
+<p>這裡筆者有兩個專案及三個使者並且各別賦予不同的權限。</p>
+<ul>
+<li><code>Global roles</code>裡面，所有角色都<code>Overall Read</code>的權限。</li>
+<li><code>user_1</code>僅能存取<code>Test-A-Job</code></li>
+<li><code>user_2</code>僅能存取<code>Test-B-Job</code></li>
+<li><code>user_3</code>則能存取<code>Test-A-Job</code>及<code>Test-B-Job</code></li>
+</ul>
+<p>我們來看一下<code>user_1</code>吧</p>
+<p><img src="user_1_permission.png" alt="user_1 Permission"></p>
+<p>可以登入，而且僅能看到<code>Test-A-Job</code>，並且可以正常執行專案的建置</p>
+<p><img src="user_1_run_test_a_job.png" alt="user_1 Run Job"></p>
+<p>同樣的，登入<code>user_2</code></p>
+<p><img src="user_2_permission.png" alt="user_2 Permission"></p>
+<p>可以登，而且僅能看到<code>Test-B-Job</code>，並且也可以正常執行專案建置</p>
+<p><img src="user_2_run_test_b_job.png" alt="user_2 Run Job"></p>
+<p>最後登入<code>user_3</code></p>
+<p><img src="user_3_permission.png" alt="user_3 Permission"></p>
+<p>也可正常登入，而且能看到<code>Test-A-Job</code>及<code>Test-B-Job</code>及正常運行兩個專案的建置</p>
+<p><img src="user_3_run_test_a_job.png" alt="user_3 Run A Job">
+<img src="user_3_run_test_b_job.png" alt="user_3 Run B Job"></p>
+<h2 id="總結">總結</h2>
+<p>基於<code>Role-Based</code>的權限控管方式，筆者覺得這對系統層比較陌生的 Jenkins 管理者來說友善多了。
+至少，不用花時間在學習及測試系統的使用者或群組，或是為了能夠吃到新的設定值而無止境的重啟 Jenkins 的服務。
+可攜性又高，很適合我們這些<del>懶人</del>工程師使用。</p>
+<h2 id="參考資料">參考資料</h2>
+<p><a href="https://medium.com/@vishwanathdeedat/jenkins-role-based-access-358936f07af">https://medium.com/@vishwanathdeedat/jenkins-role-based-access-358936f07af</a>
+<a href="https://www.thegeekstuff.com/2017/03/jenkins-users-groups-roles/">https://www.thegeekstuff.com/2017/03/jenkins-users-groups-roles/</a></p>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/jenkins/">Jenkins</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/09/group-permission-with-role-based-on-jenkins/&amp;text=Group%20Permission%20With%20Role%20Based%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/09/group-permission-with-role-based-on-jenkins/&amp;t=Group%20Permission%20With%20Role%20Based%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Group%20Permission%20With%20Role%20Based%20on%20Jenkins&amp;body=https://u2633.github.io/post/2020/09/group-permission-with-role-based-on-jenkins/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/09/group-permission-with-role-based-on-jenkins/&amp;title=Group%20Permission%20With%20Role%20Based%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>相關</h3>
+    <ul>
+      
+      <li><a href="/post/2020/09/group-permission-on-jenkins/">Group Permission on Jenkins</a></li>
+      
+      <li><a href="/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/">The Right Way to Run Npm Commands in Container on Jenkins</a></li>
+      
+      <li><a href="/post/2020/09/how-to-run-jenkins-service-on-docker/">How to Run Jenkins Service on Docker</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js" integrity="sha256-lyWCDMnMeZiXRi7Zl54sZGKYmgQs4izcT7+tKc+KUBk=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"找不到结果","placeholder":"搜尋...","results":"搜尋结果"};
+      const content_type = {
+        'post': "文章",
+        'project': "專案",
+        'publication' : "出版物",
+        'talk' : "演講"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.c816d323c3a55093dae0829b44ea1ca8.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">引用</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> 複製
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> 下載
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
