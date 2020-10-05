@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="DevOps/前端/Flutter 工程師">
+  <meta name="description" content="從運行中 Nginx 行程中回復被刪除的設定檔">
 
   
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/authors/zane/">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/09/restore-deleted-nginx-config-from-running-process/">
 
   
 
@@ -213,14 +213,12 @@
 
 
   
-  <link rel="alternate" href="/authors/zane/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/authors/zane/">
+  <link rel="canonical" href="https://u2633.github.io/post/2020/09/restore-deleted-nginx-config-from-running-process/">
 
   
   
@@ -234,18 +232,63 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/authors/zane/">
-  <meta property="og:title" content="Zane | Z@NE.NOTE">
-  <meta property="og:description" content="DevOps/前端/Flutter 工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://u2633.github.io/post/2020/09/restore-deleted-nginx-config-from-running-process/">
+  <meta property="og:title" content="Restore Deleted Nginx Config From Running Process | Z@NE.NOTE">
+  <meta property="og:description" content="從運行中 Nginx 行程中回復被刪除的設定檔"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    <meta property="og:updated_time" content="2020-09-21T17:34:11&#43;08:00">
+    
+      <meta property="article:published_time" content="2020-09-21T17:34:11&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-09-21T17:34:11&#43;08:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://u2633.github.io/post/2020/09/restore-deleted-nginx-config-from-running-process/"
+  },
+  "headline": "Restore Deleted Nginx Config From Running Process",
+  
+  "datePublished": "2020-09-21T17:34:11+08:00",
+  "dateModified": "2020-09-21T17:34:11+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Zane"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Z@NE.NOTE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "從運行中 Nginx 行程中回復被刪除的設定檔"
+}
+</script>
+
+  
 
   
 
@@ -253,10 +296,13 @@
   
 
 
+  
 
 
 
-  <title>Zane | Z@NE.NOTE</title>
+
+
+  <title>Restore Deleted Nginx Config From Running Process | Z@NE.NOTE</title>
 
 </head>
 
@@ -475,112 +521,263 @@
 </nav>
 
 
+  <article class="article">
+
   
 
 
 
-<div class="universal-wrapper pt-3">
-  <h1>Zane</h1>
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Restore Deleted Nginx Config From Running Process</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/authors/zane/">Zane</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020年9月21日
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 </div>
 
 
-<section id="profile-page" class="pt-5">
-  <div class="container">
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="前言">前言</h2>
+<p>人非聖賢，只要是人一定會犯錯，更何況是腦子裡裝了一大堆東西的工程師們，尤其是在緊湊的專案腳步上，就更容易犯錯。</p>
+<p>這次是同事發生的事，但因為有參與其中的過程，而且也順利的解決了這個問題，而自己也是犯過同樣的錯，但之前沒有紀錄下來，
+剛好趁這次做個紀錄。</p>
+<p>從標題可以知道，這次的問題是誤刪了 Nginx 的設定檔。大部份的公司為了省錢，通常會把測試的服務統一放在同一個伺服器裡，
+也就是 - 一站式。 Nginx 是很常拿來做代理的伺服器的軟體，筆者過去的經驗也幾乎是在這套軟體上。
+通常我們會把不同服務的設定檔獨立出來放到如:<code>/etc/nginx/conf.d/</code>底下，再從<code>/etc/nginx/nginx.conf</code>裡面做匯入，
+做模組化的管理。筆者的同事雖然誤刪了某個服務的設定檔，但目前服務仍正常運行中，因為需要的檔案已經被讀進記憶體了，可是，一旦 Nginx 的服重啟就會因為找不到該匯入的設定而發生錯誤。</p>
+<h2 id="解法">解法</h2>
+<p>解法的順序是</p>
+<ul>
+<li>找到 Nginx Root Process ID</li>
+<li>找到系統運行中的程序的 Memory Map</li>
+<li>找到<code>[heap]</code>的位址區段</li>
+<li>利用<code>gdb</code>將<code>[heap]</code>的資料 Dump 出來</li>
+<li>將 Dump 出來的資料轉成字串</li>
+</ul>
+<h2 id="總結">總結</h2>
+<p><a href="https://stackoverflow.com/questions/45852224/restore-current-sites-available-file">https://stackoverflow.com/questions/45852224/restore-current-sites-available-file</a></p>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/nginx/">Nginx</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/09/restore-deleted-nginx-config-from-running-process/&amp;text=Restore%20Deleted%20Nginx%20Config%20From%20Running%20Process" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/09/restore-deleted-nginx-config-from-running-process/&amp;t=Restore%20Deleted%20Nginx%20Config%20From%20Running%20Process" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Restore%20Deleted%20Nginx%20Config%20From%20Running%20Process&amp;body=https://u2633.github.io/post/2020/09/restore-deleted-nginx-config-from-running-process/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/09/restore-deleted-nginx-config-from-running-process/&amp;title=Restore%20Deleted%20Nginx%20Config%20From%20Running%20Process" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
     
     
 
+
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
     
-    
-    
-    <div class="article-widget content-widget-hr">
-      <h3>最新</h3>
-      <ul>
-        
-        <li>
-          <a href="/post/2020/09/restore-deleted-nginx-config-from-running-process/">Restore Deleted Nginx Config From Running Process</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/group-permission-with-role-based-on-jenkins/">Group Permission With Role Based on Jenkins</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/group-permission-on-jenkins/">Group Permission on Jenkins</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/dynamically-add-angular-base-href/">Dynamically Add Angular Base Href</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/">The Right Way to Run Npm Commands in Container on Jenkins</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/how-to-run-jenkins-service-on-docker/">How to Run Jenkins Service on Docker</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/build-up-angular-ssr-with-nginx/">Build Up Angular Ssr With Nginx</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/07/flutter-plugin-hand-by-hand/">Flutter Plugin Hand by Hand</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/04/add-flavors-on-ios-from-unity-export/">Unity Export vs iOS Build Configuration</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/04/how-to-fix-proguard-issue/">Flutter SDK 1.12.13 Proguard 功能預設已變更為開啟狀態</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/04/mobx-learning-note/">狀態管理工具 - MobX</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/04/xmpp-learning-note/">Extensible Messaging and Presence Protocol (XMPP)</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/04/firebase-cloud-messaging-implementation/">Firebase Cloud Messaging - Android</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/make-your-github-page-with-costomized-domain-name/">為你的 Github Page 設定個人網域名稱</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/install-mosquitto-on-aws-ec2/">在 AWS EC2 上安裝 Mosquitto(MQTT) Client 套件</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/fix-modal-popup-twice/">解決Flutter Bottom Modal彈跳兩次的問題</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/aws-s3-ssl-setup/">讓你的 AWS S3 擁有自己的網域名稱還具有免費網路憑證</a>
-        </li>
-        
-        <li>
-          <a href="/post/leetcode-challenges/">我的 Leetcode 挑戰</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/bloc-design-pattern/">什麼是BLoC Design Pattern</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/first-commit/">First Commit</a>
-        </li>
-        
-      </ul>
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
     </div>
-    
   </div>
-</section>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>相關</h3>
+    <ul>
+      
+      <li><a href="/post/2020/09/build-up-angular-ssr-with-nginx/">Build Up Angular Ssr With Nginx</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
 
       
 

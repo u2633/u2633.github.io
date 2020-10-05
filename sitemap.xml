@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	
-	<sitemap>
-	   	<loc>https://u2633.github.io/en/sitemap.xml</loc>
-		
-	</sitemap>
-	
-	<sitemap>
-	   	<loc>https://u2633.github.io/zh-hant/sitemap.xml</loc>
-		
-	   	<lastmod>2020-09-15T10:48:11+08:00</lastmod>
-		
-	</sitemap>
-	
+  
+  <sitemap>
+    <loc>https://u2633.github.io/en/sitemap.xml</loc>
+    
+  </sitemap>
+  
+  <sitemap>
+    <loc>https://u2633.github.io/zh-hant/sitemap.xml</loc>
+    
+      <lastmod>2020-09-24T10:40:58+08:00</lastmod>
+    
+  </sitemap>
+  
 </sitemapindex>

@@ -5,12 +5,39 @@
     <link>https://u2633.github.io/categories/devops/</link>
       <atom:link href="https://u2633.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <description>DevOps</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Tue, 15 Sep 2020 10:48:11 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Mon, 21 Sep 2020 17:34:11 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>DevOps</title>
       <link>https://u2633.github.io/categories/devops/</link>
     </image>
+    
+    <item>
+      <title>Restore Deleted Nginx Config From Running Process</title>
+      <link>https://u2633.github.io/post/2020/09/restore-deleted-nginx-config-from-running-process/</link>
+      <pubDate>Mon, 21 Sep 2020 17:34:11 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/09/restore-deleted-nginx-config-from-running-process/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;人非聖賢，只要是人一定會犯錯，更何況是腦子裡裝了一大堆東西的工程師們，尤其是在緊湊的專案腳步上，就更容易犯錯。&lt;/p&gt;
+&lt;p&gt;這次是同事發生的事，但因為有參與其中的過程，而且也順利的解決了這個問題，而自己也是犯過同樣的錯，但之前沒有紀錄下來，
+剛好趁這次做個紀錄。&lt;/p&gt;
+&lt;p&gt;從標題可以知道，這次的問題是誤刪了 Nginx 的設定檔。大部份的公司為了省錢，通常會把測試的服務統一放在同一個伺服器裡，
+也就是 - 一站式。 Nginx 是很常拿來做代理的伺服器的軟體，筆者過去的經驗也幾乎是在這套軟體上。
+通常我們會把不同服務的設定檔獨立出來放到如:&lt;code&gt;/etc/nginx/conf.d/&lt;/code&gt;底下，再從&lt;code&gt;/etc/nginx/nginx.conf&lt;/code&gt;裡面做匯入，
+做模組化的管理。筆者的同事雖然誤刪了某個服務的設定檔，但目前服務仍正常運行中，因為需要的檔案已經被讀進記憶體了，可是，一旦 Nginx 的服重啟就會因為找不到該匯入的設定而發生錯誤。&lt;/p&gt;
+&lt;h2 id=&#34;解法&#34;&gt;解法&lt;/h2&gt;
+&lt;p&gt;解法的順序是&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;找到 Nginx Root Process ID&lt;/li&gt;
+&lt;li&gt;找到系統運行中的程序的 Memory Map&lt;/li&gt;
+&lt;li&gt;找到&lt;code&gt;[heap]&lt;/code&gt;的位址區段&lt;/li&gt;
+&lt;li&gt;利用&lt;code&gt;gdb&lt;/code&gt;將&lt;code&gt;[heap]&lt;/code&gt;的資料 Dump 出來&lt;/li&gt;
+&lt;li&gt;將 Dump 出來的資料轉成字串&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://stackoverflow.com/questions/45852224/restore-current-sites-available-file&#34;&gt;https://stackoverflow.com/questions/45852224/restore-current-sites-available-file&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Group Permission With Role Based on Jenkins</title>

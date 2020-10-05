@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="DevOps/前端/Flutter 工程師">
+  <meta name="description" content="前言 總結 參考資料 https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind https://wiki.jenkins.io/display/JENKINS/Step&#43;by&#43;step&#43;guide&#43;to&#43;set&#43;up&#43;master&#43;and&#43;agent&#43;machines&#43;on&#43;Windows https://www.edureka.co/community/48364/windows-slave-agent-jnlp-have-jenkins-master-configured-linux https://scmquest.com/jenkins-windows-slave-configuration-with-screenshots/ https://stackoverflow.com/questions/58931996/jenkins-pipeline-bat-powershell-encoding-show-umlauts https://stackoverflow.com/questions/24291827/how-to-use-a-jenkins-variable-in-my-powershell-script/24292447#24292447 https://www.nuget.org/downloads https://stackoverflow.com/questions/48956184/msbuild-and-package-restore-with-packages-config https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-nuget-cli https://stackoverflow.com/questions/10265869/kill-process-by-filename">
 
   
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/authors/zane/">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/">
 
   
 
@@ -213,14 +213,12 @@
 
 
   
-  <link rel="alternate" href="/authors/zane/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/authors/zane/">
+  <link rel="canonical" href="https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/">
 
   
   
@@ -234,18 +232,63 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/authors/zane/">
-  <meta property="og:title" content="Zane | Z@NE.NOTE">
-  <meta property="og:description" content="DevOps/前端/Flutter 工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/">
+  <meta property="og:title" content="Setup Windows Server as a Jenkins Slave | Z@NE.NOTE">
+  <meta property="og:description" content="前言 總結 參考資料 https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind https://wiki.jenkins.io/display/JENKINS/Step&#43;by&#43;step&#43;guide&#43;to&#43;set&#43;up&#43;master&#43;and&#43;agent&#43;machines&#43;on&#43;Windows https://www.edureka.co/community/48364/windows-slave-agent-jnlp-have-jenkins-master-configured-linux https://scmquest.com/jenkins-windows-slave-configuration-with-screenshots/ https://stackoverflow.com/questions/58931996/jenkins-pipeline-bat-powershell-encoding-show-umlauts https://stackoverflow.com/questions/24291827/how-to-use-a-jenkins-variable-in-my-powershell-script/24292447#24292447 https://www.nuget.org/downloads https://stackoverflow.com/questions/48956184/msbuild-and-package-restore-with-packages-config https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-nuget-cli https://stackoverflow.com/questions/10265869/kill-process-by-filename"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    <meta property="og:updated_time" content="2020-09-21T17:34:11&#43;08:00">
+    
+      <meta property="article:published_time" content="2020-09-24T10:40:58&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-09-24T10:40:58&#43;08:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/"
+  },
+  "headline": "Setup Windows Server as a Jenkins Slave",
+  
+  "datePublished": "2020-09-24T10:40:58+08:00",
+  "dateModified": "2020-09-24T10:40:58+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Zane Chen"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Z@NE.NOTE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "前言 總結 參考資料 https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind https://wiki.jenkins.io/display/JENKINS/Step+by+step+guide+to+set+up+master+and+agent+machines+on+Windows https://www.edureka.co/community/48364/windows-slave-agent-jnlp-have-jenkins-master-configured-linux https://scmquest.com/jenkins-windows-slave-configuration-with-screenshots/ https://stackoverflow.com/questions/58931996/jenkins-pipeline-bat-powershell-encoding-show-umlauts https://stackoverflow.com/questions/24291827/how-to-use-a-jenkins-variable-in-my-powershell-script/24292447#24292447 https://www.nuget.org/downloads https://stackoverflow.com/questions/48956184/msbuild-and-package-restore-with-packages-config https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-nuget-cli https://stackoverflow.com/questions/10265869/kill-process-by-filename"
+}
+</script>
+
+  
 
   
 
@@ -253,10 +296,13 @@
   
 
 
+  
 
 
 
-  <title>Zane | Z@NE.NOTE</title>
+
+
+  <title>Setup Windows Server as a Jenkins Slave | Z@NE.NOTE</title>
 
 </head>
 
@@ -475,112 +521,297 @@
 </nav>
 
 
+  <article class="article">
+
   
 
 
 
-<div class="universal-wrapper pt-3">
-  <h1>Zane</h1>
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Setup Windows Server as a Jenkins Slave</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020年9月24日
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 </div>
 
 
-<section id="profile-page" class="pt-5">
-  <div class="container">
-    
-    
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="前言">前言</h2>
+<h2 id="總結">總結</h2>
+<h2 id="參考資料">參考資料</h2>
+<p><a href="https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind">https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind</a>
+<a href="https://wiki.jenkins.io/display/JENKINS/Step+by+step+guide+to+set+up+master+and+agent+machines+on+Windows">https://wiki.jenkins.io/display/JENKINS/Step+by+step+guide+to+set+up+master+and+agent+machines+on+Windows</a>
+<a href="https://www.edureka.co/community/48364/windows-slave-agent-jnlp-have-jenkins-master-configured-linux">https://www.edureka.co/community/48364/windows-slave-agent-jnlp-have-jenkins-master-configured-linux</a>
+<a href="https://scmquest.com/jenkins-windows-slave-configuration-with-screenshots/">https://scmquest.com/jenkins-windows-slave-configuration-with-screenshots/</a>
+<a href="https://stackoverflow.com/questions/58931996/jenkins-pipeline-bat-powershell-encoding-show-umlauts">https://stackoverflow.com/questions/58931996/jenkins-pipeline-bat-powershell-encoding-show-umlauts</a>
+<a href="https://stackoverflow.com/questions/24291827/how-to-use-a-jenkins-variable-in-my-powershell-script/24292447#24292447">https://stackoverflow.com/questions/24291827/how-to-use-a-jenkins-variable-in-my-powershell-script/24292447#24292447</a>
+<a href="https://www.nuget.org/downloads">https://www.nuget.org/downloads</a>
+<a href="https://stackoverflow.com/questions/48956184/msbuild-and-package-restore-with-packages-config">https://stackoverflow.com/questions/48956184/msbuild-and-package-restore-with-packages-config</a>
+<a href="https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-nuget-cli">https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-nuget-cli</a>
+<a href="https://stackoverflow.com/questions/10265869/kill-process-by-filename">https://stackoverflow.com/questions/10265869/kill-process-by-filename</a></p>
+
+    </div>
 
     
+
+
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/&amp;text=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/&amp;t=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave&amp;body=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/&amp;title=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu29f96e80ba801b2e14c6502906edd766_162790_270x270_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://u2633.github.io/">Zane Chen</a></h5>
+      <h6 class="card-subtitle">DevOps/前端/Flutter 工程師</h6>
+      <p class="card-text">Age is nothing but a number.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
     
     
-    <div class="article-widget content-widget-hr">
-      <h3>最新</h3>
-      <ul>
-        
-        <li>
-          <a href="/post/2020/09/restore-deleted-nginx-config-from-running-process/">Restore Deleted Nginx Config From Running Process</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/group-permission-with-role-based-on-jenkins/">Group Permission With Role Based on Jenkins</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/group-permission-on-jenkins/">Group Permission on Jenkins</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/dynamically-add-angular-base-href/">Dynamically Add Angular Base Href</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/">The Right Way to Run Npm Commands in Container on Jenkins</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/how-to-run-jenkins-service-on-docker/">How to Run Jenkins Service on Docker</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/09/build-up-angular-ssr-with-nginx/">Build Up Angular Ssr With Nginx</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/07/flutter-plugin-hand-by-hand/">Flutter Plugin Hand by Hand</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/04/add-flavors-on-ios-from-unity-export/">Unity Export vs iOS Build Configuration</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/04/how-to-fix-proguard-issue/">Flutter SDK 1.12.13 Proguard 功能預設已變更為開啟狀態</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/04/mobx-learning-note/">狀態管理工具 - MobX</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/04/xmpp-learning-note/">Extensible Messaging and Presence Protocol (XMPP)</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/04/firebase-cloud-messaging-implementation/">Firebase Cloud Messaging - Android</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/make-your-github-page-with-costomized-domain-name/">為你的 Github Page 設定個人網域名稱</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/install-mosquitto-on-aws-ec2/">在 AWS EC2 上安裝 Mosquitto(MQTT) Client 套件</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/fix-modal-popup-twice/">解決Flutter Bottom Modal彈跳兩次的問題</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/aws-s3-ssl-setup/">讓你的 AWS S3 擁有自己的網域名稱還具有免費網路憑證</a>
-        </li>
-        
-        <li>
-          <a href="/post/leetcode-challenges/">我的 Leetcode 挑戰</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/bloc-design-pattern/">什麼是BLoC Design Pattern</a>
-        </li>
-        
-        <li>
-          <a href="/post/2020/03/first-commit/">First Commit</a>
-        </li>
-        
-      </ul>
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/zane-chen-8a508787/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/u2633" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/files/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
     </div>
-    
   </div>
-</section>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
 
       
 
