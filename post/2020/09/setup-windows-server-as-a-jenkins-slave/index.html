@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="前言 總結 參考資料 https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind https://wiki.jenkins.io/display/JENKINS/Step&#43;by&#43;step&#43;guide&#43;to&#43;set&#43;up&#43;master&#43;and&#43;agent&#43;machines&#43;on&#43;Windows https://www.edureka.co/community/48364/windows-slave-agent-jnlp-have-jenkins-master-configured-linux https://scmquest.com/jenkins-windows-slave-configuration-with-screenshots/ https://stackoverflow.com/questions/58931996/jenkins-pipeline-bat-powershell-encoding-show-umlauts https://stackoverflow.com/questions/24291827/how-to-use-a-jenkins-variable-in-my-powershell-script/24292447#24292447 https://www.nuget.org/downloads https://stackoverflow.com/questions/48956184/msbuild-and-package-restore-with-packages-config https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-nuget-cli https://stackoverflow.com/questions/10265869/kill-process-by-filename">
+  <meta name="description" content="紀錄如何建立一個 Windows Slave 並且在系統上建置 Visual Studio 的專案">
 
   
   <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/">
@@ -233,8 +233,8 @@
   
   <meta property="og:site_name" content="Z@NE.NOTE">
   <meta property="og:url" content="https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/">
-  <meta property="og:title" content="Setup Windows Server as a Jenkins Slave | Z@NE.NOTE">
-  <meta property="og:description" content="前言 總結 參考資料 https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind https://wiki.jenkins.io/display/JENKINS/Step&#43;by&#43;step&#43;guide&#43;to&#43;set&#43;up&#43;master&#43;and&#43;agent&#43;machines&#43;on&#43;Windows https://www.edureka.co/community/48364/windows-slave-agent-jnlp-have-jenkins-master-configured-linux https://scmquest.com/jenkins-windows-slave-configuration-with-screenshots/ https://stackoverflow.com/questions/58931996/jenkins-pipeline-bat-powershell-encoding-show-umlauts https://stackoverflow.com/questions/24291827/how-to-use-a-jenkins-variable-in-my-powershell-script/24292447#24292447 https://www.nuget.org/downloads https://stackoverflow.com/questions/48956184/msbuild-and-package-restore-with-packages-config https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-nuget-cli https://stackoverflow.com/questions/10265869/kill-process-by-filename"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:title" content="Setup Windows Server as a Jenkins Slave and Build .Net Project | Z@NE.NOTE">
+  <meta property="og:description" content="紀錄如何建立一個 Windows Slave 並且在系統上建置 Visual Studio 的專案"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
     
@@ -266,14 +266,14 @@
     "@type": "WebPage",
     "@id": "https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/"
   },
-  "headline": "Setup Windows Server as a Jenkins Slave",
+  "headline": "Setup Windows Server as a Jenkins Slave and Build .Net Project",
   
   "datePublished": "2020-09-24T10:40:58+08:00",
   "dateModified": "2020-09-24T10:40:58+08:00",
   
   "author": {
     "@type": "Person",
-    "name": "Zane Chen"
+    "name": "Zane"
   },
   
   "publisher": {
@@ -284,7 +284,7 @@
       "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "前言 總結 參考資料 https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind https://wiki.jenkins.io/display/JENKINS/Step+by+step+guide+to+set+up+master+and+agent+machines+on+Windows https://www.edureka.co/community/48364/windows-slave-agent-jnlp-have-jenkins-master-configured-linux https://scmquest.com/jenkins-windows-slave-configuration-with-screenshots/ https://stackoverflow.com/questions/58931996/jenkins-pipeline-bat-powershell-encoding-show-umlauts https://stackoverflow.com/questions/24291827/how-to-use-a-jenkins-variable-in-my-powershell-script/24292447#24292447 https://www.nuget.org/downloads https://stackoverflow.com/questions/48956184/msbuild-and-package-restore-with-packages-config https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-nuget-cli https://stackoverflow.com/questions/10265869/kill-process-by-filename"
+  "description": "紀錄如何建立一個 Windows Slave 並且在系統上建置 Visual Studio 的專案"
 }
 </script>
 
@@ -302,7 +302,7 @@
 
 
 
-  <title>Setup Windows Server as a Jenkins Slave | Z@NE.NOTE</title>
+  <title>Setup Windows Server as a Jenkins Slave and Build .Net Project | Z@NE.NOTE</title>
 
 </head>
 
@@ -542,7 +542,7 @@
   
   
 <div class="article-container pt-3">
-  <h1>Setup Windows Server as a Jenkins Slave</h1>
+  <h1>Setup Windows Server as a Jenkins Slave and Build .Net Project</h1>
 
   
 
@@ -552,6 +552,16 @@
 
 <div class="article-metadata">
 
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/authors/zane/">Zane</a></span>
+  </div>
   
   
 
@@ -580,6 +590,10 @@
 
   
   
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
+  
 
 </div>
 
@@ -607,7 +621,76 @@
 
     <div class="article-style">
       <h2 id="前言">前言</h2>
+<p>筆者過去的經驗都是在 Linux-Like 上建立 Slave，難得有這個機會能在 Windows 系統上建立 Slave 並且在上面編譯專案，來看一下我做了哪些事吧!</p>
+<h2 id="設定-jenkins-master">設定 Jenkins Master</h2>
+<h3 id="設定-agents-的存取埠號">設定 Agents 的存取埠號</h3>
+<p>在 Jenkins 上，我們要先建立一個節點(node)。但是，在建立 Node 之前，為了提高安全性，
+我們要先設定一下 Agent 使用的 Port 號。進入<code>Configure Global Security</code>並且下拉至<code>Agents</code>。</p>
+<p><img src="jenkins_slave_1.png" alt="Agent Port Number"></p>
+<p>由於預設是使用<code>Random</code>的，但如果你是建立在如: AWS、GCP 之類的雲端服務上，通常會讓<code>Security Group</code>裡<code>Inbound</code>的 Port 越少越好。這裡我們設定<code>Fixed</code>的 Port 號為<code>5000</code>，並且在<code>Security Group</code>開放這個 Port。</p>
+<p><img src="aws_sg.png" alt="AWS Security Group"></p>
+<p>為了只讓特定的機器可以存取這個 Port，也可以在<code>Source</code>上加入目標機器的 IP，這樣就可以有效的增加安全性了。</p>
+<h3 id="建立新的節點">建立新的節點</h3>
+<p>進入<code>Manage Jenkins</code>並點擊<code>Manage Nodes and Clouds</code></p>
+<p><img src="nodes.png" alt="Manage Nodes and Clouds"></p>
+<p>點擊左側<code>New Node</code></p>
+<p><img src="new_node.png" alt="New Node"></p>
+<p>輸入<code>Node name</code>及選擇<code>Permanent Agent</code></p>
+<p><img src="new_node_2.png" alt="New Node 2"></p>
+<p>填入必要資訊，如下圖</p>
+<p><img src="jenkins_slave_2.png" alt="Node Information"></p>
+<p>設定 Slave 的工具位置，如: Git&hellip;，完成後點擊<code>Save</code></p>
+<p><img src="new_node_properties.png" alt="Node Properties"></p>
+<p>這裡我們會看到一個離線的 Node，請點擊它</p>
+<p><img src="offline_node.png" alt="Offline Node"></p>
+<p>進入後可以看到我們待會需要在 Windows Slave 執行的 Agent 指令</p>
+<p><img src="node_connection_methods.png" alt="Agent Command"></p>
+<p>下載<code>agent.jar</code>後到此 Master 的部份完成了，接下來讓我們繼續完成 Windows Slave 的設定吧!</p>
+<h2 id="設定-windows-slave">設定 Windows Slave</h2>
+<p>接著，我們要在 Windows 上執行剛剛複制下來的指令。我們先將指令寫進腳本檔(powershell 或是 batch)中，方便後續執行。
+然後，建立<code>C:\Jenkins</code>並且將<code>jenkins_slave.ps1</code>及<code>agent.jar</code>放進此資料夾。</p>
+<p><img src="slave_agent_tool.png" alt="Slave Agent Tool"></p>
+<p>為了避免 Slave 關機或是從開後造成節點失效，我們可以設定<code>Task Scheduler</code>，讓系統在啟動時可以自動運行 Agent。
+於設定完後直接執行新建的任務並且回到 Jenkins Master。</p>
+<p><img src="jenkins_slave_4.png" alt="Slave Task Scheduler"></p>
+<p>點擊<code>Refresh status</code>後，如果有看到 Slave 的資訊，就代表設定成功了!</p>
+<p><img src="jenkins_refresh_node_status.png" alt="Node Information"></p>
+<h2 id="下載-nugetexe">下載 nuget.exe</h2>
+<p>根據
+<a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore#restore-using-msbuild" target="_blank" rel="noopener">官方文件</a>的說明，Visual Studio 2017 之後的版本已經使用<code>PackageReference</code>的方式來引入相依套件，要下載這些相依套件只需要使用<code>msbuild -t:restore</code>，但如果是之前的專案這些相依套件會被放在<code>packages.config</code>，可參考此
+<a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore#restore-using-the-nugetexe-cli" target="_blank" rel="noopener">文件</a>。</p>
+<p>因為筆者目前的專案有<code>packages.config</code>，所以會需要<code>nuget.exe</code>這個工具來下載我所需要的相依套件，
+可至
+<a href="https://www.nuget.org/downloads" target="_blank" rel="noopener">此處</a>下載。</p>
+<p>restore 的指令為<code>nuget.exe restore -PackagesDirectory $YOUR_PACKAGES_LOCATION\\packages</code></p>
+<p>*NOTE:*如果讀者專案跟我筆者的一樣是混合型的，也別忘了使用<code>dotnet.exe</code>回復紀錄在<code>PackageReference</code>裡面的套件
+<code>dotnet restore --packages $YOUR_PACKAGES_LOCATION\\packages</code></p>
+<h2 id="troubleshoot">Troubleshoot</h2>
+<h3 id="如何利用-cli-的方式建置-net-專案">如何利用 CLI 的方式建置 .Net 專案</h3>
+<pre><code class="language-powershell">msbuild.exe $WORKSPACE\\$YOUR_PROJECT\\$YOUR_PROJECT.csproj `
+  /p:Platform=AnyCPU `
+  /t:WebPublish `
+  /p:WebPublishMethod=FileSystem `
+  /p:DeleteExistingFiles=True `
+  /p:publishUrl=$PUBLISH_DIR\\$YOUR_PROJECT `
+  /p:ExcludeFilesFromDeployment=&quot;Web.config&quot; `  # 要排除的檔案
+  /p:ExcludeFoldersFromDeployment=&quot;APP&quot;         # 要排除的資料夾
+</code></pre>
+<h3 id="如何利用-cli-的方式建置-net-core-專案的">如何利用 CLI 的方式建置 .Net Core 專案的</h3>
+<pre><code class="language-powershell">msbuild $WORKSPACE\\$YOUR_PROJECT\\$YOUR_PROJECT.csproj `
+  /p:Configuration=Release `
+  /p:Platform=AnyCPU `
+  /p:DeployOnBuild=true `
+  /p:ExcludeApp_Data=False `
+  /p:SelfContained=False `
+  /p:TargetFramework=netcoreapp2.2 `
+  /p:TargetRuntime=Portable `
+  /p:WebPublishMethod=FileSystem `
+  /p:DeleteExistingFiles=True `
+  /p:publishUrl=$PUBLISH_DIR\\$YOUR_PROJECT
+</code></pre>
 <h2 id="總結">總結</h2>
+<p>這次的任務就像在玩逆向工程，必需花不少時間在了解整個 .Net 的建置過程及無止境的 Try&amp;Error，過程中也學到了不少關於 .Net 的知識。經過這次的任務，我真的覺得我們這些處在這個時代的工程師，真的是太幸福了。因為， IDE 可能已經在啟重的時候就幫我們做掉了不少底層的事情，讓我們可以不用花心思在程式碼以外的事，讓我體會到 DevOps 的重要性，以及讓我更相信我選擇的道路是正確的!</p>
 <h2 id="參考資料">參考資料</h2>
 <p><a href="https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind">https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind</a>
 <a href="https://wiki.jenkins.io/display/JENKINS/Step+by+step+guide+to+set+up+master+and+agent+machines+on+Windows">https://wiki.jenkins.io/display/JENKINS/Step+by+step+guide+to+set+up+master+and+agent+machines+on+Windows</a>
@@ -626,6 +709,14 @@
 
 
 
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/jenkins/">Jenkins</a>
+  
+  <a class="badge badge-light" href="/tags/visual-studio/">Visual Studio</a>
+  
+</div>
+
 
 
 <div class="share-box" aria-hidden="true">
@@ -639,7 +730,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/&amp;text=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/&amp;text=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave%20and%20Build%20.Net%20Project" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -652,7 +743,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/&amp;t=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/&amp;t=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave%20and%20Build%20.Net%20Project" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -665,7 +756,7 @@
       
       
       <li>
-        <a href="mailto:?subject=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave&amp;body=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave%20and%20Build%20.Net%20Project&amp;body=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -678,7 +769,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/&amp;title=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/&amp;title=Setup%20Windows%20Server%20as%20a%20Jenkins%20Slave%20and%20Build%20.Net%20Project" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -698,96 +789,26 @@
 
 
   
-  
-
-
-
-
-
-  
-  
-  
     
+    
+
+
+
+
+
+  
+  
   
   
   
   <div class="media author-card content-widget-hr">
     
-      
-      <img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu29f96e80ba801b2e14c6502906edd766_162790_270x270_fill_q90_lanczos_center.jpg" alt="Avatar">
-    
 
     <div class="media-body">
-      <h5 class="card-title"><a href="https://u2633.github.io/">Zane Chen</a></h5>
-      <h6 class="card-subtitle">DevOps/前端/Flutter 工程師</h6>
-      <p class="card-text">Age is nothing but a number.</p>
+      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
+      
+      
       <ul class="network-icon" aria-hidden="true">
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
-    <li>
-      <a href="/#contact" >
-        <i class="fas fa-envelope"></i>
-      </a>
-    </li>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
-    <li>
-      <a href="https://www.linkedin.com/in/zane-chen-8a508787/" target="_blank" rel="noopener">
-        <i class="fab fa-linkedin"></i>
-      </a>
-    </li>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
-    <li>
-      <a href="https://github.com/u2633" target="_blank" rel="noopener">
-        <i class="fab fa-github"></i>
-      </a>
-    </li>
-  
-    
-    
-    
-    
-    
-    
-    
-      
-    
-    <li>
-      <a href="/files/cv.pdf" >
-        <i class="ai ai-cv"></i>
-      </a>
-    </li>
   
 </ul>
 
@@ -795,6 +816,7 @@
   </div>
 
 
+  
 
 
 
@@ -806,6 +828,21 @@
 
 
   
+  
+  <div class="article-widget content-widget-hr">
+    <h3>相關</h3>
+    <ul>
+      
+      <li><a href="/post/2020/09/group-permission-with-role-based-on-jenkins/">Group Permission With Role Based on Jenkins</a></li>
+      
+      <li><a href="/post/2020/09/group-permission-on-jenkins/">Group Permission on Jenkins</a></li>
+      
+      <li><a href="/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/">The Right Way to Run Npm Commands in Container on Jenkins</a></li>
+      
+      <li><a href="/post/2020/09/how-to-run-jenkins-service-on-docker/">How to Run Jenkins Service on Docker</a></li>
+      
+    </ul>
+  </div>
   
 
 

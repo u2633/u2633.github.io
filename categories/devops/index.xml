@@ -5,12 +5,102 @@
     <link>https://u2633.github.io/categories/devops/</link>
       <atom:link href="https://u2633.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <description>DevOps</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Mon, 21 Sep 2020 17:34:11 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Thu, 24 Sep 2020 10:40:58 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>DevOps</title>
       <link>https://u2633.github.io/categories/devops/</link>
     </image>
+    
+    <item>
+      <title>Setup Windows Server as a Jenkins Slave and Build .Net Project</title>
+      <link>https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/</link>
+      <pubDate>Thu, 24 Sep 2020 10:40:58 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;筆者過去的經驗都是在 Linux-Like 上建立 Slave，難得有這個機會能在 Windows 系統上建立 Slave 並且在上面編譯專案，來看一下我做了哪些事吧!&lt;/p&gt;
+&lt;h2 id=&#34;設定-jenkins-master&#34;&gt;設定 Jenkins Master&lt;/h2&gt;
+&lt;h3 id=&#34;設定-agents-的存取埠號&#34;&gt;設定 Agents 的存取埠號&lt;/h3&gt;
+&lt;p&gt;在 Jenkins 上，我們要先建立一個節點(node)。但是，在建立 Node 之前，為了提高安全性，
+我們要先設定一下 Agent 使用的 Port 號。進入&lt;code&gt;Configure Global Security&lt;/code&gt;並且下拉至&lt;code&gt;Agents&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;jenkins_slave_1.png&#34; alt=&#34;Agent Port Number&#34;&gt;&lt;/p&gt;
+&lt;p&gt;由於預設是使用&lt;code&gt;Random&lt;/code&gt;的，但如果你是建立在如: AWS、GCP 之類的雲端服務上，通常會讓&lt;code&gt;Security Group&lt;/code&gt;裡&lt;code&gt;Inbound&lt;/code&gt;的 Port 越少越好。這裡我們設定&lt;code&gt;Fixed&lt;/code&gt;的 Port 號為&lt;code&gt;5000&lt;/code&gt;，並且在&lt;code&gt;Security Group&lt;/code&gt;開放這個 Port。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;aws_sg.png&#34; alt=&#34;AWS Security Group&#34;&gt;&lt;/p&gt;
+&lt;p&gt;為了只讓特定的機器可以存取這個 Port，也可以在&lt;code&gt;Source&lt;/code&gt;上加入目標機器的 IP，這樣就可以有效的增加安全性了。&lt;/p&gt;
+&lt;h3 id=&#34;建立新的節點&#34;&gt;建立新的節點&lt;/h3&gt;
+&lt;p&gt;進入&lt;code&gt;Manage Jenkins&lt;/code&gt;並點擊&lt;code&gt;Manage Nodes and Clouds&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;nodes.png&#34; alt=&#34;Manage Nodes and Clouds&#34;&gt;&lt;/p&gt;
+&lt;p&gt;點擊左側&lt;code&gt;New Node&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;new_node.png&#34; alt=&#34;New Node&#34;&gt;&lt;/p&gt;
+&lt;p&gt;輸入&lt;code&gt;Node name&lt;/code&gt;及選擇&lt;code&gt;Permanent Agent&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;new_node_2.png&#34; alt=&#34;New Node 2&#34;&gt;&lt;/p&gt;
+&lt;p&gt;填入必要資訊，如下圖&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;jenkins_slave_2.png&#34; alt=&#34;Node Information&#34;&gt;&lt;/p&gt;
+&lt;p&gt;設定 Slave 的工具位置，如: Git&amp;hellip;，完成後點擊&lt;code&gt;Save&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;new_node_properties.png&#34; alt=&#34;Node Properties&#34;&gt;&lt;/p&gt;
+&lt;p&gt;這裡我們會看到一個離線的 Node，請點擊它&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;offline_node.png&#34; alt=&#34;Offline Node&#34;&gt;&lt;/p&gt;
+&lt;p&gt;進入後可以看到我們待會需要在 Windows Slave 執行的 Agent 指令&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;node_connection_methods.png&#34; alt=&#34;Agent Command&#34;&gt;&lt;/p&gt;
+&lt;p&gt;下載&lt;code&gt;agent.jar&lt;/code&gt;後到此 Master 的部份完成了，接下來讓我們繼續完成 Windows Slave 的設定吧!&lt;/p&gt;
+&lt;h2 id=&#34;設定-windows-slave&#34;&gt;設定 Windows Slave&lt;/h2&gt;
+&lt;p&gt;接著，我們要在 Windows 上執行剛剛複制下來的指令。我們先將指令寫進腳本檔(powershell 或是 batch)中，方便後續執行。
+然後，建立&lt;code&gt;C:\Jenkins&lt;/code&gt;並且將&lt;code&gt;jenkins_slave.ps1&lt;/code&gt;及&lt;code&gt;agent.jar&lt;/code&gt;放進此資料夾。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;slave_agent_tool.png&#34; alt=&#34;Slave Agent Tool&#34;&gt;&lt;/p&gt;
+&lt;p&gt;為了避免 Slave 關機或是從開後造成節點失效，我們可以設定&lt;code&gt;Task Scheduler&lt;/code&gt;，讓系統在啟動時可以自動運行 Agent。
+於設定完後直接執行新建的任務並且回到 Jenkins Master。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;jenkins_slave_4.png&#34; alt=&#34;Slave Task Scheduler&#34;&gt;&lt;/p&gt;
+&lt;p&gt;點擊&lt;code&gt;Refresh status&lt;/code&gt;後，如果有看到 Slave 的資訊，就代表設定成功了!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;jenkins_refresh_node_status.png&#34; alt=&#34;Node Information&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;下載-nugetexe&#34;&gt;下載 nuget.exe&lt;/h2&gt;
+&lt;p&gt;根據
+&lt;a href=&#34;https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore#restore-using-msbuild&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官方文件&lt;/a&gt;的說明，Visual Studio 2017 之後的版本已經使用&lt;code&gt;PackageReference&lt;/code&gt;的方式來引入相依套件，要下載這些相依套件只需要使用&lt;code&gt;msbuild -t:restore&lt;/code&gt;，但如果是之前的專案這些相依套件會被放在&lt;code&gt;packages.config&lt;/code&gt;，可參考此
+&lt;a href=&#34;https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore#restore-using-the-nugetexe-cli&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;文件&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;因為筆者目前的專案有&lt;code&gt;packages.config&lt;/code&gt;，所以會需要&lt;code&gt;nuget.exe&lt;/code&gt;這個工具來下載我所需要的相依套件，
+可至
+&lt;a href=&#34;https://www.nuget.org/downloads&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;此處&lt;/a&gt;下載。&lt;/p&gt;
+&lt;p&gt;restore 的指令為&lt;code&gt;nuget.exe restore -PackagesDirectory $YOUR_PACKAGES_LOCATION\\packages&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;*NOTE:*如果讀者專案跟我筆者的一樣是混合型的，也別忘了使用&lt;code&gt;dotnet.exe&lt;/code&gt;回復紀錄在&lt;code&gt;PackageReference&lt;/code&gt;裡面的套件
+&lt;code&gt;dotnet restore --packages $YOUR_PACKAGES_LOCATION\\packages&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;troubleshoot&#34;&gt;Troubleshoot&lt;/h2&gt;
+&lt;h3 id=&#34;如何利用-cli-的方式建置-net-專案&#34;&gt;如何利用 CLI 的方式建置 .Net 專案&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;msbuild.exe $WORKSPACE\\$YOUR_PROJECT\\$YOUR_PROJECT.csproj `
+  /p:Platform=AnyCPU `
+  /t:WebPublish `
+  /p:WebPublishMethod=FileSystem `
+  /p:DeleteExistingFiles=True `
+  /p:publishUrl=$PUBLISH_DIR\\$YOUR_PROJECT `
+  /p:ExcludeFilesFromDeployment=&amp;quot;Web.config&amp;quot; `  # 要排除的檔案
+  /p:ExcludeFoldersFromDeployment=&amp;quot;APP&amp;quot;         # 要排除的資料夾
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;如何利用-cli-的方式建置-net-core-專案的&#34;&gt;如何利用 CLI 的方式建置 .Net Core 專案的&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;msbuild $WORKSPACE\\$YOUR_PROJECT\\$YOUR_PROJECT.csproj `
+  /p:Configuration=Release `
+  /p:Platform=AnyCPU `
+  /p:DeployOnBuild=true `
+  /p:ExcludeApp_Data=False `
+  /p:SelfContained=False `
+  /p:TargetFramework=netcoreapp2.2 `
+  /p:TargetRuntime=Portable `
+  /p:WebPublishMethod=FileSystem `
+  /p:DeleteExistingFiles=True `
+  /p:publishUrl=$PUBLISH_DIR\\$YOUR_PROJECT
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;這次的任務就像在玩逆向工程，必需花不少時間在了解整個 .Net 的建置過程及無止境的 Try&amp;amp;Error，過程中也學到了不少關於 .Net 的知識。經過這次的任務，我真的覺得我們這些處在這個時代的工程師，真的是太幸福了。因為， IDE 可能已經在啟重的時候就幫我們做掉了不少底層的事情，讓我們可以不用花心思在程式碼以外的事，讓我體會到 DevOps 的重要性，以及讓我更相信我選擇的道路是正確的!&lt;/p&gt;
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind&#34;&gt;https://stackoverflow.com/questions/16303150/how-can-i-run-a-powershell-script-as-a-background-task-without-displaying-a-wind&lt;/a&gt;
+&lt;a href=&#34;https://wiki.jenkins.io/display/JENKINS/Step+by+step+guide+to+set+up+master+and+agent+machines+on+Windows&#34;&gt;https://wiki.jenkins.io/display/JENKINS/Step+by+step+guide+to+set+up+master+and+agent+machines+on+Windows&lt;/a&gt;
+&lt;a href=&#34;https://www.edureka.co/community/48364/windows-slave-agent-jnlp-have-jenkins-master-configured-linux&#34;&gt;https://www.edureka.co/community/48364/windows-slave-agent-jnlp-have-jenkins-master-configured-linux&lt;/a&gt;
+&lt;a href=&#34;https://scmquest.com/jenkins-windows-slave-configuration-with-screenshots/&#34;&gt;https://scmquest.com/jenkins-windows-slave-configuration-with-screenshots/&lt;/a&gt;
+&lt;a href=&#34;https://stackoverflow.com/questions/58931996/jenkins-pipeline-bat-powershell-encoding-show-umlauts&#34;&gt;https://stackoverflow.com/questions/58931996/jenkins-pipeline-bat-powershell-encoding-show-umlauts&lt;/a&gt;
+&lt;a href=&#34;https://stackoverflow.com/questions/24291827/how-to-use-a-jenkins-variable-in-my-powershell-script/24292447#24292447&#34;&gt;https://stackoverflow.com/questions/24291827/how-to-use-a-jenkins-variable-in-my-powershell-script/24292447#24292447&lt;/a&gt;
+&lt;a href=&#34;https://www.nuget.org/downloads&#34;&gt;https://www.nuget.org/downloads&lt;/a&gt;
+&lt;a href=&#34;https://stackoverflow.com/questions/48956184/msbuild-and-package-restore-with-packages-config&#34;&gt;https://stackoverflow.com/questions/48956184/msbuild-and-package-restore-with-packages-config&lt;/a&gt;
+&lt;a href=&#34;https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-nuget-cli&#34;&gt;https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-nuget-cli&lt;/a&gt;
+&lt;a href=&#34;https://stackoverflow.com/questions/10265869/kill-process-by-filename&#34;&gt;https://stackoverflow.com/questions/10265869/kill-process-by-filename&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Restore Deleted Nginx Config From Running Process</title>
