@@ -28,12 +28,10 @@
   
     
   
-  <meta name="description" content="DevOps/前端/Flutter 工程師">
+  <meta name="description" content="AWS CodeCommit 觸發 Jenkins Build Job">
 
   
-  <link rel="alternate" hreflang="en" href="https://u2633.github.io/en/post/">
-  
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/">
 
   
 
@@ -215,14 +213,12 @@
 
 
   
-  <link rel="alternate" href="/post/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/post/">
+  <link rel="canonical" href="https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/">
 
   
   
@@ -236,18 +232,63 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/post/">
-  <meta property="og:title" content="Posts | Z@NE.NOTE">
-  <meta property="og:description" content="DevOps/前端/Flutter 工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/">
+  <meta property="og:title" content="Aws Codecommit to Trigger Jenkins Build | Z@NE.NOTE">
+  <meta property="og:description" content="AWS CodeCommit 觸發 Jenkins Build Job"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    <meta property="og:updated_time" content="2020-10-07T12:17:46&#43;08:00">
+    
+      <meta property="article:published_time" content="2020-10-07T12:17:46&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-10-07T12:17:46&#43;08:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/"
+  },
+  "headline": "Aws Codecommit to Trigger Jenkins Build",
+  
+  "datePublished": "2020-10-07T12:17:46+08:00",
+  "dateModified": "2020-10-07T12:17:46+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Zane"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Z@NE.NOTE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "AWS CodeCommit 觸發 Jenkins Build Job"
+}
+</script>
+
+  
 
   
 
@@ -255,10 +296,13 @@
   
 
 
+  
 
 
 
-  <title>Posts | Z@NE.NOTE</title>
+
+
+  <title>Aws Codecommit to Trigger Jenkins Build | Z@NE.NOTE</title>
 
 </head>
 
@@ -470,22 +514,6 @@
       
 
       
-      <li class="nav-item dropdown i18n-dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
-          <i class="fas fa-globe mr-1" aria-hidden="true"></i><span class="d-none d-lg-inline">中文 (繁體)</span>
-        </a>
-        <div class="dropdown-menu">
-          <div class="dropdown-item i18n-active font-weight-bold">
-            <span>中文 (繁體)</span>
-          </div>
-          
-          <a class="dropdown-item" href="https://u2633.github.io/en/post/">
-            <span>English</span>
-          </a>
-          
-        </div>
-      </li>
-      
 
     </ul>
 
@@ -493,78 +521,33 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>Aws Codecommit to Trigger Jenkins Build</h1>
+
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>Posts</h1>
-
-  
-
-  
-</div>
-
-
-
-<div class="universal-wrapper">
-
-  
-
-  
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/10/aws-codecommit-to-trigger-jenkins-build/" >Aws Codecommit to Trigger Jenkins Build</a>
-    </h3>
-
-    
-    <div class="article-style">
-      AWS CodeCommit 觸發 Jenkins Build Job
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
 
 
 <div class="article-metadata">
@@ -614,925 +597,236 @@
 
 </div>
 
-      
-    </div>
-
     
 
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 </div>
 
-    
-  
-    
-      
 
 
+  <div class="article-container">
 
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/setup-windows-server-as-a-jenkins-slave/" >Setup Windows Server as a Jenkins Slave and Build .Net Project</a>
-    </h3>
-
-    
     <div class="article-style">
-      如何建立一個 Windows Slave 並且在系統上建置 Visual Studio 的專案
+      <h2 id="前言">前言</h2>
+<p>相信不少 Jenkins 的管理者們都曾為了讓建置的工作可以達到全自動，而在 Job 的設定中啟用過<code>Poll SCM</code>這個選項。
+這個選項啟用後，我們就可以使用 Unix-Like 的格式設定時間讓 Job 自行運作。</p>
+<p><img src="poll_scm.png" alt="Poll SCM"></p>
+<p>但問題來了，目前 Jenkins 最短的排程只有<code>1分鐘</code>，亦就是在排程的欄位裡輸入<code>* * * * *</code>，但這就無法達到<em>即時性</em>了。
+有時候為了趕時間，開發人員還得進來手動觸發，這真的蠻麻煩又浪費開發者們的時間。</p>
+<p>所以，這次的任務就是 - <strong>讓 AWS CodeCommit 可以<em>即時</em>觸發 Jenkins 的 Build Job</strong>。</p>
+<p>流程會是: 開發人員 Push 程式碼至 CodeCommit =&gt; CodeCommit 觸發通知 =&gt; SNS 發送訊息至 SQS =&gt;
+Jenkins 接收到 SQS 訊息後確認 CodeCommit 上有 Code Change 後觸發 Build Job，流程圖如下</p>
+<p><img src="codecommit_trigger_jenkins_build.png" alt="CodeCommit Trigger Build"></p>
+<h2 id="設定-aws">設定 AWS</h2>
+<p>首先，我們需要先建立相對應的 SNS 跟 SQS Topic，讓 CodeCommit 的 Trigger 可以應用到 SNS 的 Topic，
+以及讓 SQS 可以訂閱 SNS Topic</p>
+<h3 id="設定-sns">設定 SNS</h3>
+<p>進入 SNS 後，點擊建立鈕後，輸入名稱並建立即可</p>
+<p><img src="create_sns.png" alt="Create SNS"></p>
+<h3 id="設定-sqs">設定 SQS</h3>
+<p>進入 SQS 後，點擊建立後，選擇 Queue 型態並且輸入名稱</p>
+<p><img src="create_sqs_1.png" alt="Create Queue 1"></p>
+<p>選擇剛剛建立的 SNS Topic，其他設定保留預設後點擊建立即可</p>
+<p><img src="create_sqs_2.png" alt="Create Queue 2"></p>
+<h3 id="設定-codecommit">設定 CodeCommit</h3>
+<p>接下來進入 CodeCommit 點擊<code>Create Trigger</code></p>
+<p><img src="create_trigger.png" alt="Create Trigger"></p>
+<p>輸入必要欄位</p>
+<p><img src="create_trigger_1.png" alt="Create Trigger 1"></p>
+<p>設定 Service Detail</p>
+<p><img src="create_trigger_2.png" alt="Create Trigger 2"></p>
+<p>點擊測試</p>
+<p><img src="test_trigger.png" alt="Test Trigger"></p>
+<p>如果看到上面的圖就代表服務串成功</p>
+<h3 id="測試-code-changed">測試 Code Changed</h3>
+<p>這時候我們可以在本地端修改檔案再 Push 到 CodeCommit 測試整個流程是否串通。</p>
+<p>在進行 Push 之前，我們先進去 SQS 並且點擊<code>Send and receive message</code>來觀察改變。</p>
+<p><img src="sqs_send_receive_msg.png" alt="Send and Receive Message"></p>
+<p>進入功能後點擊<code>Poll for messages</code>，這時候會 Queue 會進入接受狀態。</p>
+<p>接著在本地端做 Push 觸發 Code Change 的事件</p>
+<p><img src="code_change.png" alt="Code Changed"></p>
+<p>若流程有串通，就會收到如下之訊息</p>
+<p><img src="sqs_poll_message.png" alt="Poll for Messages"></p>
+<p>到此，AWS 的服務就完成了，接下來要進入設定 Jenkins 的階段了。</p>
+<h2 id="設定-jenkins">設定 Jenkins</h2>
+<p>在 Jenkins 上我們需要安裝第三方的插件、設定存取的憑證及設定專案。</p>
+<h3 id="安裝第三方插件">安裝第三方插件</h3>
+<p>在 Jenkins 上，我們需要借助第三方插件來監聽 SQS 上面的訊息進行觸發，這裡我們用的是
+<a href="https://plugins.jenkins.io/aws-codecommit-trigger/" target="_blank" rel="noopener">AWS CodeCommit Trigger</a>，安裝完畢後進入<code>Configue System</code>下拉至<code>AWS Code Commit Trigger SQS Plugin</code>並且完成相關設定後點擊<code>Test</code>。</p>
+<p><img src="jenkins_plugin_settings.png" alt="Jenkins Plugin"></p>
+<h3 id="設定專案及測試">設定專案及測試</h3>
+<p>進入 Build Job 後，啟用<code>Build when a CodeCommit repository is updated and notifies a SQS queue</code>並且完成相關資訊的填寫，如下圖</p>
+<p><img src="build_job_setting.png" alt="Build Job"></p>
+<p>這時候可以進行測試整個完整的流程了，在進行 Code Changed 後，應該要可以看到 Job 被觸發了，
+而且也可以看到 Build Job 中 SQS Activity 的活動紀錄</p>
+<p><img src="jenkins_sqs_activity.png" alt="Jenkins SQS Activity"></p>
+<h2 id="總結">總結</h2>
+<p>這功能我在<code>AWS Code Commit Trigger SQS Plugin</code> v3.0.2 之前測試是失敗的，直到最近更新到 v3.0.2 後才正常的，
+目前測試也都很正常，觸發也蠻快的(至少，低於 1 分鐘)。</p>
+<h2 id="參考資料">參考資料</h2>
+<p><a href="https://github.com/jenkinsci/aws-codecommit-trigger-plugin">https://github.com/jenkinsci/aws-codecommit-trigger-plugin</a></p>
+
     </div>
+
     
 
-    <div class="stream-meta article-metadata">
 
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/aws/">AWS</a>
+  
+  <a class="badge badge-light" href="/tags/jenkins/">Jenkins</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
       
-
+      
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/&amp;text=Aws%20Codecommit%20to%20Trigger%20Jenkins%20Build" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
     
       
-    
-    2020年9月24日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/restore-deleted-nginx-config-from-running-process/" >Restore Deleted Nginx Config From Running Process</a>
-    </h3>
-
-    
-    <div class="article-style">
-      從運行中的 Nginx 行程回復被刪除的設定檔
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/&amp;t=Aws%20Codecommit%20to%20Trigger%20Jenkins%20Build" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
     
       
-    
-    2020年9月21日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/group-permission-with-role-based-on-jenkins/" >Group Permission With Role Based on Jenkins</a>
-    </h3>
-
-    
-    <div class="article-style">
-      利用 Role-Based 管理 Jenkins 角色權限
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Aws%20Codecommit%20to%20Trigger%20Jenkins%20Build&amp;body=https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
     
       
-    
-    2020年9月15日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/group-permission-on-jenkins/" >Group Permission on Jenkins</a>
-    </h3>
-
-    
-    <div class="article-style">
-      利用群組特性設定每個群組的可視性
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
       
-    
-    2020年9月11日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
       
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/dynamically-add-angular-base-href/" >Dynamically Add Angular Base Href</a>
-    </h3>
-
-    
-    <div class="article-style">
-      動態設定 Angular Base Href
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年9月11日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/programming/">Programming</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/" >The Right Way to Run Npm Commands in Container on Jenkins</a>
-    </h3>
-
-    
-    <div class="article-style">
-      解決在 Jenkins Pipeline 裡無法在 Docker Container 裡正常運行 npm 指令
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年9月9日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a>, <a href="/categories/issue/">Issue</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/how-to-run-jenkins-service-on-docker/" >How to Run Jenkins Service on Docker</a>
-    </h3>
-
-    
-    <div class="article-style">
-      在 Docker 上運行 Jenkins
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年9月8日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/build-up-angular-ssr-with-nginx/" >Build Up Angular Ssr With Nginx</a>
-    </h3>
-
-    
-    <div class="article-style">
-      在 Nginx 上實作 Angular Serve Side Render
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年9月7日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/07/flutter-plugin-hand-by-hand/" >Flutter Plugin Hand by Hand</a>
-    </h3>
-
-    
-    <div class="article-style">
-      如何建立 Flutter Plugin
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年7月21日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/programming/">Programming</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-
-  
-<nav>
-  <ul class="pagination justify-content-center">
-    
-    
-    <li class="page-item"><a class="page-link" href="/post/page/2/">&raquo;</a></li>
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/&amp;title=Aws%20Codecommit%20to%20Trigger%20Jenkins%20Build" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
     
   </ul>
-</nav>
-
-
-
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>相關</h3>
+    <ul>
+      
+      <li><a href="/post/2020/09/setup-windows-server-as-a-jenkins-slave/">Setup Windows Server as a Jenkins Slave and Build .Net Project</a></li>
+      
+      <li><a href="/post/2020/09/group-permission-with-role-based-on-jenkins/">Group Permission With Role Based on Jenkins</a></li>
+      
+      <li><a href="/post/2020/09/group-permission-on-jenkins/">Group Permission on Jenkins</a></li>
+      
+      <li><a href="/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/">The Right Way to Run Npm Commands in Container on Jenkins</a></li>
+      
+      <li><a href="/post/2020/09/how-to-run-jenkins-service-on-docker/">How to Run Jenkins Service on Docker</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
 
       
 

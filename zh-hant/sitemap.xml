@@ -4,7 +4,7 @@
   
   <url>
     <loc>https://u2633.github.io/authors/</loc>
-    <lastmod>2020-09-24T10:40:58+08:00</lastmod>
+    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -18,8 +18,18 @@
   </url>
   
   <url>
+    <loc>https://u2633.github.io/tags/aws/</loc>
+    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/</loc>
+    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://u2633.github.io/categories/</loc>
-    <lastmod>2020-09-24T10:40:58+08:00</lastmod>
+    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -34,17 +44,17 @@
   
   <url>
     <loc>https://u2633.github.io/categories/devops/</loc>
-    <lastmod>2020-09-24T10:40:58+08:00</lastmod>
+    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://u2633.github.io/tags/jenkins/</loc>
-    <lastmod>2020-09-24T10:40:58+08:00</lastmod>
+    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://u2633.github.io/post/</loc>
-    <lastmod>2020-09-24T10:40:58+08:00</lastmod>
+    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -58,13 +68,8 @@
   </url>
   
   <url>
-    <loc>https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/</loc>
-    <lastmod>2020-09-24T10:40:58+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://u2633.github.io/tags/</loc>
-    <lastmod>2020-09-24T10:40:58+08:00</lastmod>
+    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -78,13 +83,8 @@
   </url>
   
   <url>
-    <loc>https://u2633.github.io/tags/visual-studio/</loc>
-    <lastmod>2020-09-24T10:40:58+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://u2633.github.io/</loc>
-    <lastmod>2020-09-24T10:40:58+08:00</lastmod>
+    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -99,6 +99,16 @@
   
   <url>
     <loc>https://u2633.github.io/authors/zane/</loc>
+    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://u2633.github.io/post/2020/09/setup-windows-server-as-a-jenkins-slave/</loc>
+    <lastmod>2020-09-24T10:40:58+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://u2633.github.io/tags/visual-studio/</loc>
     <lastmod>2020-09-24T10:40:58+08:00</lastmod>
   </url>
   
@@ -235,11 +245,6 @@
   <url>
     <loc>https://u2633.github.io/post/2020/03/make-your-github-page-with-costomized-domain-name/</loc>
     <lastmod>2020-03-16T11:21:20+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://u2633.github.io/tags/aws/</loc>
-    <lastmod>2020-03-12T21:45:17+08:00</lastmod>
   </url>
   
   <url>

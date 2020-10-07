@@ -5,12 +5,78 @@
     <link>https://u2633.github.io/post/</link>
       <atom:link href="https://u2633.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Thu, 24 Sep 2020 10:40:58 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>zh-hant</language><lastBuildDate>Wed, 07 Oct 2020 12:17:46 +0800</lastBuildDate>
     <image>
       <url>https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>https://u2633.github.io/post/</link>
     </image>
+    
+    <item>
+      <title>Aws Codecommit to Trigger Jenkins Build</title>
+      <link>https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/</link>
+      <pubDate>Wed, 07 Oct 2020 12:17:46 +0800</pubDate>
+      <guid>https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;相信不少 Jenkins 的管理者們都曾為了讓建置的工作可以達到全自動，而在 Job 的設定中啟用過&lt;code&gt;Poll SCM&lt;/code&gt;這個選項。
+這個選項啟用後，我們就可以使用 Unix-Like 的格式設定時間讓 Job 自行運作。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;poll_scm.png&#34; alt=&#34;Poll SCM&#34;&gt;&lt;/p&gt;
+&lt;p&gt;但問題來了，目前 Jenkins 最短的排程只有&lt;code&gt;1分鐘&lt;/code&gt;，亦就是在排程的欄位裡輸入&lt;code&gt;* * * * *&lt;/code&gt;，但這就無法達到&lt;em&gt;即時性&lt;/em&gt;了。
+有時候為了趕時間，開發人員還得進來手動觸發，這真的蠻麻煩又浪費開發者們的時間。&lt;/p&gt;
+&lt;p&gt;所以，這次的任務就是 - &lt;strong&gt;讓 AWS CodeCommit 可以&lt;em&gt;即時&lt;/em&gt;觸發 Jenkins 的 Build Job&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;流程會是: 開發人員 Push 程式碼至 CodeCommit =&amp;gt; CodeCommit 觸發通知 =&amp;gt; SNS 發送訊息至 SQS =&amp;gt;
+Jenkins 接收到 SQS 訊息後確認 CodeCommit 上有 Code Change 後觸發 Build Job，流程圖如下&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;codecommit_trigger_jenkins_build.png&#34; alt=&#34;CodeCommit Trigger Build&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;設定-aws&#34;&gt;設定 AWS&lt;/h2&gt;
+&lt;p&gt;首先，我們需要先建立相對應的 SNS 跟 SQS Topic，讓 CodeCommit 的 Trigger 可以應用到 SNS 的 Topic，
+以及讓 SQS 可以訂閱 SNS Topic&lt;/p&gt;
+&lt;h3 id=&#34;設定-sns&#34;&gt;設定 SNS&lt;/h3&gt;
+&lt;p&gt;進入 SNS 後，點擊建立鈕後，輸入名稱並建立即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;create_sns.png&#34; alt=&#34;Create SNS&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;設定-sqs&#34;&gt;設定 SQS&lt;/h3&gt;
+&lt;p&gt;進入 SQS 後，點擊建立後，選擇 Queue 型態並且輸入名稱&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;create_sqs_1.png&#34; alt=&#34;Create Queue 1&#34;&gt;&lt;/p&gt;
+&lt;p&gt;選擇剛剛建立的 SNS Topic，其他設定保留預設後點擊建立即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;create_sqs_2.png&#34; alt=&#34;Create Queue 2&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;設定-codecommit&#34;&gt;設定 CodeCommit&lt;/h3&gt;
+&lt;p&gt;接下來進入 CodeCommit 點擊&lt;code&gt;Create Trigger&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;create_trigger.png&#34; alt=&#34;Create Trigger&#34;&gt;&lt;/p&gt;
+&lt;p&gt;輸入必要欄位&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;create_trigger_1.png&#34; alt=&#34;Create Trigger 1&#34;&gt;&lt;/p&gt;
+&lt;p&gt;設定 Service Detail&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;create_trigger_2.png&#34; alt=&#34;Create Trigger 2&#34;&gt;&lt;/p&gt;
+&lt;p&gt;點擊測試&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;test_trigger.png&#34; alt=&#34;Test Trigger&#34;&gt;&lt;/p&gt;
+&lt;p&gt;如果看到上面的圖就代表服務串成功&lt;/p&gt;
+&lt;h3 id=&#34;測試-code-changed&#34;&gt;測試 Code Changed&lt;/h3&gt;
+&lt;p&gt;這時候我們可以在本地端修改檔案再 Push 到 CodeCommit 測試整個流程是否串通。&lt;/p&gt;
+&lt;p&gt;在進行 Push 之前，我們先進去 SQS 並且點擊&lt;code&gt;Send and receive message&lt;/code&gt;來觀察改變。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;sqs_send_receive_msg.png&#34; alt=&#34;Send and Receive Message&#34;&gt;&lt;/p&gt;
+&lt;p&gt;進入功能後點擊&lt;code&gt;Poll for messages&lt;/code&gt;，這時候會 Queue 會進入接受狀態。&lt;/p&gt;
+&lt;p&gt;接著在本地端做 Push 觸發 Code Change 的事件&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;code_change.png&#34; alt=&#34;Code Changed&#34;&gt;&lt;/p&gt;
+&lt;p&gt;若流程有串通，就會收到如下之訊息&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;sqs_poll_message.png&#34; alt=&#34;Poll for Messages&#34;&gt;&lt;/p&gt;
+&lt;p&gt;到此，AWS 的服務就完成了，接下來要進入設定 Jenkins 的階段了。&lt;/p&gt;
+&lt;h2 id=&#34;設定-jenkins&#34;&gt;設定 Jenkins&lt;/h2&gt;
+&lt;p&gt;在 Jenkins 上我們需要安裝第三方的插件、設定存取的憑證及設定專案。&lt;/p&gt;
+&lt;h3 id=&#34;安裝第三方插件&#34;&gt;安裝第三方插件&lt;/h3&gt;
+&lt;p&gt;在 Jenkins 上，我們需要借助第三方插件來監聽 SQS 上面的訊息進行觸發，這裡我們用的是
+&lt;a href=&#34;https://plugins.jenkins.io/aws-codecommit-trigger/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AWS CodeCommit Trigger&lt;/a&gt;，安裝完畢後進入&lt;code&gt;Configue System&lt;/code&gt;下拉至&lt;code&gt;AWS Code Commit Trigger SQS Plugin&lt;/code&gt;並且完成相關設定後點擊&lt;code&gt;Test&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;jenkins_plugin_settings.png&#34; alt=&#34;Jenkins Plugin&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;設定專案及測試&#34;&gt;設定專案及測試&lt;/h3&gt;
+&lt;p&gt;進入 Build Job 後，啟用&lt;code&gt;Build when a CodeCommit repository is updated and notifies a SQS queue&lt;/code&gt;並且完成相關資訊的填寫，如下圖&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;build_job_setting.png&#34; alt=&#34;Build Job&#34;&gt;&lt;/p&gt;
+&lt;p&gt;這時候可以進行測試整個完整的流程了，在進行 Code Changed 後，應該要可以看到 Job 被觸發了，
+而且也可以看到 Build Job 中 SQS Activity 的活動紀錄&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;jenkins_sqs_activity.png&#34; alt=&#34;Jenkins SQS Activity&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;總結&#34;&gt;總結&lt;/h2&gt;
+&lt;p&gt;這功能我在&lt;code&gt;AWS Code Commit Trigger SQS Plugin&lt;/code&gt; v3.0.2 之前測試是失敗的，直到最近更新到 v3.0.2 後才正常的，
+目前測試也都很正常，觸發也蠻快的(至少，低於 1 分鐘)。&lt;/p&gt;
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/jenkinsci/aws-codecommit-trigger-plugin&#34;&gt;https://github.com/jenkinsci/aws-codecommit-trigger-plugin&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Setup Windows Server as a Jenkins Slave and Build .Net Project</title>
