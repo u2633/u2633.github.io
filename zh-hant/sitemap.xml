@@ -4,7 +4,7 @@
   
   <url>
     <loc>https://u2633.github.io/authors/</loc>
-    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
+    <lastmod>2020-10-11T19:49:04+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -18,18 +18,8 @@
   </url>
   
   <url>
-    <loc>https://u2633.github.io/tags/aws/</loc>
-    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/</loc>
-    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://u2633.github.io/categories/</loc>
-    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
+    <lastmod>2020-10-11T19:49:04+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -43,18 +33,23 @@
   </url>
   
   <url>
+    <loc>https://u2633.github.io/post/2020/10/create-share-library-on-jenkins/</loc>
+    <lastmod>2020-10-11T19:49:04+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://u2633.github.io/categories/devops/</loc>
-    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
+    <lastmod>2020-10-11T19:49:04+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://u2633.github.io/tags/jenkins/</loc>
-    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
+    <lastmod>2020-10-11T19:49:04+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://u2633.github.io/post/</loc>
-    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
+    <lastmod>2020-10-11T19:49:04+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -69,7 +64,7 @@
   
   <url>
     <loc>https://u2633.github.io/tags/</loc>
-    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
+    <lastmod>2020-10-11T19:49:04+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -84,7 +79,7 @@
   
   <url>
     <loc>https://u2633.github.io/</loc>
-    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
+    <lastmod>2020-10-11T19:49:04+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -99,6 +94,16 @@
   
   <url>
     <loc>https://u2633.github.io/authors/zane/</loc>
+    <lastmod>2020-10-11T19:49:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://u2633.github.io/tags/aws/</loc>
+    <lastmod>2020-10-07T12:17:46+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://u2633.github.io/post/2020/10/aws-codecommit-to-trigger-jenkins-build/</loc>
     <lastmod>2020-10-07T12:17:46+08:00</lastmod>
   </url>
   

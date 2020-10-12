@@ -28,12 +28,10 @@
   
     
   
-  <meta name="description" content="DevOps/前端/Flutter 工程師">
+  <meta name="description" content="在 Jenkins 建立可以讓其他腳本使用的 Share Library ">
 
   
-  <link rel="alternate" hreflang="en" href="https://u2633.github.io/en/post/">
-  
-  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/">
+  <link rel="alternate" hreflang="zh-hant" href="https://u2633.github.io/post/2020/10/create-share-library-on-jenkins/">
 
   
 
@@ -215,14 +213,12 @@
 
 
   
-  <link rel="alternate" href="/post/index.xml" type="application/rss+xml" title="Z@NE.NOTE">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://u2633.github.io/post/">
+  <link rel="canonical" href="https://u2633.github.io/post/2020/10/create-share-library-on-jenkins/">
 
   
   
@@ -236,18 +232,63 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Z@NE.NOTE">
-  <meta property="og:url" content="https://u2633.github.io/post/">
-  <meta property="og:title" content="Posts | Z@NE.NOTE">
-  <meta property="og:description" content="DevOps/前端/Flutter 工程師"><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://u2633.github.io/post/2020/10/create-share-library-on-jenkins/">
+  <meta property="og:title" content="Create Share Library on Jenkins | Z@NE.NOTE">
+  <meta property="og:description" content="在 Jenkins 建立可以讓其他腳本使用的 Share Library "><meta property="og:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="zh-hant">
   
-    <meta property="og:updated_time" content="2020-10-11T19:49:04&#43;08:00">
+    
+      <meta property="article:published_time" content="2020-10-11T19:49:04&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-10-11T19:49:04&#43;08:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://u2633.github.io/post/2020/10/create-share-library-on-jenkins/"
+  },
+  "headline": "Create Share Library on Jenkins",
+  
+  "datePublished": "2020-10-11T19:49:04+08:00",
+  "dateModified": "2020-10-11T19:49:04+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Zane"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Z@NE.NOTE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://u2633.github.io/images/icon_hu4b75b0750a7644dfba4c3cde2b8c5154_77905_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "在 Jenkins 建立可以讓其他腳本使用的 Share Library "
+}
+</script>
+
+  
 
   
 
@@ -255,10 +296,13 @@
   
 
 
+  
 
 
 
-  <title>Posts | Z@NE.NOTE</title>
+
+
+  <title>Create Share Library on Jenkins | Z@NE.NOTE</title>
 
 </head>
 
@@ -470,22 +514,6 @@
       
 
       
-      <li class="nav-item dropdown i18n-dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
-          <i class="fas fa-globe mr-1" aria-hidden="true"></i><span class="d-none d-lg-inline">中文 (繁體)</span>
-        </a>
-        <div class="dropdown-menu">
-          <div class="dropdown-item i18n-active font-weight-bold">
-            <span>中文 (繁體)</span>
-          </div>
-          
-          <a class="dropdown-item" href="https://u2633.github.io/en/post/">
-            <span>English</span>
-          </a>
-          
-        </div>
-      </li>
-      
 
     </ul>
 
@@ -493,78 +521,33 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>Create Share Library on Jenkins</h1>
+
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>Posts</h1>
-
-  
-
-  
-</div>
-
-
-
-<div class="universal-wrapper">
-
-  
-
-  
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/10/create-share-library-on-jenkins/" >Create Share Library on Jenkins</a>
-    </h3>
-
-    
-    <div class="article-style">
-      在 Jenkins 建立可以讓其他腳本使用的 Share Library
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
 
 
 <div class="article-metadata">
@@ -614,925 +597,288 @@
 
 </div>
 
-      
-    </div>
-
     
 
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 </div>
 
-    
-  
-    
-      
 
 
+  <div class="article-container">
 
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/10/aws-codecommit-to-trigger-jenkins-build/" >Aws Codecommit to Trigger Jenkins Build</a>
-    </h3>
-
-    
     <div class="article-style">
-      AWS CodeCommit 觸發 Jenkins Build Job
+      <h2 id="前言">前言</h2>
+<p>為了減少因為複制而造成重複的腳本，Jenkins 提供了
+<a href="https://www.jenkins.io/doc/book/pipeline/shared-libraries/" target="_blank" rel="noopener">共享函式庫</a>(Share Library)這個功能，讓 Pipeline 也可以使用模組化的方式來減少重複的程式碼。</p>
+<p>根據官方文件，Share Library 的資料夾結構必需如下圖</p>
+<p><img src="structure.png" alt="Structure"></p>
+<ul>
+<li><code>src</code> - 與 Java 的資料夾結構一樣。此資料夾會在 Pipeline 執行時被加入到<code>classpath</code></li>
+<li><code>vars</code> - 裡面的檔案會是以一個<code>.groovy</code>及一個<code>.txt</code>成對的存在著，例如: utilities.groovy 與 utilities.txt。
+<code>.groovy</code>會像一個對外開放的命名空間。亦即<code>所有在這個命名空間裡的函式</code>都可以在 Pipeline <code>引入這個共享函式</code>後利用這個命名空間直接存取。<code>.txt</code>的內容則會針對<code>.groovy</code>裡即有的函式加以說明，就像<code>JavaDoc</code>一樣。只是…，官網上面說它支援<code>html</code>或是<code>markdown</code>的語法，但是，我在使用<code>markdown</code>的時候一直無法正常顯示，後來就改用<code>html</code>的語法了。</li>
+<li><code>resources</code> - 裡面的資料也是全域的，但必需透過<code>內建的的step</code> - <code> libraryResource</code>才可以存取。</li>
+</ul>
+<p>Jenkins Share Library 的基本說明大概是這樣。接下來就開始建立吧!</p>
+<h2 id="建立-jenkins-share-library">建立 Jenkins Share Library</h2>
+<p>Share Library 會是一個獨立的 Git Repo，並且會在設定 Jenkins 時被引入。請根據各自使用的 VCS 建立之。</p>
+<p>這裡我覺得常用的功能有發送訊息之類的腳本。我們先建立一個發送 Slack Notification 的功能</p>
+<p><img src="my_share_library_structure.png" alt="My Share Library Structure"></p>
+<p>這裡產生了資料夾結構並且建立了兩個命名空間<code>utilities</code>及<code>log</code>，又及各自說明文件。在<code>utilities</code>裡面，
+我們建立了一個發送 Slack 訊息的函式。</p>
+<pre><code class="language-groovy">/**
+ * Slack Notifier
+ *
+ * To send build status into the channel of Slack
+ *
+ * @params  channel - The channel where message will be sent
+ *          status  - Build status. It will be success, fixed, failure or unstable
+ */
+def slackNotify(String channel, String status) {
+    def colorCode = null
+
+    switch(status) {
+        case 'success':
+        case 'fixed':
+            colorCode = '#00FF00';
+            break;
+        case 'failure':
+            colorCode = '#FF0000';
+            break;
+        case 'unstable':
+            colorCode = '#FFCC00';
+            break;
+        default:
+            colorCode = '#440f3c';
+            break;
+    }
+
+    slackSend channel: &quot;$channel&quot;,
+              color: &quot;$colorCode&quot;,
+              message: &quot;*${status.toUpperCase()}* - ${env.JOB_NAME} #${env.BUILD_NUMBER} (&lt;${env.BUILD_URL}console|Open&gt;)&quot;
+}
+</code></pre>
+<h3 id="建立說文件">建立說文件</h3>
+<p>接下來，繼續進行說明文件的建立來讓我們的 Share Library 更完整吧!因為<code>markdown</code>的方式我目前還沒研究成功，所以這次是先使用<code>html</code>的語法。</p>
+<pre><code class="language-html">&lt;b&gt;slackNotify(String channel, String status)&lt;/b&gt;
+&lt;pre&gt;
+    To send build status into the channel of Slack. There are two parameters have to set when using the function.
+    &lt;b&gt;channel&lt;/b&gt; - The channel where message will be sent.
+    &lt;b&gt;status&lt;/b&gt; - Build status. It will be success, fixed, failure or unstable.
+&lt;/pre&gt;
+</code></pre>
+<p>這樣就把說明文件完成了，接下來只要讓 Jenkins 把剛剛建立的 Share Library 引入就完成了九成了。</p>
+<h2 id="設定-jenkins">設定 Jenkins</h2>
+<p>進入<code>System Configuration</code>後並且點擊<code>Configure system</code>，下拉至<code>Global Pipeline Libraries</code>，
+點擊建立並且填入相關資訊，如:<code>Name</code>、<code>Default version</code>、<code>Project Repository</code>及<code>Credentials</code>。</p>
+<p><img src="jenkins_share_library_setting.png" alt="Jenkins Share Library Setting"></p>
+<p><em>Note</em>: 此設定是針對<code>Git</code>，如果讀者是使用<code>Subversion</code>也可將設定改成<code>Subversion</code>即可。</p>
+<h2 id="引入-share-library">引入 Share Library</h2>
+<p>在 Pipeline 引入<code>vars/</code>的函式語法有四種</p>
+<pre><code class="language-groovy">/* Basic */
+@Library('my-shared-library') _
+/* Using a version specifier, such as branch, tag, etc */
+@Library('my-shared-library@1.0') _
+/* Accessing multiple libraries with one statement */
+@Library(['my-shared-library', 'otherlib@abc1234']) _
+
+/* Dynamically */
+library 'my-shared-library' // 這是以 step 的方式呼叫
+</code></pre>
+<p>要引入<code>src/</code>的類別則需要使用<code>import</code>語法。(雖然這個方法也可以用來引入<code>vars/</code>底下的函式，
+但為了程式碼的簡潔，官方並不建議這樣做)</p>
+<pre><code class="language-groovy">@Library('somelib')
+import com.mycorp.pipeline.somelib.UsefulClass
+</code></pre>
+<p>最後，建立一個 Job 來測試。引入我們剛剛建立的 Share Library 並且在<code>stage</code>裡面呼叫。</p>
+<pre><code class="language-jenkinsfile">@Library('general-utility') _
+
+pipeline {
+
+    stages {
+        stage('Test') {
+            steps {
+                script {
+                    utilities.slackNotifier()
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>相信各位一定都成功了!這裡就不放圖了XD。</p>
+<p>剛剛說過的完整性包括了說明文件，那…，我們剛寫了一堆html的說明文件呢?這部份必需先執行過一次 Build Job 後才會看得到。
+它會存在於<code>Global Variable Reference</code>。</p>
+<p>點擊<code>Pipeline Syntax</code></p>
+<p><img src="job_function_menu.png" alt="Pipeline Syntax"></p>
+<p>再點擊<code>Global Variable Reference</code></p>
+<p><img src="pipeline_menu_list.png" alt="Global Variable Reference"></p>
+<p>可以看到剛剛建立的說明就在這裡，看起來就很專業的樣子XD</p>
+<p><img src="share_library_doc.png" alt="Share Library Doc"></p>
+<h2 id="總結">總結</h2>
+<p>對於正在學習 Jenkins 的朋友們，我個人覺得這個技能是必點的，因為模組化能夠讓你的腳本更精簡且更具有可攜性及可讀性。
+Junior(Pay少) 跟 Senior(Pay多) 的差距也常常從這些細節去區分出來的。舉個例吧，假設你有十個函式或是描述是很常在腳本裡出現的，而且又有十個 Job 是被複制出來的，就相當於有將近100個多餘的函式在你的 Pipeline 裡了。</p>
+<h2 id="參考資料">參考資料</h2>
+<p><a href="https://www.jenkins.io/doc/book/pipeline/shared-libraries/">https://www.jenkins.io/doc/book/pipeline/shared-libraries/</a></p>
+
     </div>
+
     
 
-    <div class="stream-meta article-metadata">
 
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/jenkins/">Jenkins</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
       
-
+      
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://u2633.github.io/post/2020/10/create-share-library-on-jenkins/&amp;text=Create%20Share%20Library%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
     
       
-    
-    2020年10月7日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/setup-windows-server-as-a-jenkins-slave/" >Setup Windows Server as a Jenkins Slave and Build .Net Project</a>
-    </h3>
-
-    
-    <div class="article-style">
-      如何建立一個 Windows Slave 並且在系統上建置 Visual Studio 的專案
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://u2633.github.io/post/2020/10/create-share-library-on-jenkins/&amp;t=Create%20Share%20Library%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
     
       
-    
-    2020年9月24日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/restore-deleted-nginx-config-from-running-process/" >Restore Deleted Nginx Config From Running Process</a>
-    </h3>
-
-    
-    <div class="article-style">
-      從運行中的 Nginx 行程回復被刪除的設定檔
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Create%20Share%20Library%20on%20Jenkins&amp;body=https://u2633.github.io/post/2020/10/create-share-library-on-jenkins/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
     
       
-    
-    2020年9月21日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/group-permission-with-role-based-on-jenkins/" >Group Permission With Role Based on Jenkins</a>
-    </h3>
-
-    
-    <div class="article-style">
-      利用 Role-Based 管理 Jenkins 角色權限
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
       
-    
-    2020年9月15日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
       
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/group-permission-on-jenkins/" >Group Permission on Jenkins</a>
-    </h3>
-
-    
-    <div class="article-style">
-      利用群組特性設定每個群組的可視性
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年9月11日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/dynamically-add-angular-base-href/" >Dynamically Add Angular Base Href</a>
-    </h3>
-
-    
-    <div class="article-style">
-      動態設定 Angular Base Href
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年9月11日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/programming/">Programming</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/" >The Right Way to Run Npm Commands in Container on Jenkins</a>
-    </h3>
-
-    
-    <div class="article-style">
-      解決在 Jenkins Pipeline 裡無法在 Docker Container 裡正常運行 npm 指令
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年9月9日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a>, <a href="/categories/issue/">Issue</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/how-to-run-jenkins-service-on-docker/" >How to Run Jenkins Service on Docker</a>
-    </h3>
-
-    
-    <div class="article-style">
-      在 Docker 上運行 Jenkins
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年9月8日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2020/09/build-up-angular-ssr-with-nginx/" >Build Up Angular Ssr With Nginx</a>
-    </h3>
-
-    
-    <div class="article-style">
-      在 Nginx 上實作 Angular Serve Side Render
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/authors/zane/">Zane</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    2020年9月7日
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/devops/">DevOps</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-
-  
-<nav>
-  <ul class="pagination justify-content-center">
-    
-    
-    <li class="page-item"><a class="page-link" href="/post/page/2/">&raquo;</a></li>
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://u2633.github.io/post/2020/10/create-share-library-on-jenkins/&amp;title=Create%20Share%20Library%20on%20Jenkins" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
     
   </ul>
-</nav>
-
-
-
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/zane/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>相關</h3>
+    <ul>
+      
+      <li><a href="/post/2020/10/aws-codecommit-to-trigger-jenkins-build/">Aws Codecommit to Trigger Jenkins Build</a></li>
+      
+      <li><a href="/post/2020/09/setup-windows-server-as-a-jenkins-slave/">Setup Windows Server as a Jenkins Slave and Build .Net Project</a></li>
+      
+      <li><a href="/post/2020/09/group-permission-with-role-based-on-jenkins/">Group Permission With Role Based on Jenkins</a></li>
+      
+      <li><a href="/post/2020/09/group-permission-on-jenkins/">Group Permission on Jenkins</a></li>
+      
+      <li><a href="/post/2020/09/the-right-way-to-run-npm-command-in-container-on-jenkins/">The Right Way to Run Npm Commands in Container on Jenkins</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
 
       
 
